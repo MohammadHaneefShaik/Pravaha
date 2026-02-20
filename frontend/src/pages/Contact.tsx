@@ -5,16 +5,16 @@ import { Mail, Phone, MapPin, User, Briefcase, Globe } from "lucide-react";
 const coordinators = {
   faculty: [
     {
-      name: "Dr. M. Sravan Kumar Reddy",
-      role: "Associate Professor, CSE",
-      phone: "+91 91600 69003",
-      email: "mskreddycse@rgmcet.edu.in",
+      name: "Dr. D.Lenine",
+      role: " Professor, EEE",
+      phone: "+91 9866723784",
+      email: "Lenine@rgmcet.edu.in",
     },
     {
-      name: "Mr. P. Naveen Sundar Kumar",
-      role: "Assistant Professor, CSE",
-      phone: "+91 98488 83044",
-      email: "naveen@rgmcet.edu.in",
+      name: "Mr.Y.Vijaya Suresh",
+      role: "Associate Professor, EEE",
+      phone: "+91 9441243353",
+      email: "vijayasuresh@rgmcet.edu.in",
     },
   ],
   student: [
