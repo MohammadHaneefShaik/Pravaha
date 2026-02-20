@@ -17,8 +17,7 @@ import eventRoutes from "./routes/event.js";
 
 
 const app = express();
-const PORT = 5000;
-
+const PORT = process.env.PORT || 5000;
 /* ---------------------------------- */
 /* FIX __dirname FOR ES MODULES */
 /* ---------------------------------- */
@@ -36,7 +35,9 @@ app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://localhost:8080"
+   origin: [
+    "https://pravaha-2k26.vercel.app",
+    "http://localhost:5173"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -70,7 +71,7 @@ app.get("/healthz", (req, res) => res.send("OK"));
 /* ---------------------------------- */
 app.use((req, res) => {
   if (req.method === "GET" && !req.path.startsWith("/api")) {
-    return res.redirect("https://concurrence.vercel.app");
+    return res.redirect("https://prvaha-2k26.vercel.app");
   }
   res.status(404).json({ success: false, message: "API route not found" });
 });
