@@ -136,38 +136,51 @@ export async function transactionRejectedMail({ to, fullName }) {
       <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:12px; padding:40px; color:#334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-top: 4px solid #ef4444;">
         
         <div style="text-align:center; margin-bottom: 30px;">
-          <h1 style="margin:0; color:#0f172a; font-size: 28px;">PRAVAHA <span style="color:#ef4444;">2K26</span></h1>
-          <p style="margin-top:8px; color:#64748b; font-size:14px; font-weight: bold;">TRANSACTION UPDATE</p>
+          <h1 style="margin:0; color:#0f172a; font-size: 28px; font-weight: 800;">PRAVAHA <span style="color:#ef4444;">2K26</span></h1>
+          <p style="margin-top:8px; color:#64748b; font-size:14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Transaction Update</p>
         </div>
 
-        <p style="font-size:16px;">Dear <strong>${fullName}</strong>,</p>
+        <p style="font-size:16px; color: #1e293b;">Dear <strong>${fullName}</strong>,</p>
         
         <p style="font-size:15px; line-height:1.6; color: #475569;">
           We regret to inform you that your transaction for <strong>PRAVAHA 2K26</strong> has been 
-          <span style="color:#ef4444; font-weight: bold;">Rejected</span> due to a verification discrepancy.
+          <span style="color:#ef4444; font-weight: bold;">Rejected</span> following our manual verification process.
         </p>
         
         <p style="font-size:15px; line-height:1.6; color: #475569;">
-          Don't worry! You can register again by submitting a valid payment screenshot and the correct transaction details via the portal.
+          This usually happens due to an incorrect Transaction ID or an unclear payment screenshot. You may re-register by providing the correct details via the official portal.
         </p>
 
         <div style="margin-top:30px; padding:25px; background:#fef2f2; border:1px solid #fee2e2; border-radius:10px;">
-          <p style="margin-top:0; color:#991b1b; font-size:14px; font-weight:bold; margin-bottom: 15px;">Need Assistance? Contact Coordinators:</p>
+          <p style="margin-top:0; color:#991b1b; font-size:14px; font-weight:bold; margin-bottom: 15px; text-transform: uppercase;">Contact Student Coordinators:</p>
           
-          <table width="100%" style="font-size:13px; color:#451a1a; line-height:1.6;">
+          <table width="100%" style="font-size:13px; color:#451a1a; line-height:1.6; border-collapse: collapse;">
             <tr>
-              <td style="padding-bottom:10px;"><strong>S. MD. Arif</strong><br/>9398875293</td>
-              <td style="padding-bottom:10px;"><strong>S. MD. Umar Farook</strong><br/>9014185582</td>
+              <td style="padding-bottom:15px; width: 50%; vertical-align: top;">
+                <strong style="font-size:14px;">S. MD. Arif</strong><br/>
+                📞 +91 9398875293<br/>
+                ✉️ <a href="mailto:sh040293@gmail.com" style="color:#ef4444; text-decoration:none;">sh040293@gmail.com</a>
+              </td>
+              <td style="padding-bottom:15px; width: 50%; vertical-align: top;">
+                <strong style="font-size:14px;">S. MD. Umar Farook</strong><br/>
+                📞 +91 9014185582<br/>
+                ✉️ <a href="mailto:umarshaik2208@gmail.com" style="color:#ef4444; text-decoration:none;">umarshaik2208@gmail.com</a>
+              </td>
             </tr>
             <tr>
-              <td><strong>K. Arshad</strong><br/>8179479455</td>
+              <td style="padding-top:5px; vertical-align: top;">
+                <strong style="font-size:14px;">K. Arshad</strong><br/>
+                📞 +91 8179479455<br/>
+                ✉️ <a href="mailto:kattubadiarshad@gmail.com" style="color:#ef4444; text-decoration:none;">kattubadiarshad@gmail.com</a>
+              </td>
               <td></td>
             </tr>
           </table>
         </div>
 
-        <div style="margin-top:30px; text-align:center; color:#94a3b8; font-size:12px;">
-          <p>— Team PRAVAHA 2K26 | RGMCET</p>
+        <div style="margin-top:30px; text-align:center; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+          <p style="margin:0; font-size:14px; color:#1e293b; font-weight: 600;">Team PRAVAHA 2K26</p>
+          <p style="margin:4px 0 0; font-size:12px; color:#94a3b8;">RGMCET, Nandyal</p>
         </div>
       </div>
     </div>
@@ -179,7 +192,6 @@ export async function transactionRejectedMail({ to, fullName }) {
     console.error("❌ Rejection Mail Error:", err.message);
   }
 }
-
 /* ✅ DEFAULT EXPORT */
 export default {
   verifyMailer,
