@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
-import { Linkedin, Instagram, Github } from "lucide-react";
+import {  Instagram } from "lucide-react";
 
 interface TeamMember {
   name: string;
   role: string;
   img: string;
-  linkedin: string;
   instagram: string;
 }
 
@@ -15,23 +14,17 @@ export default function TeamSection(): JSX.Element {
     {
       name: "Shaik Mohammad Arif",
       role: "web developer",
-      img: "/images/team/haneef.jpg",
-      linkedin: "https://www.linkedin.com/in/shaik-mohammad-haneef-6b3686309",
       instagram: "https://www.instagram.com/mdariif_07_?igsh=dnBmZmpoemdmY2tz_",
 
     },
     {
       name: "Shaik Mohammad Umar Farook",
       role: "web  Developer",
-      img: "/images/team/sandeep.jpg",
-      linkedin: "https://www.linkedin.com/in/sandeep-saran-ca",
       instagram: "https://www.instagram.com/__umarrr._?igsh=M21pa29tOHJ5M3Uw",
     },
     {
       name: "Kattubadi Arshad",
-      role: "UI Designer & Tester",
-      img: "/images/team/sohail.jpg",
-      linkedin: "https://www.linkedin.com/in/sohel-hussain-79538b2b7",
+      role: "UI + Tester",
       instagram: "https://www.instagram.com/arshxd.25?igsh=MWZpaTlnejE2aGJydw==",
     },
   ];
@@ -126,22 +119,6 @@ export default function TeamSection(): JSX.Element {
               <div className="flex justify-center gap-4 mt-5">
 
                 <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="
-                    p-2 rounded-lg
-                    bg-primary/10
-                    border border-primary/20
-                    hover:text-cyan-400
-                    hover:border-cyan-400/40
-                    transition
-                  "
-                >
-                  <Linkedin size={18} />
-                </a>
-
-                <a
                   href={member.instagram}
                   target="_blank"
                   rel="noreferrer"
@@ -155,21 +132,6 @@ export default function TeamSection(): JSX.Element {
                   "
                 >
                   <Instagram size={18} />
-                </a>
-
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  className="
-                    p-2 rounded-lg
-                    bg-primary/10
-                    border border-primary/20
-                    hover:text-emerald-400
-                    hover:border-emerald-400/40
-                    transition
-                  "
-                >
-                  <Github size={18} />
                 </a>
 
               </div>
