@@ -225,15 +225,15 @@ export default function AdminDashboard() {
 
                   </td>
 
-                  <td>
-
-                    <img
-                      src={reg.paymentScreenshot} target="_blank" rel="noreferrer"
-                      className="w-12 rounded"
-                    />
-
-                  </td>
-
+                 {/* Proof */}
+          <td className="px-4 py-3 text-center border-r border-white/10">
+            <a href={r.paymentScreenshot} target="_blank" rel="noreferrer">
+              <img
+                src={r.paymentScreenshot}
+                className="w-12 h-10 mx-auto rounded object-cover border border-white/20"
+              />
+            </a>
+          </td>
                   <td>
 
                     <div className="flex gap-2">
