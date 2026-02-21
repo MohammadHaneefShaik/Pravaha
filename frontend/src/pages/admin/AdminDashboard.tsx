@@ -228,7 +228,7 @@ export default function AdminDashboard() {
                   <td>
 
                     <img
-                      src={reg.paymentScreenshot}
+                      src={reg.paymentScreenshot} target="_blank" rel="noreferrer"
                       className="w-12 rounded"
                     />
 
