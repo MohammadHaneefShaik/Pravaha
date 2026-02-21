@@ -3,7 +3,6 @@ import {  Instagram } from "lucide-react";
 
 interface TeamMember {
   name: string;
-  role: string;
   img: string;
   instagram: string;
 }
@@ -13,18 +12,15 @@ export default function TeamSection(): JSX.Element {
   const team: TeamMember[] = [
     {
       name: "Shaik Mohammad Arif",
-      role: "web developer",
       instagram: "https://www.instagram.com/mdariif_07_?igsh=dnBmZmpoemdmY2tz_",
 
     },
     {
       name: "Shaik Mohammad Umar Farook",
-      role: "web  Developer",
       instagram: "https://www.instagram.com/__umarrr._?igsh=M21pa29tOHJ5M3Uw",
     },
     {
       name: "Kattubadi Arshad",
-      role: "UI + Tester",
       instagram: "https://www.instagram.com/arshxd.25?igsh=MWZpaTlnejE2aGJydw==",
     },
   ];
@@ -93,11 +89,6 @@ export default function TeamSection(): JSX.Element {
               <h3 className="text-xl font-semibold text-white">
                 {member.name}
               </h3>
-
-              {/* Role */}
-              <p className="text-primary mt-1 text-sm">
-                {member.role}
-              </p>
 
               {/* Socials */}
               <div className="flex justify-center gap-4 mt-5">
