@@ -32,7 +32,7 @@ export default function TeamSection(): JSX.Element {
       role: "UI Designer & Tester",
       img: "/images/team/sohail.jpg",
       linkedin: "https://www.linkedin.com/in/sohel-hussain-79538b2b7",
-      instagram: "https://www.instagram.com/lovelysonu_55",
+      instagram: "https://www.instagram.com/arshxd.25?igsh=MWZpaTlnejE2aGJydw==",
     },
   ];
 
