@@ -31,9 +31,9 @@ const coordinators = {
       email: "umarshaik2208@gmail.com",
     },
     {
-      name: "K. Arshad",
-      role: "III EEE (24095A0203)",
-      phone: "+91 81794 79455",
+      name: "R.Siva Nanda Reddy",
+      role: "III EEE (23091A0270)",
+      phone: "+91 8309246760",
       email: "kattubadiarshad@gmail.com",
     },
   ],
