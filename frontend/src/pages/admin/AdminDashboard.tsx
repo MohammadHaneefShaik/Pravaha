@@ -227,9 +227,9 @@ export default function AdminDashboard() {
 
                  {/* Proof */}
           <td className="px-4 py-3 text-center border-r border-white/10">
-            <a href={r.paymentScreenshot} target="_blank" rel="noreferrer">
+            <a href={reg.paymentScreenshot} target="_blank" rel="noreferrer">
               <img
-                src={r.paymentScreenshot}
+                src={reg.paymentScreenshot}
                 className="w-12 h-10 mx-auto rounded object-cover border border-white/20"
               />
             </a>
