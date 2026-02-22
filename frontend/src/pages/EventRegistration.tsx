@@ -84,26 +84,31 @@ const EventRegistration = () => {
   };
 
 
-  if (loading) return <div className="text-center py-20">Loading...</div>;
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center text-center py-20 text-muted-foreground">
+      Loading...
+    </div>
+  );
+
   if (submitted) {
     return (
       <Layout>
-        <section className="min-h-screen flex items-center justify-center bg-[#050814] text-white">
+        <section className="min-h-screen flex items-center justify-center bg-[#050814] text-white px-4">
 
-          <div className="text-center max-w-md px-6">
+          <div className="text-center max-w-sm w-full px-4 sm:px-6">
 
             {/* Icon */}
-            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-5xl animate-bounce">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-5 sm:mb-6 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center text-4xl sm:text-5xl animate-bounce">
               🎉
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl font-bold mb-3">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">
               Congratulations!
             </h1>
 
             {/* Message */}
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-400 mb-5 sm:mb-6 text-sm sm:text-base leading-relaxed">
               Your registration for <span className="text-cyan-400 font-semibold">
                 {event.eventName}
               </span> has been submitted successfully.
@@ -112,18 +117,18 @@ const EventRegistration = () => {
             </p>
 
             {/* Buttons */}
-            <div className="flex gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
 
               <a
                 href="/events"
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold"
+                className="px-5 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold text-sm sm:text-base text-center"
               >
                 Browse Events
               </a>
 
               <a
                 href="/"
-                className="px-6 py-3 rounded-xl border border-white/20"
+                className="px-5 sm:px-6 py-3 rounded-xl border border-white/20 text-sm sm:text-base text-center"
               >
                 Go Home
               </a>
@@ -139,19 +144,19 @@ const EventRegistration = () => {
 
   return (
     <Layout>
-      <section className="pt-32 pb-20 bg-gradient-to-b from-background to-card/30">
-        <div className="container mx-auto px-4 max-w-3xl">
+      <section className="pt-24 sm:pt-32 pb-12 sm:pb-20 bg-gradient-to-b from-background to-card/30">
+        <div className="container mx-auto px-4 sm:px-6 max-w-2xl">
 
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-10"
+            className="text-center mb-8 sm:mb-10"
           >
-            <h1 className="text-4xl font-orbitron font-bold text-gradient-title">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-orbitron font-bold text-gradient-title leading-tight">
               {event.eventName}
             </h1>
-            <p className="text-muted-foreground mt-2">
+            <p className="text-muted-foreground mt-2 text-sm sm:text-base">
               Entry Fee: ₹{event.price}
             </p>
           </motion.div>
@@ -161,7 +166,7 @@ const EventRegistration = () => {
             onSubmit={handleSubmit}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-card border border-border rounded-2xl p-8 glow-border space-y-4"
+            className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 glow-border space-y-3 sm:space-y-4"
           >
 
             {/* Inputs */}
@@ -181,35 +186,35 @@ const EventRegistration = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, [field.key]: e.target.value })
                 }
-                className="w-full px-4 py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
               />
             ))}
 
             {/* Payment Section */}
-            <div className="bg-secondary/20 border border-border rounded-xl p-6 mt-6 text-center space-y-4">
+            <div className="bg-secondary/20 border border-border rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 text-center space-y-4">
 
               {/* Title */}
               <div className="flex flex-col items-center gap-2">
-                <CreditCard className="w-8 h-8 text-primary" />
-                <p className="text-muted-foreground text-sm">
+                <CreditCard className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
+                <p className="text-muted-foreground text-xs sm:text-sm">
                   Scan the QR code to complete your payment
                 </p>
               </div>
 
               {/* QR Card */}
-              <div className="bg-white p-4 rounded-xl shadow-md inline-block">
+              <div className="bg-white p-3 sm:p-4 rounded-xl shadow-md inline-block">
                 <QRCodeCanvas
                   value={upiString}
-                  size={180}
+                  size={160}
                   level="H"
                   includeMargin={true}
                 />
               </div>
 
               {/* UPI ID */}
-              <div className="text-sm text-muted-foreground">
+              <div className="text-xs sm:text-sm text-muted-foreground">
                 UPI ID
-                <div className="font-semibold text-primary text-base mt-1">
+                <div className="font-semibold text-primary text-sm sm:text-base mt-1 break-all">
                   {event.upiId}
                 </div>
               </div>
@@ -222,7 +227,7 @@ const EventRegistration = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, transactionId: e.target.value })
                 }
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg mb-3"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background border border-border rounded-lg mb-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-primary"
               />
 
 
@@ -230,7 +235,7 @@ const EventRegistration = () => {
               <div className="space-y-2">
 
                 <label
-                  className="flex items-center justify-center gap-2 cursor-pointer border border-dashed border-primary p-3 rounded-lg hover:bg-primary/10 transition"
+                  className="flex items-center justify-center gap-2 cursor-pointer border border-dashed border-primary p-3 rounded-lg hover:bg-primary/10 transition text-sm sm:text-base"
                 >
                   📤 Upload Payment Screenshot
 
@@ -253,9 +258,10 @@ const EventRegistration = () => {
 
               </div>
             </div>
+
             <button
               type="submit"
-              className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition"
+              className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base"
             >
               Complete Registration →
             </button>
