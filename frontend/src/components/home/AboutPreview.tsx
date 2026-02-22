@@ -36,13 +36,13 @@ const AboutPreview = () => {
             <div className="grid grid-cols-3 gap-4 pt-4">
               <div className="text-center p-4 rounded-lg bg-card border border-border">
                 <div className="text-2xl md:text-3xl font-orbitron font-bold text-primary">
-                  500+
+                  200+
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">Participants</div>
               </div>
               <div className="text-center p-4 rounded-lg bg-card border border-border">
                 <div className="text-2xl md:text-3xl font-orbitron font-bold text-primary">
-                  10
+                  6+
                 </div>
             
                 <div className="text-xs text-muted-foreground mt-1">events</div>
