@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
@@ -46,19 +47,19 @@ const CountdownTimer = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:flex sm:flex-row justify-center gap-3 sm:gap-4 md:gap-6 max-w-xs sm:max-w-none mx-auto">
+    <div className="flex flex-wrap justify-center gap-4 md:gap-6">
       {timeUnits.map((unit, index) => (
         <motion.div
           key={unit.label}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 + 0.5 }}
-          className="countdown-box w-full sm:min-w-[85px] md:min-w-[110px] text-center"
+          className="countdown-box min-w-[80px] md:min-w-[100px]"
         >
-          <div className="text-3xl sm:text-4xl md:text-5xl font-orbitron font-bold text-primary glow-text">
+          <div className="text-3xl md:text-5xl font-orbitron font-bold text-primary glow-text">
             {String(unit.value).padStart(2, "0")}
           </div>
-          <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground font-medium mt-1 tracking-widest">
+          <div className="text-xs md:text-sm text-muted-foreground font-medium mt-1 tracking-wider">
             {unit.label}
           </div>
         </motion.div>
