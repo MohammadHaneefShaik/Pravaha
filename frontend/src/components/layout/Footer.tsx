@@ -4,17 +4,19 @@ import { Zap, Mail, Phone, MapPin } from "lucide-react";
 const Footer = () => {
   return (
     <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-12">
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <Link to="/" className="flex items-center gap-2">
-              <Zap className="w-8 h-8 text-primary" />
-              <span className="text-xl font-orbitron font-bold text-electric">
+              <Zap className="w-7 h-7 sm:w-8 sm:h-8 text-primary flex-shrink-0" />
+              <span className="text-lg sm:text-xl font-orbitron font-bold text-electric">
                 PRAVAHA-2K26
               </span>
             </Link>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
               EEE RIPPLE 2K26 - National Level Technical Symposium. Flow of
               Innovation in Electrical Engineering.
             </p>
@@ -22,7 +24,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="font-orbitron font-semibold text-foreground">
+            <h3 className="font-orbitron font-semibold text-foreground text-sm sm:text-base">
               Quick Links
             </h3>
             <ul className="space-y-2">
@@ -43,7 +45,7 @@ const Footer = () => {
 
           {/* Events */}
           <div className="space-y-4">
-            <h3 className="font-orbitron font-semibold text-foreground">
+            <h3 className="font-orbitron font-semibold text-foreground text-sm sm:text-base">
               Events
             </h3>
             <ul className="space-y-2">
@@ -67,8 +69,8 @@ const Footer = () => {
           </div>
 
           {/* Contact */}
-          <div className="space-y-4">
-            <h3 className="font-orbitron font-semibold text-foreground">
+          <div className="space-y-4 sm:col-span-2 lg:col-span-1">
+            <h3 className="font-orbitron font-semibold text-foreground text-sm sm:text-base">
               Contact Us
             </h3>
             <ul className="space-y-3">
@@ -82,7 +84,7 @@ const Footer = () => {
                 <Mail className="w-4 h-4 text-primary flex-shrink-0" />
                 <a
                   href="mailto:pravaha2k26@rgmcet.edu.in"
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors break-all"
                 >
                   pravaha2k26@rgmcet.edu.in
                 </a>
@@ -98,15 +100,17 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-border">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+        <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-border">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
             <p>© PRAVAHA-2K26 – All Rights Reserved</p>
             <p>Organized by Department of EEE, RGMCET</p>
           </div>
         </div>
+
       </div>
     </footer>
   );
