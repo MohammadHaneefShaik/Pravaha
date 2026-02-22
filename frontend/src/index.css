@@ -146,11 +146,6 @@
 
 @layer components {
 
-  /* Section Container — used across all page sections */
-  .section-container {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8;
-  }
-
   /* Glowing Border Effect */
   .glow-border {
     @apply border border-primary/30 relative;
@@ -159,17 +154,6 @@
 
   .glow-border:hover {
     box-shadow: 0 0 30px hsl(190 100% 50% / 0.25);
-  }
-
-  /* Glowing Border for accent */
-  .glow-border-accent {
-    @apply border border-accent/30 relative;
-    box-shadow: 0 0 20px hsl(190 80% 40% / 0.15);
-  }
-
-  /* Glass Card */
-  .glass-card {
-    @apply bg-card/60 backdrop-blur-md border border-border rounded-xl;
   }
 
   /* Electric Text */
@@ -188,14 +172,6 @@
     background-clip: text;
   }
 
-  /* Gradient Text */
-  .gradient-text {
-    background: linear-gradient(90deg, hsl(190 100% 50%) 0%, hsl(180 100% 70%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
   /* Circuit Pattern Background */
   .bg-circuit {
     background-image:
@@ -204,9 +180,9 @@
     background-size: 50px 50px;
   }
 
-  /* Countdown Box — responsive padding */
+  /* Countdown Box */
   .countdown-box {
-    @apply bg-secondary/50 border border-primary/40 rounded-lg px-2 py-2.5 sm:px-6 sm:py-4;
+    @apply bg-secondary/50 border border-primary/40 rounded-lg px-6 py-4;
     box-shadow: 0 0 20px hsl(190 100% 50% / 0.1), inset 0 1px 0 hsl(190 100% 50% / 0.1);
   }
 
@@ -313,3 +289,5 @@
     }
   }
 }
+
+
