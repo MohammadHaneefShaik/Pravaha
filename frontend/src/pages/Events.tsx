@@ -101,36 +101,38 @@ const EventCard = ({ event }: any) => (
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    className="group p-6 rounded-xl bg-card border border-border glow-border card-hover"
+    className="group p-5 sm:p-6 rounded-xl bg-card border border-border glow-border card-hover flex flex-col"
   >
-    <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
-      <event.icon className="w-7 h-7 text-primary" />
+    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 sm:mb-5">
+      <event.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
     </div>
 
-    <h3 className="text-xl font-orbitron font-semibold mb-2">
+    <h3 className="text-lg sm:text-xl font-orbitron font-semibold mb-2">
       {event.title}
     </h3>
 
-    <p className="text-primary font-semibold mb-3">
+    <p className="text-primary font-semibold mb-3 text-sm sm:text-base">
       Entry Fee: ₹{event.price}
     </p>
 
-    <div className="flex flex-wrap gap-2 mb-5">
+    <div className="flex flex-wrap gap-2 mb-4 sm:mb-5">
       {event.highlights.map((highlight: string) => (
         <span
           key={highlight}
-          className="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20"
+          className="px-2.5 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20"
         >
           {highlight}
         </span>
       ))}
     </div>
 
-    <Link to={`/register/${event.slug}`}>
-      <Button variant="glow" className="w-full">
-        Register Now →
-      </Button>
-    </Link>
+    <div className="mt-auto">
+      <Link to={`/register/${event.slug}`}>
+        <Button variant="glow" className="w-full">
+          Register Now →
+        </Button>
+      </Link>
+    </div>
   </motion.div>
 );
 
@@ -139,21 +141,24 @@ const Events = () => {
     <Layout>
 
       {/* HERO */}
-      <section className="pt-32 pb-12 text-center">
-        <h1 className="text-5xl font-orbitron font-bold text-gradient-title">
-          Events & Activities
+      <section className="pt-24 sm:pt-32 pb-8 sm:pb-12 text-center px-4 sm:px-6">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-orbitron font-bold text-gradient-title leading-tight">
+          Events &amp; Activities
         </h1>
+        <p className="text-muted-foreground mt-3 text-sm sm:text-base max-w-xl mx-auto">
+          Choose your challenge and register to compete at PRAVAHA-2K26.
+        </p>
       </section>
 
       {/* TECHNICAL EVENTS */}
-      <section className="py-10">
-        <div className="container mx-auto px-4">
+      <section className="py-8 sm:py-10">
+        <div className="container mx-auto px-4 sm:px-6">
 
-          <h2 className="text-3xl font-orbitron text-primary mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-orbitron text-primary mb-4 sm:mb-6 text-center sm:text-left">
             Technical Events (₹150)
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {technicalEvents.map((event) => (
               <EventCard key={event.slug} event={event} />
             ))}
@@ -163,14 +168,14 @@ const Events = () => {
       </section>
 
       {/* NON TECHNICAL EVENTS */}
-      <section className="py-10">
-        <div className="container mx-auto px-4">
+      <section className="py-8 sm:py-10">
+        <div className="container mx-auto px-4 sm:px-6">
 
-          <h2 className="text-3xl font-orbitron text-primary mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-orbitron text-primary mb-4 sm:mb-6 text-center sm:text-left">
             Non-Technical Events (₹100)
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {nonTechnicalEvents.map((event) => (
               <EventCard key={event.slug} event={event} />
             ))}
@@ -180,8 +185,8 @@ const Events = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-16 text-center">
-        
+      <section className="py-12 sm:py-16 text-center">
+
       </section>
 
     </Layout>
