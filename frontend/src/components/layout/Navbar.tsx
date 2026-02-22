@@ -61,9 +61,9 @@ export default function Navbar({ showLogo = true }) {
 
 
   const mobileLinkClass = ({ isActive }) =>
-    `block py-2 text-center rounded-lg transition ${isActive
+    `block py-3 px-4 text-center rounded-lg transition ${isActive
       ? "text-primary bg-primary/10"
-      : "text-muted-foreground hover:text-primary"
+      : "text-muted-foreground hover:text-primary hover:bg-primary/5"
     }`;
 
 
@@ -75,15 +75,15 @@ export default function Navbar({ showLogo = true }) {
       className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border"
     >
 
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
         {/* LOGO */}
         {showLogo && (
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2 min-w-0">
 
-            <Zap className="w-6 h-6 text-primary" />
+            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
 
-            <span className="font-orbitron font-bold text-lg">
+            <span className="font-orbitron font-bold text-base sm:text-lg truncate">
               PRAVAHA-2K26
             </span>
 
@@ -92,7 +92,7 @@ export default function Navbar({ showLogo = true }) {
 
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-4 lg:gap-6">
 
           {/* NORMAL USER */}
           {!isAdmin && (
@@ -152,9 +152,10 @@ export default function Navbar({ showLogo = true }) {
         {/* MOBILE BUTTON */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden"
+          className="md:hidden p-2 rounded-lg hover:bg-primary/10 transition"
+          aria-label="Toggle menu"
         >
-          {open ? <X /> : <Menu />}
+          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
 
       </div>
@@ -166,13 +167,14 @@ export default function Navbar({ showLogo = true }) {
         {open && (
 
           <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: "auto" }}
-            exit={{ height: 0 }}
-            className="md:hidden bg-background border-t border-border"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden bg-background border-t border-border overflow-hidden"
           >
 
-            <div className="flex flex-col gap-3 p-4">
+            <div className="flex flex-col gap-1 p-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
 
               {!isAdmin && (
                 <>
@@ -239,6 +241,7 @@ export default function Navbar({ showLogo = true }) {
 
                   <Button
                     variant="destructive"
+                    className="w-full mt-2"
                     onClick={() => {
                       handleLogout();
                       setOpen(false);
