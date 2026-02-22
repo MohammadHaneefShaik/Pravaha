@@ -88,7 +88,7 @@ const HeroSection = () => {
         >
             
           <Button asChild variant="outline" size="xl">  
-            <Link to="/events">explore Events</Link>
+            <Link to="/events">Explore events</Link>
           </Button>
         </motion.div>
       </div>
