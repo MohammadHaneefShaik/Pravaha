@@ -4,13 +4,6 @@ import { Calendar, FileUp, UserCheck, PartyPopper } from "lucide-react";
 
 const schedule = [
   {
-    day: "Registration",
-    date: "5th March 2026",
-    status: "upcoming",
-    icon: UserCheck,
-    events: [{ time: "11:59 PM", activity: "Online Portal Closes" }]
-  },
-  {
     day: "Day 1",
     date: "12th March 2026",
     status: "event",
@@ -28,7 +21,7 @@ const schedule = [
     status: "event",
     icon: PartyPopper,
     events: [
-      { time: "10:00 AM", activity: "Project Expo" },
+      { time: "10:00 AM", activity: "Non-Technical events" },
       { time: "12:30 PM", activity: "Guest Lecture" },
       { time: "03:00 PM", activity: "Awards & Closing Ceremony" },
     ]
@@ -47,9 +40,6 @@ const ImportantDates = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <p className="font-display text-xs tracking-[0.3em] text-accent uppercase mb-3">
-            Event Roadmap
-          </p>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
             RIPPLE <span className="gradient-text">Schedule</span>
           </h2>
