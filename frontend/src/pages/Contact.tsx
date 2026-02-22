@@ -19,16 +19,17 @@ const coordinators = {
   ],
   student: [
     {
-      name: "S. MD. Arif",
-      role: "III EEE (23091A0209)",
-      phone: "+91 93988 75293",
-      email: "sh040293@gmail.com",
-    },
-    {
       name: "S. MD. Umar Farook",
       role: "III EEE (24095A0218)",
       phone: "+91 90141 85582",
       email: "umarshaik2208@gmail.com",
+    },
+    {
+      name: "S. MD. Arif",
+      role: "III EEE (23091A0209)",
+      phone: "+91 93988 75293",
+      email: "sh040293@gmail.com"
+
     },
     {
       name: "R.Siva Nanda Reddy",
