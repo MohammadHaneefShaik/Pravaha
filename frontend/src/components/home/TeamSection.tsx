@@ -5,7 +5,6 @@ interface TeamMember {
   name: string;
   year: string;
   instagram: string;
-  linkedin: string;
 }
 
 export default function TeamSection(): JSX.Element {
@@ -15,19 +14,16 @@ export default function TeamSection(): JSX.Element {
       name: "Shaik Mohammad Arif",
       year: "III EEE (23091A0209)",
       instagram: "https://www.instagram.com/mdariif_07_?igsh=dnBmZmpoemdmY2tz_",
-      linkedin: "https://www.linkedin.com/in/mohammad-arif-shaik-b06b21328",
     },
     {
       name: "Shaik Mohammad Umar Farook",
       year: "III EEE (24095A0218)",
       instagram: "https://www.instagram.com/__umarrr._?igsh=M21pa29tOHJ5M3Uw",
-      linkedin:  ""
     },
     {
       name: "Kattubadi Arshad",
       year: "III EEE (24095A0203)",
       instagram: "https://www.instagram.com/arshxd.25?igsh=MWZpaTlnejE2aGJydw==",
-      linkedin: "https://www.linkedin.com/in/kattubadi-arshad-7b67432b6";
     },
   ];
 
@@ -120,22 +116,6 @@ export default function TeamSection(): JSX.Element {
                   "
                 >
                   <Instagram size={16} />
-                </a>
-
-                  <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="
-                    p-2 rounded-lg
-                    bg-primary/10
-                    border border-primary/20
-                    hover:text-pink-400
-                    hover:border-pink-400/40
-                    transition
-                  "
-                >
-                  <linkedin size={16} />
                 </a>
 
               </div>
