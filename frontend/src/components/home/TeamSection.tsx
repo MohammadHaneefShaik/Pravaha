@@ -99,23 +99,6 @@ export default function TeamSection(): JSX.Element {
                 {member.role}
               </p>
 
-                  {/* CONTENT */}
-              <div className="relative z-10 flex items-center justify-between gap-3">
-                <div>
-                  <div className="flex items-center gap-2">
-                      <UserCircle2 size={24} className="text-cyan-300" />
-                    <h3 className="text-lg sm:text-xl font-bold text-cyan-300">
-                      {person.name}
-                    </h3>
-                  </div>
-                  <div className="flex items-center gap-2 mt-2">
-                      <Laptop size={24} className="text-gray-400" />
-                    <p className="text-base text-gray-400">
-                      {person.role}
-                    </p>
-                  </div>
-                </div>
-
               {/* Socials */}
               <div className="flex justify-center gap-3 sm:gap-4 mt-4 sm:mt-5">
 
