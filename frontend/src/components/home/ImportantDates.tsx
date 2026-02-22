@@ -1,16 +1,15 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { Calendar, PartyPopper } from "lucide-react";
 
 const schedule = [
   {
     day: "Day 1",
     date: "12th March 2026",
-    status: "event",
     icon: Calendar,
+    accent: "primary",
     events: [
       { time: "09:00 AM", activity: "Inauguration Ceremony" },
-      { time: "11:00 AM", activity: "Technical events" },
+      { time: "11:00 AM", activity: "Technical Events" },
       { time: "01:00 PM", activity: "Lunch Break" },
       { time: "02:00 PM", activity: "Coding Contest" },
     ],
@@ -18,10 +17,10 @@ const schedule = [
   {
     day: "Day 2",
     date: "13th March 2026",
-    status: "event",
     icon: PartyPopper,
+    accent: "accent",
     events: [
-      { time: "10:00 AM", activity: "Non-Technical events" },
+      { time: "10:00 AM", activity: "Non-Technical Events" },
       { time: "12:30 PM", activity: "Guest Lecture" },
       { time: "03:00 PM", activity: "Awards & Closing Ceremony" },
     ],
@@ -29,94 +28,142 @@ const schedule = [
 ];
 
 const ImportantDates = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="dates" className="py-16 sm:py-24 lg:py-32 bg-secondary/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8" ref={ref}>
+    <section id="dates" className="py-16 sm:py-24 lg:py-32 bg-secondary/30 relative overflow-hidden">
 
-        {/* Header */}
+      {/* Ambient background glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* ── Header ── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10 sm:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+          className="text-center mb-14 sm:mb-20"
         >
-          <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-            RIPPLE <span className="gradient-text">SCHEDULE</span>
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/8 text-primary text-xs font-semibold tracking-widest uppercase mb-5 font-inter">
+            <Calendar className="w-3 h-3" />
+            Event Schedule
+          </span>
+          <h2 className="font-orbitron text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3">
+            RIPPLE{" "}
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Schedule
+            </span>
           </h2>
-          <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
+          <p className="font-inter text-muted-foreground text-sm sm:text-base max-w-xs sm:max-w-md mx-auto">
+            Two power-packed days of innovation, competition &amp; celebration.
+          </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="max-w-2xl lg:max-w-3xl mx-auto">
-          <div className="relative">
+        {/* ── Timeline ── */}
+        <div className="max-w-2xl mx-auto relative">
 
-            {/* Vertical connector line — centered on icon */}
-            <div className="absolute left-5 sm:left-6 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-accent to-primary/20 hidden sm:block" />
+          {/* Centre spine line */}
+          <div className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-primary/60 via-accent/40 to-transparent" />
 
-            <div className="space-y-6 sm:space-y-10">
-              {schedule.map((item, i) => (
-                <motion.div
-                  key={item.day}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.2 }}
-                  className="flex items-start gap-4 sm:gap-6"
-                >
-                  {/* Icon circle */}
-                  <motion.div
-                    whileHover={{ scale: 1.15, rotate: 6 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className={`relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 shadow-lg ${item.status === "event"
-                      ? "bg-accent text-white"
-                      : "bg-primary/20 text-primary"
-                      }`}
-                  >
-                    <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </motion.div>
+          {schedule.map((day, di) => (
+            <div key={day.day} className="mb-10 sm:mb-14 last:mb-0">
 
-                  {/* Card */}
-                  <motion.div
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                    className={`flex-1 glass-card p-4 sm:p-6 glow-border ${item.status === "event"
-                      ? "border-l-4 border-accent"
-                      : "border-l-4 border-primary"
-                      }`}
-                  >
-                    {/* Day + Date row */}
-                    <div className="flex flex-wrap justify-between items-baseline gap-2 mb-4">
-                      <h3 className="font-display text-base sm:text-xl font-bold text-foreground">
-                        {item.day}
-                      </h3>
-                      <span className="text-xs sm:text-sm font-mono font-semibold opacity-70 whitespace-nowrap">
-                        {item.date}
-                      </span>
-                    </div>
+              {/* ── Day header node ── */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: di * 0.15 }}
+                className="relative flex justify-center mb-7 sm:mb-10"
+              >
+                {/* Pill badge sitting on the spine */}
+                <div className={`relative z-10 flex items-center gap-2.5 px-5 py-2 rounded-full border ${day.accent === "primary" ? "border-primary/50 bg-primary/10" : "border-accent/50 bg-accent/10"} backdrop-blur-sm`}>
+                  <day.icon className={`w-4 h-4 ${day.accent === "primary" ? "text-primary" : "text-accent"}`} />
+                  <span className={`font-orbitron text-sm font-bold ${day.accent === "primary" ? "text-primary" : "text-accent"}`}>
+                    {day.day}
+                  </span>
+                  <span className="font-inter text-xs text-muted-foreground hidden sm:inline">
+                    — {day.date}
+                  </span>
+                </div>
+                {/* Date below on mobile */}
+                <p className="font-inter absolute -bottom-5 text-[10px] text-muted-foreground sm:hidden text-center w-full">
+                  {day.date}
+                </p>
+              </motion.div>
 
-                    {/* Events list */}
-                    <div className="space-y-3 border-t border-white/10 pt-3">
-                      {item.events.map((ev, idx) => (
-                        <div key={idx} className="flex gap-3 sm:gap-4 items-start group">
-                          <span className="text-xs font-mono text-accent pt-0.5 min-w-[70px] sm:min-w-[80px] shrink-0">
-                            {ev.time}
-                          </span>
-                          <span className="text-xs sm:text-sm text-foreground/80 group-hover:text-foreground transition-colors">
-                            {ev.activity}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ))}
+              {/* ── Events ── */}
+              <div className="space-y-0">
+                {day.events.map((ev, ei) => {
+                  const isLeft = ei % 2 === 0;
+                  return (
+                    <motion.div
+                      key={ei}
+                      initial={{ opacity: 0, x: isLeft ? -24 : 24 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: di * 0.15 + ei * 0.08 }}
+                      className="relative flex items-center"
+                    >
+                      {/* LEFT side */}
+                      <div className={`w-1/2 pr-6 sm:pr-8 text-right ${!isLeft ? "opacity-0 pointer-events-none" : ""}`}>
+                        {isLeft && (
+                          <>
+                            <p className="font-orbitron text-[11px] sm:text-xs font-semibold text-primary tracking-wider mb-0.5">
+                              {ev.time}
+                            </p>
+                            <p className="font-inter text-sm sm:text-base text-foreground/85 leading-snug">
+                              {ev.activity}
+                            </p>
+                          </>
+                        )}
+                      </div>
+
+                      {/* Centre dot */}
+                      <div className="relative z-10 flex-shrink-0 flex items-center justify-center">
+                        <div className={`w-3 h-3 rounded-full border-2 ${day.accent === "primary" ? "border-primary bg-primary/30" : "border-accent bg-accent/30"} shadow-sm`} />
+                      </div>
+
+                      {/* RIGHT side */}
+                      <div className={`w-1/2 pl-6 sm:pl-8 ${isLeft ? "opacity-0 pointer-events-none" : ""}`}>
+                        {!isLeft && (
+                          <>
+                            <p className="font-orbitron text-[11px] sm:text-xs font-semibold text-accent tracking-wider mb-0.5">
+                              {ev.time}
+                            </p>
+                            <p className="font-inter text-sm sm:text-base text-foreground/85 leading-snug">
+                              {ev.activity}
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
             </div>
+          ))}
 
+          {/* End cap dot */}
+          <div className="relative flex justify-center">
+            <div className="relative z-10 w-2 h-2 rounded-full bg-accent/50" />
           </div>
+
         </div>
+
+        {/* ── Footer note ── */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.7, duration: 0.5 }}
+          className="font-inter text-center text-[11px] text-muted-foreground/60 mt-12 sm:mt-16 tracking-wide"
+        >
+          * Schedule is subject to minor changes. Stay tuned for updates.
+        </motion.p>
 
       </div>
     </section>
