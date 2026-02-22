@@ -51,17 +51,17 @@ export default function DignitaryGallery(): JSX.Element {
 
   return (
 
-    <section className="relative py-16">
+    <section className="relative py-12 sm:py-16">
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 sm:px-6">
 
-        <div className="text-center mb-10">
+        <div className="text-center mb-8 sm:mb-10">
 
-          <h2 className="text-4xl font-orbitron font-bold text-primary">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-orbitron font-bold text-primary">
             Dignitary Messages
           </h2>
 
-          <p className="text-muted-foreground mt-2">
+          <p className="text-muted-foreground mt-2 text-sm sm:text-base">
             Inspiring words from our leadership
           </p>
 
@@ -77,33 +77,33 @@ export default function DignitaryGallery(): JSX.Element {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-background/60 backdrop-blur-xl border border-primary/20 rounded-3xl p-8 max-w-4xl w-full flex flex-col md:flex-row items-center gap-8"
+              className="bg-background/60 backdrop-blur-xl border border-primary/20 rounded-3xl p-5 sm:p-8 max-w-xs sm:max-w-2xl md:max-w-3xl lg:max-w-4xl w-full flex flex-col sm:flex-row items-center gap-5 sm:gap-8"
             >
 
               {/* IMAGE */}
               <img
                 src={sir.image}
                 alt={sir.name}
-                className="w-40 h-40 rounded-full object-cover border-4 border-primary/30"
+                className="w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full object-cover border-4 border-primary/30 flex-shrink-0"
               />
 
               {/* TEXT */}
-              <div>
+              <div className="text-center sm:text-left">
 
-                <h3 className="text-2xl font-bold text-white">
+                <h3 className="text-xl sm:text-2xl font-bold text-white">
                   {sir.name}
                 </h3>
 
-                <p className="text-primary font-semibold">
+                <p className="text-primary font-semibold text-sm sm:text-base mt-1">
                   {sir.designation}
                 </p>
 
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-sm sm:text-base mt-0.5">
                   {sir.institution}
                 </p>
 
                 {sir.msg && (
-                  <p className="italic text-muted-foreground mt-3">
+                  <p className="italic text-muted-foreground mt-3 text-sm sm:text-base leading-relaxed">
                     "{sir.msg}"
                   </p>
                 )}
@@ -114,6 +114,18 @@ export default function DignitaryGallery(): JSX.Element {
 
           </AnimatePresence>
 
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-2 mt-5 sm:mt-6">
+          {dignitariesData.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === index ? "bg-primary w-5" : "bg-primary/30"}`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
         </div>
 
       </div>
