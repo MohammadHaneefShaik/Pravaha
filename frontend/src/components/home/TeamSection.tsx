@@ -89,22 +89,6 @@ export default function TeamSection(): JSX.Element {
               "
             >
 
-              {/* Image */}
-              <div className="flex justify-center mb-4 sm:mb-5">
-
-                <img
-                  src={member.img}
-                  alt={member.name}
-                  className="
-                    w-20 h-20 sm:w-24 sm:h-24
-                    rounded-full
-                    object-cover
-                    border-2 border-primary/30
-                  "
-                />
-
-              </div>
-
               {/* Name */}
               <h3 className="text-lg sm:text-xl font-semibold text-white leading-snug">
                 {member.name}
