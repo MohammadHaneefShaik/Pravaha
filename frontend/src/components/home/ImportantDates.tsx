@@ -44,7 +44,6 @@ const ImportantDates = () => {
           className="text-center mb-10 sm:mb-16"
         >
           <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-                 animate={isInView ? { opacity: 1, x: 0 } : {}}
             RIPPLE <span className="gradient-text">SCHEDULE</span>
           </h2>
           <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
