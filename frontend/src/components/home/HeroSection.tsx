@@ -88,7 +88,7 @@ const HeroSection = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <Button asChild variant="outline" size="xl" className="w-full max-w-xs sm:w-auto">
-            <Link to="/events">explore Events</Link>
+            <Link to="/events">Explore Events</Link>
           </Button>
         </motion.div>
       </div>
