@@ -61,9 +61,8 @@ const About = () => {
               className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4"
             >
               {[
-                { icon: Target, label: "Innovation", value: "Focus" },
-                { icon: Users, label: "Participants", value: "500+" },
-                { icon: Lightbulb, label: "Events", value: "10+" },
+                { icon: Users, label: "Participants", value: "200+" },
+                { icon: Lightbulb, label: "Events", value: "06+" },
               ].map((item) => (
                 <div
                   key={item.label}
