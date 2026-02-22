@@ -34,7 +34,7 @@ const coordinators = {
       name: "R.Siva Nanda Reddy",
       role: "III EEE (23091A0270)",
       phone: "+91 8309246760",
-      email: "kattubadiarshad@gmail.com",
+      email: "rsivareddy46@gmail.com",
     },
   ],
 };
