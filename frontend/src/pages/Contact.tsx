@@ -1,266 +1,179 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { toast } from "sonner";
+import { Mail, Phone, MapPin, User, Briefcase, Globe } from "lucide-react";
 
-const coordinators = [
-  {
-    name: "Dr. K. Ramesh Kumar",
-    role: "Faculty Coordinator",
-    phone: "+91 98765 43210",
-    email: "ramesh.kumar@rgmcet.edu.in",
-  },
-  {
-    name: "Prof. S. Lakshmi Devi",
-    role: "Faculty Coordinator",
-    phone: "+91 98765 43211",
-    email: "lakshmi.devi@rgmcet.edu.in",
-  },
-  {
-    name: "Arun Kumar",
-    role: "Student Coordinator",
-    phone: "+91 98765 43212",
-    email: "arun.pravaha@rgmcet.edu.in",
-  },
-  {
-    name: "Priya Sharma",
-    role: "Student Coordinator",
-    phone: "+91 98765 43213",
-    email: "priya.pravaha@rgmcet.edu.in",
-  },
-];
+const coordinators = {
+  faculty: [
+    {
+      name: "Dr. D.Lenine",
+      role: " Professor, EEE",
+      phone: "+91 9866723784",
+      email: "Lenine@rgmcet.edu.in",
+    },
+    {
+      name: "Mr.Y.Vijaya Suresh",
+      role: "Associate Professor, EEE",
+      phone: "+91 9441243353",
+      email: "vijayasuresh@rgmcet.edu.in",
+    },
+  ],
+  student: [
+    {
+      name: "S. MD. Arif",
+      role: "III EEE (23091A0209)",
+      phone: "+91 93988 75293",
+      email: "sh040293@gmail.com",
+    },
+    {
+      name: "S. MD. Umar Farook",
+      role: "III EEE (24095A0218)",
+      phone: "+91 90141 85582",
+      email: "umarshaik2208@gmail.com",
+    },
+    {
+      name: "R.Siva Nanda Reddy",
+      role: "III EEE (23091A0270)",
+      phone: "+91 8309246760",
+      email: "kattubadiarshad@gmail.com",
+    },
+  ],
+};
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Message sent! We'll get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
-  };
-
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 bg-gradient-to-b from-card/50 to-background">
-        <div className="container mx-auto px-4 sm:px-6">
+      <section className="pt-32 pb-16 bg-gradient-to-b from-card/50 to-background">
+        <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center max-w-3xl mx-auto"
+            className="max-w-3xl mx-auto"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-orbitron font-bold text-gradient-title mb-4 sm:mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-orbitron font-bold text-gradient-title mb-6">
               Contact Us
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground px-2">
-              Have questions? Reach out to our team and we'll be happy to assist you.
+            <p className="text-muted-foreground font-medium tracking-wide">
+              Connect with the organizers of <span className="text-primary font-bold">PRAVAHA 2K26</span>
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-12 sm:py-16">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12">
-
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-5 sm:space-y-6"
-            >
-              <h2 className="text-xl sm:text-2xl font-orbitron font-bold text-foreground mb-4 sm:mb-6">
-                Get in Touch
-              </h2>
-
-              {/* Address */}
-              <div className="p-4 sm:p-6 rounded-xl bg-card border border-border glow-border">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1 sm:mb-2 text-sm sm:text-base">Address</h3>
-                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                      Department of Electrical &amp; Electronics Engineering<br />
-                      Rajeev Gandhi Memorial College of Engineering &amp; Technology<br />
-                      Nandyal - 518501, Andhra Pradesh, India
-                    </p>
-                  </div>
-                </div>
+      {/* Organizer Directory */}
+      <section className="pb-20">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="space-y-16"
+          >
+            {/* Faculty Section */}
+            <div className="space-y-8">
+              <div className="flex items-center gap-4">
+                <h3 className="text-2xl font-orbitron font-bold text-foreground uppercase tracking-wider">Faculty Leads</h3>
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-border to-transparent"></div>
               </div>
-
-              {/* Email & Phone */}
-              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="p-3 sm:p-4 rounded-xl bg-card border border-border">
-                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-primary mb-1.5 sm:mb-2" />
-                  <h3 className="font-semibold text-foreground text-xs sm:text-sm mb-1">Email</h3>
-                  <a
-                    href="mailto:pravaha2k26@rgmcet.edu.in"
-                    className="text-primary text-xs sm:text-sm hover:underline break-all"
-                  >
-                    pravaha2k26@rgmcet.edu.in
-                  </a>
-                </div>
-                <div className="p-3 sm:p-4 rounded-xl bg-card border border-border">
-                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary mb-1.5 sm:mb-2" />
-                  <h3 className="font-semibold text-foreground text-xs sm:text-sm mb-1">
-                    Response Time
-                  </h3>
-                  <p className="text-muted-foreground text-xs sm:text-sm">Within 24 hours</p>
-                </div>
+              <div className="grid gap-6">
+                {coordinators.faculty.map((coord, i) => (
+                  <CoordinatorRow key={i} coord={coord} isFaculty={true} />
+                ))}
               </div>
+            </div>
 
-              {/* Coordinators */}
-              <div>
-                <h3 className="text-base sm:text-lg font-orbitron font-semibold text-foreground mb-3 sm:mb-4">
-                  Event Coordinators
-                </h3>
-                <div className="grid gap-2 sm:gap-3">
-                  {coordinators.map((coordinator) => (
-                    <div
-                      key={coordinator.name}
-                      className="p-3 sm:p-4 rounded-lg bg-card border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3"
-                    >
-                      <div>
-                        <p className="font-medium text-foreground text-sm sm:text-base">
-                          {coordinator.name}
-                        </p>
-                        <p className="text-xs text-primary">{coordinator.role}</p>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm">
-                        <a
-                          href={`tel:${coordinator.phone}`}
-                          className="flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                          {coordinator.phone}
-                        </a>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            {/* Students Section */}
+            <div className="space-y-8">
+              <div className="flex items-center gap-4">
+                <h3 className="text-2xl font-orbitron font-bold text-foreground uppercase tracking-wider">Student Coordinators</h3>
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-border to-transparent"></div>
               </div>
-            </motion.div>
-
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="p-4 sm:p-6 rounded-xl bg-card border border-border glow-border">
-                <h3 className="text-base sm:text-lg font-orbitron font-semibold text-foreground mb-4 sm:mb-6">
-                  Send us a Message
-                </h3>
-                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <div>
-                      <label className="text-xs sm:text-sm text-muted-foreground mb-1.5 sm:mb-2 block">
-                        Your Name
-                      </label>
-                      <Input
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
-                        required
-                        className="bg-secondary/50 border-border"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-xs sm:text-sm text-muted-foreground mb-1.5 sm:mb-2 block">
-                        Email Address
-                      </label>
-                      <Input
-                        type="email"
-                        placeholder="john@example.com"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
-                        required
-                        className="bg-secondary/50 border-border"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-xs sm:text-sm text-muted-foreground mb-1.5 sm:mb-2 block">
-                      Subject
-                    </label>
-                    <Input
-                      placeholder="How can we help?"
-                      value={formData.subject}
-                      onChange={(e) =>
-                        setFormData({ ...formData, subject: e.target.value })
-                      }
-                      required
-                      className="bg-secondary/50 border-border"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs sm:text-sm text-muted-foreground mb-1.5 sm:mb-2 block">
-                      Message
-                    </label>
-                    <Textarea
-                      placeholder="Tell us more about your query..."
-                      value={formData.message}
-                      onChange={(e) =>
-                        setFormData({ ...formData, message: e.target.value })
-                      }
-                      required
-                      rows={5}
-                      className="bg-secondary/50 border-border resize-none"
-                    />
-                  </div>
-                  <Button type="submit" variant="electric" className="w-full gap-2">
-                    <Send className="w-4 h-4" />
-                    Send Message
-                  </Button>
-                </form>
+              <div className="grid gap-6">
+                {coordinators.student.map((coord, i) => (
+                  <CoordinatorRow key={i} coord={coord} isFaculty={false} />
+                ))}
               </div>
-            </motion.div>
-
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="py-6 sm:py-8 pb-12 sm:pb-16">
-        <div className="container mx-auto px-4 sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="rounded-xl overflow-hidden border border-border glow-border"
-          >
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3855.8881746282686!2d78.4732!3d15.4891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDI5JzIwLjgiTiA3OMKwMjgnMjMuNSJF!5e0!3m2!1sen!2sin!4v1234567890"
-              width="100%"
-              height="300"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="RGMCET Location"
-              className="w-full sm:h-[400px] h-[260px]"
-            />
-          </motion.div>
+      {/* Communication Hub (Final Footer Contact) */}
+      <section className="py-20 bg-secondary/10 border-t border-border/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-orbitron font-bold text-foreground mb-2">Communication Hub</h2>
+            <p className="text-muted-foreground uppercase text-[10px] tracking-[0.4em]">Reach out via official channels</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="flex flex-col items-center p-10 rounded-3xl bg-card border border-border group hover:border-primary transition-all">
+              <div className="p-5 bg-primary/10 rounded-2xl text-primary mb-6 group-hover:scale-110 transition-transform">
+                <MapPin size={32} />
+              </div>
+              <h3 className="font-bold text-foreground mb-3 uppercase tracking-widest text-sm">Physical Venue</h3>
+              <p className="text-muted-foreground text-sm text-center leading-relaxed">
+                RGMCET (Autonomous)<br />Nandyal - 518501, AP, India
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center p-10 rounded-3xl bg-card border border-border group hover:border-primary transition-all">
+              <div className="p-5 bg-primary/10 rounded-2xl text-primary mb-6 group-hover:scale-110 transition-transform">
+                <Mail size={32} />
+              </div>
+              <h3 className="font-bold text-foreground mb-3 uppercase tracking-widest text-sm">Email Support</h3>
+              <p className="text-primary font-mono text-sm font-bold">pravaha2k26@rgmcet.edu.in</p>
+            </div>
+
+            <div className="flex flex-col items-center p-10 rounded-3xl bg-card border border-border group hover:border-primary transition-all">
+              <div className="p-5 bg-primary/10 rounded-2xl text-primary mb-6 group-hover:scale-110 transition-transform">
+                <Globe size={32} />
+              </div>
+              <h3 className="font-bold text-foreground mb-3 uppercase tracking-widest text-sm">Official Website</h3>
+              <p className="text-muted-foreground text-sm text-center font-bold">
+                www.rgmcet.edu.in
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </Layout>
   );
 };
+
+/* Internal Helper Component for Coordinator Rows */
+function CoordinatorRow({ coord, isFaculty }: { coord: any, isFaculty: boolean }) {
+  return (
+    <div className="p-8 rounded-3xl bg-card/30 border border-border flex flex-col md:flex-row md:items-center justify-between gap-8 hover:bg-card/60 hover:border-primary/40 transition-all group backdrop-blur-sm">
+      <div className="flex items-center gap-6">
+        <div className={`p-5 rounded-2xl shadow-inner ${isFaculty ? 'bg-cyan-500/10 text-cyan-400' : 'bg-primary/10 text-primary'}`}>
+          {isFaculty ? <Briefcase className="w-7 h-7" /> : <User className="w-7 h-7" />}
+        </div>
+        <div>
+          <p className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+            {coord.name}
+          </p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-[0.2em] mt-1">{coord.role}</p>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-4">
+        <a
+          href={`tel:${coord.phone}`}
+          className="flex h-12 px-6 items-center gap-3 text-sm font-black bg-secondary hover:bg-primary hover:text-primary-foreground rounded-xl transition-all shadow-lg uppercase tracking-wider"
+        >
+          <Phone size={18} />
+          {coord.phone}
+        </a>
+        <a
+          href={`mailto:${coord.email}`}
+          className="flex h-12 w-12 items-center justify-center bg-card border border-border hover:border-primary hover:text-primary rounded-xl transition-all shadow-md"
+          title={coord.email}
+        >
+          <Mail size={22} />
+        </a>
+      </div>
+    </div>
+  );
+}
 
 export default Contact;
