@@ -95,7 +95,7 @@ export async function sendPaymentApprovalMail({
 
         <div style="margin:30px 0; text-align:center;">
           <p style="margin-bottom:15px; font-size:14px; color:#475569;">Join the official WhatsApp group for real-time updates:</p>
-          <a href="https://chat.whatsapp.com/LbjF1AivyB3IJFwFhF3ZG9" target="_blank" 
+          <a href="https://chat.whatsapp.com/HdiFSCnkQbMBHcRP86RA4x" target="_blank" 
              style="display:inline-block; padding:12px 24px; background:#22c55e; color:#ffffff; text-decoration:none; font-weight:bold; border-radius:6px; font-size:15px;">
              Join WhatsApp Group
           </a>
