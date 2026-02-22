@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Calendar, FileText, Trophy } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CountdownTimer from "./CountdownTimer";
 import DignitaryGallery from "./DigitalGallery";
@@ -8,7 +8,7 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -18,16 +18,17 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-16 text-center">
+      <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
+
         {/* Date Badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 bg-primary/10 mb-8"
+          className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-primary/40 bg-primary/10 mb-6 sm:mb-8"
         >
-          <Calendar className="w-4 h-4 text-primary" />
-          <span className="text-primary font-medium">12th & 13th March 2026</span>
+          <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+          <span className="text-primary font-medium text-sm sm:text-base">12th &amp; 13th March 2026</span>
         </motion.div>
 
         {/* Main Title */}
@@ -35,7 +36,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-orbitron font-bold text-gradient-title mb-4"
+          className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-orbitron font-bold text-gradient-title mb-4 leading-tight"
         >
           PRAVAHA-2K26
         </motion.h1>
@@ -45,15 +46,15 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-2 mb-6"
+          className="space-y-1 sm:space-y-2 mb-6"
         >
-          <h2 className="text-xl md:text-2xl font-orbitron text-primary tracking-wider">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-orbitron text-primary tracking-wider">
             EEE RIPPLE 2K26
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
             National Level Technical Symposium
           </p>
-          <p className="text-base md:text-lg text-primary/80 italic">
+          <p className="text-sm sm:text-base md:text-lg text-primary/80 italic px-2">
             "Flow of Innovation in Electrical Engineering"
           </p>
         </motion.div>
@@ -63,7 +64,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mb-10"
+          className="mb-8 sm:mb-10"
         >
           <CountdownTimer />
         </motion.div>
@@ -73,7 +74,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="max-w-2xl mx-auto text-muted-foreground text-base md:text-lg mb-10"
+          className="max-w-xl sm:max-w-2xl mx-auto text-muted-foreground text-sm sm:text-base md:text-lg mb-8 sm:mb-10 px-2"
         >
           A premier platform for aspiring electrical engineers to innovate, compete,
           and collaborate.
@@ -84,17 +85,16 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="flex flex-wrap justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
-            
-          <Button asChild variant="outline" size="xl">  
-            <Link to="/events">Explore events</Link>
+          <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
+            <Link to="/events">explore Events</Link>
           </Button>
         </motion.div>
       </div>
 
       {/* Animated Circuit Lines */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
