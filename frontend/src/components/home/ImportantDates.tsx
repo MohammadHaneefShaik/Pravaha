@@ -44,7 +44,7 @@ const ImportantDates = () => {
           className="text-center mb-10 sm:mb-16"
         >
           <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-            RIPPLE <span className="gradient-text">SCHEDULE</span>
+            RIPPLE <span className="gradient-text">Schedule</span>
           </h2>
           <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
         </motion.div>
@@ -60,26 +60,31 @@ const ImportantDates = () => {
               {schedule.map((item, i) => (
                 <motion.div
                   key={item.day}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.2 }}
                   className="flex items-start gap-4 sm:gap-6"
                 >
                   {/* Icon circle */}
-                  <div
+                  <motion.div
+                    whileHover={{ scale: 1.15, rotate: 6 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                     className={`relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 shadow-lg ${item.status === "event"
-                        ? "bg-accent text-white"
-                        : "bg-primary/20 text-primary"
+                      ? "bg-accent text-white"
+                      : "bg-primary/20 text-primary"
                       }`}
                   >
                     <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </div>
+                  </motion.div>
 
                   {/* Card */}
-                  <div
-                    className={`flex-1 glass-card p-4 sm:p-6 ${item.status === "event"
-                        ? "border-l-4 border-accent"
-                        : "border-l-4 border-primary"
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                    className={`flex-1 glass-card p-4 sm:p-6 glow-border ${item.status === "event"
+                      ? "border-l-4 border-accent"
+                      : "border-l-4 border-primary"
                       }`}
                   >
                     {/* Day + Date row */}
@@ -105,7 +110,7 @@ const ImportantDates = () => {
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
               ))}
             </div>
