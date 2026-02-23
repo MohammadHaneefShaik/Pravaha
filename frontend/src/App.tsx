@@ -12,7 +12,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import EventRegistration from "./pages/EventRegistration";
 import Dashboard from "./pages/admin/Dashboard";
-import Committee from "./pages/committee";
+import Committee from "./pages/Committee";
 
 const queryClient = new QueryClient();
 
