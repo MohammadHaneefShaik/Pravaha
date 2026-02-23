@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import EventRegistration from "./pages/EventRegistration";
 import Dashboard from "./pages/admin/Dashboard";
+import Committee from "./pages/committee";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/events" element={<Events />} />
           <Route path="/register/:slug" element={<EventRegistration />} />
+          <Route path="/committee" element={<Committee />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<AdminAuth />} />
           <Route path="/dashboard" element={<Dashboard />} />
