@@ -86,7 +86,7 @@ const Footer = () => {
                   href="mailto:pravaha2k26@rgmcet.edu.in"
                   className="hover:text-primary transition-colors break-all"
                 >
-                  pravaha2k26@rgmcet.edu.in
+                  pravahaeee@rgmcet.edu.in
                 </a>
               </li>
               <li className="flex items-center gap-3 text-sm text-muted-foreground">
