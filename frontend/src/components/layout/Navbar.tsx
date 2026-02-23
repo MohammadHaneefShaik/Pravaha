@@ -109,6 +109,10 @@ export default function Navbar({ showLogo = true }) {
                 Events
               </NavLink>
 
+              <NavLink to="/committee" className={desktopLinkClass}>
+                Commitee
+              </NavLink>
+              
               <NavLink to="/contact" className={desktopLinkClass}>
                 Contact
               </NavLink>
@@ -200,6 +204,14 @@ export default function Navbar({ showLogo = true }) {
                     className={mobileLinkClass}
                   >
                     Events
+                  </NavLink>
+
+                  <NavLink
+                    to="/committee"
+                    onClick={() => setOpen(false)}
+                    className={mobileLinkClass}
+                  >
+                    Commitee
                   </NavLink>
 
                   <NavLink
