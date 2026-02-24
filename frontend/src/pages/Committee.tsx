@@ -7,7 +7,7 @@ import Layout from "@/components/layout/Layout";
 
 const staffCoordinators = [
     { name: "Dr.B.Rami Reddy", role: "Professor & Dean – Student Affairs", qual: "M.Tech & Ph.D" },
-    { name: "Dr.V.Naga.Bhaskar Reddy", role: "Professor", qual: "M.Tech & Ph.D" },
+    { name: "Dr.V.Naga.Bhaskar Reddy", role: "Professor & HOD", qual: "M.Tech & Ph.D" },
     { name: "Dr.D.Lenine", role: "Professor", qual: "M.Tech & Ph.D" },
     { name: "Dr.K.Brahmanandam", role: "Professor", qual: "M.Tech & Ph.D" },
     { name: "Dr.J.Surya Kumari", role: "Associate Professor", qual: "M.Tech & Ph.D" },
