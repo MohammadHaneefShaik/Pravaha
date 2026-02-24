@@ -121,22 +121,10 @@ const additionalTeams = [
         mobiles: ["6309595189", "9391434805", "6281001271", "6309291020", "8347796637", "8142325962", "9177448808"],
     },
     {
-        sno: 4,
-        team: "STALLS",
-        organizers: ["M. Manoj Kumar", "K. Akhilesh Kumar", "U. Lakshmi Prasad", "N. Arun Gowd", "F. Lalitha", "EV. Subba rami Reddy", "K.Bhavani Shankar Naik", "S. Fiyaz hussain", "S. Abdul Rahaman", "A. Bharath Singh", "Roshan", "Goivse", "Jaswanth", "Abhinam Reddy", "S. Rohit", "M. Bharat Kumar Reddy", "N. Bharath"],
-        mobiles: ["9414105016", "9710101373", "9392594183", "6389521694", "9182261718", "9919978836", "9346248023", "8688870325", "7760353428", "9650913122", "6301181212", "9686159710", "6312447569", "9008503641", "9664238896", "9986373257", "9119026441"],
-    },
-    {
         sno: 5,
         team: "RANGOLI",
         organizers: ["J. Ruparani", "B. Manasa", "D. Saneha", "B. Namitha"],
         mobiles: ["9963685388", "9963678138", "9003117271", "8125874816"],
-    },
-    {
-        sno: 6,
-        team: "BLOOD DONATION CAMP",
-        organizers: ["M. Tajawar Reddy", "D.Rangaswamy", "C. B. Sivalah", "K. Nanda", "D. Subhan", "V. Sampath Kumar", "N. Vamsi Krishna", "K.VenkateshVaratha"],
-        mobiles: ["6281704193", "7676083511", "9382039606", "8887313012", "9382774141", "8009842891", "9542784808", "9381741086"],
     },
 ];
 
