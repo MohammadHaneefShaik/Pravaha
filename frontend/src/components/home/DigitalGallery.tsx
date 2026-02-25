@@ -8,6 +8,7 @@ interface Dignitary {
   institution: string;
   image: string;
   msg?: string;
+  objectPosition?: string;
 }
 
 export default function DignitaryGallery(): JSX.Element {
@@ -85,6 +86,7 @@ export default function DignitaryGallery(): JSX.Element {
                 src={sir.image}
                 alt={sir.name}
                 className="w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full object-cover border-4 border-primary/30 flex-shrink-0"
+                style={{ objectPosition: sir.objectPosition ?? "center" }}
               />
 
               {/* TEXT */}
