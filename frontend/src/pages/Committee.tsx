@@ -1,5 +1,30 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
+/* ─────────────────────────────────────────
+   DATA
+───────────────────────────────────────── */
+
+const staffCoordinators = [
+    { name: "Dr.B.Rami Reddy", role: "Professor & Dean – Student Affairs", qual: "M.Tech & Ph.D" },
+    { name: "Dr.A.Ramchanandan", role: "Professor", qual: "M.Tech & Ph.D" },
+    { name: "Dr.J.Surya Kumari", role: "Associate Professor", qual: "M.Tech & Ph.D" },
+    { name: "Dr.B M Manjunatha", role: "Associate Professor", qual: "M.Tech & Ph.D" },
+    { name: "Dr.A.Suresh Kumar", role: "Associate Professor", qual: "M.Tech & Ph.D" },
+    { name: "Dri/Narasimhulu", role: "Associate Professor", qual: "M.Tech & Ph.D" },
+    { name: "Mr.G.Kumaraswamy", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
+    { name: "Mr.J.Nagarjuna Reddy", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
+    { name: "Mr.R.Satish Kumar", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
+    { name: "Mr.P.Sai Sampath Kumar", role: "Assistant Professor", qual: "M.Tech (Ph.D)" },
+    { name: "Mr.P.Sasi Kiran", role: "Assistant Professor", qual: "M.Tech" },
+    { name: "Mr.E.Narasimhulu", role: "Assistant Professor", qual: "M.Tech" },
+    { name: "Mr.T.Ashok Kumar", role: "Assistant Professor", qual: "M.Tech" },
+    { name: "Mrs.B.Priyanka", role: "Assistant Professor", qual: "M.Tech (Ph.D)" },
+    { name: "Mr.K.Rajesh", role: "Assistant Professor", qual: "M.Tech" },
+    { name: "Mr.D.Siva Krishna", role: "Assistant Professor", qual: "M.Tech" },
+    { name: "Mr.K.Prahlada Reddy", role: "Assistant Professor", qual: "M.Tech" },
+    { name: "Mr.P.Kasi Rao", role: "Assistant Professor", qual: "M.Tech" },
+];
+
 
 
 const studentCoordinators = [
