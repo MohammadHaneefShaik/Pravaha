@@ -1,33 +1,6 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
 
-/* ─────────────────────────────────────────
-   DATA
-───────────────────────────────────────── */
-
-const staffCoordinators = [
-    { name: "Dr.B.Rami Reddy", role: "Professor & Dean – Student Affairs", qual: "M.Tech & Ph.D" },
-    { name: "Dr.V.Naga.Bhaskar Reddy", role: "Professor & HOD", qual: "M.Tech & Ph.D" },
-    { name: "Dr.D.Lenine", role: "Professor", qual: "M.Tech & Ph.D" },
-    { name: "Dr.K.Brahmanandam", role: "Professor", qual: "M.Tech & Ph.D" },
-    { name: "Dr.J.Surya Kumari", role: "Associate Professor", qual: "M.Tech & Ph.D" },
-    { name: "Mr.Vijaya Suresh", role: "Associate Professor", qual: "M.Tech(ph.D)" },
-    { name: "Dr.A.Suresh Kumar", role: "Associate Professor", qual: "M.Tech & Ph.D" },
-    { name: "Dr.V.Narasimhulu", role: "Associate Professor", qual: "M.Tech & Ph.D" },
-    { name: "Mr.G.Kumaraswamy", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.J.Nagarjuna Reddy", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.R.Satish Kumar", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.P.Sai Sampath Kumar", role: "Assistant Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.E.Narasimhulu", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.P.Seshi Kiran", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.E.Narasimhulu", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.T.Ashok Kumar", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mrs.B.Priyanka", role: "Assistant Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.D.Siva Krishna", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.K.Prahlada Reddy", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.P.Kasi Rao", role: "Assistant Professor", qual: "M.Tech" },
-   { name: "Mrs.K.Saraswathi", role: "Assistant Professor", qual: "M.Tech" },
-];
 
 const studentCoordinators = [
     { name: "S.MD.Arif", phone: "9398875293" },
