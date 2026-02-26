@@ -67,7 +67,7 @@ const ADMINS = [
   // SUPER ADMIN
   {
     email: "pravahaeee@rgmcet.edu.in",
-    password: "superpravaha123",
+    password: "eee@pravaha",
     role: "super",
     eventName: null,
   },
