@@ -1,37 +1,8 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
-/* ─────────────────────────────────────────
-   DATA
-───────────────────────────────────────── */
-
-const staffCoordinators = [
-    { name: "Dr.B.Rami Reddy", role: "Professor & Dean – Student Affairs", qual: "M.Tech & Ph.D" },
-    { name: "Dr.A.Ramchanandan", role: "Professor", qual: "M.Tech & Ph.D" },
-    { name: "Dr.J.Surya Kumari", role: "Associate Professor", qual: "M.Tech & Ph.D" },
-    { name: "Dr.B M Manjunatha", role: "Associate Professor", qual: "M.Tech & Ph.D" },
-    { name: "Dr.A.Suresh Kumar", role: "Associate Professor", qual: "M.Tech & Ph.D" },
-    { name: "Dri/Narasimhulu", role: "Associate Professor", qual: "M.Tech & Ph.D" },
-    { name: "Mr.G.Kumaraswamy", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.J.Nagarjuna Reddy", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.R.Satish Kumar", role: "Associate Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.P.Sai Sampath Kumar", role: "Assistant Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.P.Sasi Kiran", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.E.Narasimhulu", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.T.Ashok Kumar", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mrs.B.Priyanka", role: "Assistant Professor", qual: "M.Tech (Ph.D)" },
-    { name: "Mr.K.Rajesh", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.D.Siva Krishna", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.K.Prahlada Reddy", role: "Assistant Professor", qual: "M.Tech" },
-    { name: "Mr.P.Kasi Rao", role: "Assistant Professor", qual: "M.Tech" },
-];
 
 
 
-const studentCoordinators = [
-    { name: "S.MD.Arif", phone: "9398875293" },
-    { name: "S.MD.Umar Farook", phone: "9014185582" },
-    {name: "R.Siva Nanda Reddy", phone: "8309246760"},
-];
 
 const technicalTeams = [
     {
@@ -205,84 +176,6 @@ const Committee = () => {
                 >
                     Meet the dedicated team behind PRAVAHA-2K26.
                 </motion.p>
-            </section>
-
-            {/* ══════════════════════════════════════
-          1. STAFF COORDINATORS
-      ══════════════════════════════════════ */}
-            <section className="py-10 px-4 sm:px-6">
-                <div className="container mx-auto max-w-5xl">
-                    <SectionHeading title="Staff Coordinators" />
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={fadeUp}
-                    >
-                        <GlassTable>
-                            <thead>
-                                <tr>
-                                    <Th>Name</Th>
-                                    <Th>Designation</Th>
-                                    <Th>Qualification</Th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {staffCoordinators.map((s, i) => (
-                                    <motion.tr
-                                        key={i}
-                                        custom={i}
-                                        initial="hidden"
-                                        whileInView="visible"
-                                        viewport={{ once: true }}
-                                        variants={fadeUp}
-                                        className="hover:bg-primary/5 transition-colors"
-                                    >
-                                        <Td>
-                                            <span className="font-medium text-foreground">{s.name}</span>
-                                        </Td>
-                                        <Td>{s.role}</Td>
-                                        <Td>{s.qual}</Td>
-                                    </motion.tr>
-                                ))}
-                            </tbody>
-                        </GlassTable>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* ══════════════════════════════════════
-          2. STUDENT COORDINATORS
-      ══════════════════════════════════════ */}
-            <section className="py-10 px-4 sm:px-6">
-                <div className="container mx-auto max-w-5xl">
-                    <SectionHeading title="Student Coordinators" />
-                    <div className="grid sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
-                        {studentCoordinators.map((s, i) => (
-                            <motion.div
-                                key={i}
-                                custom={i}
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true }}
-                                variants={fadeUp}
-                                className="p-6 rounded-2xl border border-white/10 bg-card/60 backdrop-blur-sm shadow-[0_0_30px_rgba(99,102,241,0.10)] text-center hover:border-primary/40 hover:shadow-[0_0_40px_rgba(99,102,241,0.20)] transition-all duration-300"
-                            >
-                                <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-3">
-                                    <span className="text-xl font-orbitron font-bold text-primary">
-                                        {s.name.charAt(0)}
-                                    </span>
-                                </div>
-                                <p className="font-orbitron font-semibold text-foreground text-sm sm:text-base">
-                                    {s.name}
-                                </p>
-                                <p className="text-xs text-muted-foreground mt-1 tracking-wide">
-                                    📞 {s.phone}
-                                </p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
             </section>
 
             {/* ══════════════════════════════════════
