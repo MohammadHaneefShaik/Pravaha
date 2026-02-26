@@ -2,7 +2,7 @@
 
 import chairman from "@/assets/images/chairman.jpeg";
 import hod from "@/assets/images/hod.jpeg";
-import md from "@/assets/images/MD.jpeg";
+import md from "@/assets/images/MD.jpg";
 import principal from "@/assets/images/principal.jpeg";
 import lenine from "@/assets/images/lenine.jpeg";
 import suresh from "@/assets/images/suresh.jpeg";
