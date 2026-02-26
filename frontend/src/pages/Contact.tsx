@@ -123,7 +123,7 @@ const Contact = () => {
                 <Mail size={32} />
               </div>
               <h3 className="font-bold text-foreground mb-3 uppercase tracking-widest text-sm">Email Support</h3>
-              <p className="text-primary font-mono text-sm font-bold">pravaha2k26@rgmcet.edu.in</p>
+              <p className="text-primary font-mono text-sm font-bold">pravahaeee@rgmcet.edu.in</p>
             </div>
 
             <div className="flex flex-col items-center p-10 rounded-3xl bg-card border border-border group hover:border-primary transition-all">
