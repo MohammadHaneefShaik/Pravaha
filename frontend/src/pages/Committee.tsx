@@ -37,38 +37,7 @@ const technicalTeams = [
     },
 ];
 
-const nonTechnicalTeams = [
-    {
-        sno: 1,
-        team: "GRAPHITE ELEGANCE",
-        organizers: ["B. Mallika", "R. Lakshmi Bhavani", "G.Harika"],
-        mobiles: ["8309679076", "7989743654", "7807067890"],
-    },
-    {
-        sno: 2,
-        team: "INSTANT CAPTURE",
-        organizers: ["J. Annapurneswari", "G. Janaena", "K.Keerthana", "D. Manasa"],
-        mobiles: ["9000568866", "9014855290", "7892227629", "7893100736"],
-    },
-    {
-        sno: 3,
-        team: "SNAP SNATCH",
-        organizers: ["P.sree sai deekshitha", "M.Tharun", "K.Priyanka"],
-        mobiles: ["8573786278", "8347784827", "9110249617"],
-    },
-    {
-        sno: 4,
-        team: "PHOTO CLUE",
-        organizers: ["P.sree sai deekshitha", "B.Venkateswara Rao", "M.V.Vidya sagar", "M.Zakeer Hussain", "M.Tharun", "S.Sameer"],
-        mobiles: ["8573786278", "9189115282", "7892377661", "9989218430", "9247784827", "8143225862"],
-    },
-    {
-        sno: 5,
-        team: "QUIK MEME",
-        organizers: ["M.Tejeshvara Reddy", "I. Suvartalah", "M. Jagadeshwar Reddy"],
-        mobiles: ["6281704193", "8143168178", "9581138136"],
-    },
-];
+
 
 const additionalTeams = [
     {
@@ -201,60 +170,6 @@ const Committee = () => {
                             </thead>
                             <tbody>
                                 {technicalTeams.map((t, i) => (
-                                    <motion.tr
-                                        key={i}
-                                        custom={i}
-                                        initial="hidden"
-                                        whileInView="visible"
-                                        viewport={{ once: true }}
-                                        variants={fadeUp}
-                                        className="hover:bg-primary/5 transition-colors"
-                                    >
-                                        <Td center>{t.sno}</Td>
-                                        <Td>
-                                            <span className="font-semibold text-primary/80">{t.team}</span>
-                                        </Td>
-                                        <Td>
-                                            {t.organizers.map((o, j) => (
-                                                <div key={j}>{o}</div>
-                                            ))}
-                                        </Td>
-                                        <Td>
-                                            {t.mobiles.map((m, j) => (
-                                                <div key={j}>{m}</div>
-                                            ))}
-                                        </Td>
-                                    </motion.tr>
-                                ))}
-                            </tbody>
-                        </GlassTable>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* ══════════════════════════════════════
-          4. NON-TECHNICAL TEAM ORGANIZERS
-      ══════════════════════════════════════ */}
-            <section className="py-10 px-4 sm:px-6">
-                <div className="container mx-auto max-w-5xl">
-                    <SectionHeading title="Non-Technical Team Organizers" />
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={fadeUp}
-                    >
-                        <GlassTable>
-                            <thead>
-                                <tr>
-                                    <Th>S.No.</Th>
-                                    <Th>Team</Th>
-                                    <Th>Student Organizers</Th>
-                                    <Th>Mobile</Th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {nonTechnicalTeams.map((t, i) => (
                                     <motion.tr
                                         key={i}
                                         custom={i}
