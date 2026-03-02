@@ -17,6 +17,7 @@ const coordinators = {
       email: "vijayasuresh@rgmcet.edu.in",
     },
   ],
+  };
 
 const Contact = () => {
   return (
