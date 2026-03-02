@@ -26,33 +26,19 @@ export const eventsData = [
     title: "Coding Competition",
     slug: "coding-competition",
   },
+   {
+    title: "Circuit Twisting",
+    slug: "circuit-twisting",
+   },
 
-
-  /* NON TECHNICAL EVENTS */
-
-  {
-    title: "Graphite Elegance",
-    slug: "graphite-elegance",
+   {
+    title: "Logo Design",
+    slug: "logo-design",
   },
-
-  {
-    title: "Instant Capture",
-    slug: "instant-capture",
+    {
+    title: "EV Spark",
+    slug:  "ev-spark",
   },
-
-  {
-    title: "Treasure Hunt",
-    slug: "treasure-hunt",
-  },
-
-  {
-    title: "Photo Clue",
-    slug: "photo-clue",
-  },
-
-  {
-    title: "Quick Meme",
-    slug: "quick-meme",
-  },
+  
 
 ];
