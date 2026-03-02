@@ -61,7 +61,9 @@ const Contact = () => {
                 ))}
               </div>
             </div>
-
+          </motion.div>
+        </div>
+      </section>
             
       {/* Communication Hub (Final Footer Contact) */}
       <section className="py-20 bg-secondary/10 border-t border-border/50">
