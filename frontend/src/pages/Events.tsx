@@ -68,7 +68,7 @@ const technicalEvents = [
     highlights: ["Logo design", "Cash Prize"],
   },
     {
-    icon: EV,
+    icon: vehicle,
     title: "EV Spark",
     slug: "EV Spark",
     price: 150,
