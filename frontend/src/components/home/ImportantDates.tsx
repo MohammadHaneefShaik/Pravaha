@@ -20,7 +20,7 @@ const schedule = [
     icon: PartyPopper,
     accent: "accent",
     events: [
-      { time: "10:00 AM", activity: "Non-Technical Events" },
+      { time: "10:00 AM", activity: "Technical Events" },
       { time: "12:30 PM", activity: "Guest Lecture" },
       { time: "03:00 PM", activity: "Awards & Closing Ceremony" },
     ],
