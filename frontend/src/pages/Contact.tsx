@@ -17,28 +17,6 @@ const coordinators = {
       email: "vijayasuresh@rgmcet.edu.in",
     },
   ],
-  student: [
-    {
-      name: "S. MD. Umar Farook",
-      role: "III EEE (24095A0218)",
-      phone: "+91 90141 85582",
-      email: "umarshaik2208@gmail.com",
-    },
-    {
-      name: "S. MD. Arif",
-      role: "III EEE (23091A0209)",
-      phone: "+91 93988 75293",
-      email: "sh040293@gmail.com"
-
-    },
-    {
-      name: "R.Siva Nanda Reddy",
-      role: "III EEE (23091A0270)",
-      phone: "+91 8309246760",
-      email: "rsivareddy46@gmail.com",
-    },
-  ],
-};
 
 const Contact = () => {
   return (
@@ -83,22 +61,7 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Students Section */}
-            <div className="space-y-8">
-              <div className="flex items-center gap-4">
-                <h3 className="text-2xl font-orbitron font-bold text-foreground uppercase tracking-wider">Student Coordinators</h3>
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-border to-transparent"></div>
-              </div>
-              <div className="grid gap-6">
-                {coordinators.student.map((coord, i) => (
-                  <CoordinatorRow key={i} coord={coord} isFaculty={false} />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
+            
       {/* Communication Hub (Final Footer Contact) */}
       <section className="py-20 bg-secondary/10 border-t border-border/50">
         <div className="container mx-auto px-4">
