@@ -27,8 +27,8 @@ const technicalEvents = [
   },
   {
     icon: Cpu,
-    title: "Project Presentation",
-    slug: "project-presentation",
+    title: "Project Expo",
+    slug: "project-Expo",
     price: 150,
     highlights: ["Pragma", "Live Demo", "Innovation Awards"],
   },
@@ -53,48 +53,32 @@ const technicalEvents = [
     price: 150,
     highlights: ["Codathon", "Problem Solving", "Cash Prize"],
   },
+  {
+    icon: Circuit,
+    title: "Circuit Twisting",
+    slug: "Circuit Twisting",
+    price: 150,
+    highlights: ["Circuit design", " Solving", "Cash Prize"],
+  },
+   {
+    icon: Electric,
+    title: "Logo Design",
+    slug: "Logo Design",
+    price: 150,
+    highlights: ["Logo design", "Cash Prize"],
+  },
+    {
+    icon: Electric vehicle,
+    title: "EV Spark",
+    slug: "EV Spark",
+    price: 150,
+    highlights: ["Electric vehicle", "Cash Prize"],
+  },
+  
+  
 ];
 
-/* ===============================
-   NON TECHNICAL EVENTS
-================================ */
-const nonTechnicalEvents = [
-  {
-    icon: Trophy,
-    title: "Graphite Elegance",
-    slug: "graphite-elegance",
-    price: 100,
-    highlights: ["Creative Art", "Sketching", "Cash Prize"],
-  },
-  {
-    icon: Camera,
-    title: "Instant Capture",
-    slug: "instant-capture",
-    price: 100,
-    highlights: ["Photography", "Creative Shots", "Competition"],
-  },
-  {
-    icon: Puzzle,
-    title: "Treasure Hunt",
-    slug: "treasure-hunt",
-    price: 100,
-    highlights: ["Clues", "Fun Event", "Exciting Rewards"],
-  },
-  {
-    icon: Camera,
-    title: "Photo Clue",
-    slug: "photo-clue",
-    price: 100,
-    highlights: ["Puzzle Based", "Creative Thinking"],
-  },
-  {
-    icon: Puzzle,
-    title: "Quick Meme",
-    slug: "quick-meme",
-    price: 100,
-    highlights: ["Fun Event", "Creative Memes"],
-  },
-];
+
 
 const EventCard = ({ event }: any) => (
   <motion.div
@@ -160,23 +144,6 @@ const Events = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {technicalEvents.map((event) => (
-              <EventCard key={event.slug} event={event} />
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* NON TECHNICAL EVENTS */}
-      <section className="py-8 sm:py-10">
-        <div className="container mx-auto px-4 sm:px-6">
-
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-orbitron text-primary mb-4 sm:mb-6 text-center sm:text-left">
-            Non-Technical Events (₹100)
-          </h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {nonTechnicalEvents.map((event) => (
               <EventCard key={event.slug} event={event} />
             ))}
           </div>
