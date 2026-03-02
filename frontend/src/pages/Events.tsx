@@ -8,7 +8,7 @@ import {
   HelpCircle,
   Cpu,
   Zap,
-  Circuit,
+  Charge,
   Logo,
   Bike,
 } from "lucide-react";
@@ -53,7 +53,7 @@ const technicalEvents = [
     highlights: ["Codathon", "Problem Solving", "Cash Prize"],
   },
   {
-    icon: Circuit,
+    icon: Charge,
     title: "Circuit Twisting",
     slug: "Circuit Twisting",
     price: 150,
