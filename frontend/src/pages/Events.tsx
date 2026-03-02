@@ -8,10 +8,9 @@ import {
   HelpCircle,
   Cpu,
   Zap,
-  Trophy,
-  Camera,
-  Puzzle,
-  ArrowRight,
+  Circuit,
+  Logo,
+  Bike,
 } from "lucide-react";
 
 /* ===============================
@@ -61,14 +60,14 @@ const technicalEvents = [
     highlights: ["Circuit design", " Solving", "Cash Prize"],
   },
    {
-    icon: Electric,
+    icon: Logo,
     title: "Logo Design",
     slug: "Logo Design",
     price: 150,
     highlights: ["Logo design", "Cash Prize"],
   },
     {
-    icon: vehicle,
+    icon: Bike,
     title: "EV Spark",
     slug: "EV Spark",
     price: 150,
