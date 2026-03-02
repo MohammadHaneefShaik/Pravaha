@@ -8,11 +8,10 @@ import {
   HelpCircle,
   Cpu,
   Zap,
-  Charge,
-  Logo,
+  BatteryCharging,
+  Palette,
   Bike,
 } from "lucide-react";
-
 /* ===============================
    TECHNICAL EVENTS
 ================================ */
@@ -53,23 +52,23 @@ const technicalEvents = [
     highlights: ["Codathon", "Problem Solving", "Cash Prize"],
   },
   {
-    icon: Charge,
+    icon:  BatteryCharging,
     title: "Circuit Twisting",
-    slug: "Circuit Twisting",
+    slug: "circuit-twisting",
     price: 150,
     highlights: ["Circuit design", " Solving", "Cash Prize"],
   },
    {
-    icon: Logo,
+    icon: Palette,
     title: "Logo Design",
-    slug: "Logo Design",
+    slug: "logo-design",
     price: 150,
     highlights: ["Logo design", "Cash Prize"],
   },
     {
     icon: Bike,
     title: "EV Spark",
-    slug: "EV Spark",
+    slug:  "ev-spark",
     price: 150,
     highlights: ["Electric vehicle", "Cash Prize"],
   },
