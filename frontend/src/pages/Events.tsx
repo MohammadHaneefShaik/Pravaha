@@ -11,7 +11,11 @@ import {
   BatteryCharging,
   Palette,
   Bike,
+  Trophy,
+  Camera,
+  Puzzle,
 } from "lucide-react";
+
 /* ===============================
    TECHNICAL EVENTS
 ================================ */
@@ -21,6 +25,8 @@ const technicalEvents = [
     title: "Paper Presentation",
     slug: "paper-presentation",
     price: 150,
+    description:
+      "Showcase your research and innovative ideas through structured academic papers. Present your findings before a panel of industry experts and gain invaluable professional feedback.",
     highlights: ["Battle of Ideaz", "Research Papers", "Expert Feedback"],
   },
   {
@@ -28,6 +34,8 @@ const technicalEvents = [
     title: "Project Expo",
     slug: "project-Expo",
     price: 150,
+    description:
+      "Bring your engineering projects to life with live demonstrations. Exhibit your technical solutions, prototypes, and innovations to judges and peers in a competitive expo setting.",
     highlights: ["Pragma", "Live Demo", "Innovation Awards"],
   },
   {
@@ -35,6 +43,8 @@ const technicalEvents = [
     title: "Poster Presentation",
     slug: "poster-presentation",
     price: 150,
+    description:
+      "Communicate complex technical concepts through compelling visual design. Create an impactful poster that effectively conveys your research, analysis, or engineering solution.",
     highlights: ["Blue Print", "Visual Display", "Best Poster Award"],
   },
   {
@@ -42,6 +52,8 @@ const technicalEvents = [
     title: "Technical Quiz",
     slug: "technical-quiz",
     price: 150,
+    description:
+      "Test your depth of technical knowledge across engineering domains in a fast-paced, multi-round quiz challenge. Compete against the brightest minds and prove your expertise.",
     highlights: ["Technozen", "Multiple Rounds", "Top Prizes"],
   },
   {
@@ -49,31 +61,37 @@ const technicalEvents = [
     title: "Coding Competition",
     slug: "coding-competition",
     price: 150,
+    description:
+      "Tackle real-world algorithmic challenges under time pressure. Demonstrate your problem-solving skills, coding efficiency, and logical thinking to claim the top spot on the leaderboard.",
     highlights: ["Codathon", "Problem Solving", "Cash Prize"],
   },
   {
-    icon:  BatteryCharging,
+    icon: BatteryCharging,
     title: "Circuit Twisting",
     slug: "circuit-twisting",
     price: 150,
-    highlights: ["Circuit design", " Solving", "Cash Prize"],
+    description:
+      "Put your electronics and circuit design skills to the ultimate test. Analyze, troubleshoot, and build functional circuits within a stipulated time in this hands-on hardware challenge.",
+    highlights: ["Circuit Design", "Problem Solving", "Cash Prize"],
   },
-   {
+  {
     icon: Palette,
     title: "Logo Design",
     slug: "logo-design",
     price: 150,
+    description:
+      "Blend creativity with technical precision to craft a distinctive brand identity. Design a professional and memorable logo that communicates vision, purpose, and innovation.",
     highlights: ["Logo Craft", "Cash Prize"],
   },
-    {
+  {
     icon: Bike,
     title: "EV Spark",
-    slug:  "ev-spark",
+    slug: "ev-spark",
     price: 150,
-    highlights: ["Electric vehicle", "Workshop"],
+    description:
+      "Dive into the future of sustainable transportation through an immersive electric vehicle workshop. Explore EV architecture, battery technology, and the engineering behind green mobility.",
+    highlights: ["Electric Vehicle", "Workshop"],
   },
-  
-  
 ];
 
 
@@ -92,6 +110,10 @@ const EventCard = ({ event }: any) => (
     <h3 className="text-lg sm:text-xl font-orbitron font-semibold mb-2">
       {event.title}
     </h3>
+
+    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-3">
+      {event.description}
+    </p>
 
     <p className="text-primary font-semibold mb-3 text-sm sm:text-base">
       Entry Fee: ₹{event.price}
@@ -148,6 +170,8 @@ const Events = () => {
 
         </div>
       </section>
+
+
 
       {/* CTA */}
       <section className="py-12 sm:py-16 text-center">
