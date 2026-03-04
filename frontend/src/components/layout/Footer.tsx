@@ -53,8 +53,11 @@ const Footer = () => {
                 "Paper Presentation",
                 "Poster Presentation",
                 "Technical Quiz",
-                "Workshops",
+                "EV Spark",
                 "Project Expo",
+                "Coding",
+                "Circuit Twisting",
+                "Logo Design",
               ].map((item) => (
                 <li key={item}>
                   <Link
@@ -95,7 +98,7 @@ const Footer = () => {
                   href="tel:+919876543210"
                   className="hover:text-primary transition-colors"
                 >
-                  +91 9398875293
+                  +91 9441243353
                 </a>
               </li>
             </ul>
