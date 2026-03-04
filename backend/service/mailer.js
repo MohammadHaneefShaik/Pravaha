@@ -245,6 +245,20 @@ export async function verifyMailer() {
 }
 
 /* =========================
+   EVENT WHATSAPP GROUP LINKS
+========================= */
+const EVENT_WHATSAPP_LINKS = {
+  "Paper Presentation": "https://chat.whatsapp.com/Gplnn1zihq31SyFGFr057l?mode=gi_t",
+  "Project Expo": "https://chat.whatsapp.com/FLvSXVzmP4o3kFf17CAlDf?mode=gi_t",
+  "Poster Presentation": "https://chat.whatsapp.com/FJxfaQRXuz13nez0Gbhmqj?mode=gi_t",
+  "Coding Competition": "https://chat.whatsapp.com/EuDGunWuZyw7TuTpYkImNE?mode=hq2tcla",
+  "Technical Quiz": "https://chat.whatsapp.com/JxhH8XSFXaaEcgoxCqRNyK?mode=gi_t",
+  "Circuit Twisting": "https://chat.whatsapp.com/HTzqSYjQwJl702iUVRftbo?mode=gi_",
+  "Logo Design": "https://chat.whatsapp.com/JNWKMtGeG696BK3BDRZTlf?mode=hqctcla",
+  "EV Spark": "https://chat.whatsapp.com/IGZQYumx84pLcGZygln0L7?mode=gi_t",
+};
+
+/* =========================
    NORMAL EVENT APPROVAL MAIL
 ========================= */
 export async function sendPaymentApprovalMail({
@@ -254,6 +268,8 @@ export async function sendPaymentApprovalMail({
   transactionId,
 }) {
   try {
+    const whatsappLink = EVENT_WHATSAPP_LINKS[eventName] || "https://chat.whatsapp.com/LbjF1AivyB3IJFwFhF3ZG9";
+
     await postToScript({
       to,
       subject: `Registration Confirmed | ${eventName} | PRAVAHA 2K26`,
@@ -287,8 +303,8 @@ export async function sendPaymentApprovalMail({
           </table>
         </div>
         <div style="margin:26px 0; padding:18px; border-radius:14px; background:#022c22; border:1px solid #14532d; text-align:center;">
-          <p style="margin:0 0 10px; font-size:15px; color:#ffffff;"> Join the official WhatsApp group for updates</p>
-          <a href="https://chat.whatsapp.com/LbjF1AivyB3IJFwFhF3ZG9" target="_blank" style="display:inline-block; padding:10px 18px; background:#22c55e; color:#022c22; text-decoration:none; font-weight:bold; border-radius:999px;">Join WhatsApp Group</a>
+          <p style="margin:0 0 10px; font-size:15px; color:#ffffff;">📢 Join the official WhatsApp group for <strong>${eventName}</strong> updates &amp; announcements</p>
+          <a href="${whatsappLink}" target="_blank" style="display:inline-block; padding:10px 18px; background:#22c55e; color:#022c22; text-decoration:none; font-weight:bold; border-radius:999px; font-size:14px;">Join WhatsApp Group</a>
         </div>
 
         <p style="font-size:15px; line-height:1.6;">
@@ -350,7 +366,7 @@ export async function transactionRejectedMail({ to, fullName }) {
         </p>
 
         <div style="margin-top:30px; padding:20px; background:#020617; border:1px solid #1e293b; border-radius:14px;">
-          <p style="margin-top:0; color:#22d3ee; font-size:14px; font-weight:bold;">Need help? Contact our Website incharges:</p>
+          <p style="margin-top:0; color:#22d3ee; font-size:14px; font-weight:bold;">Need help? Contact our coordinators:</p>
           
           <table width="100%" cellspacing="0" cellpadding="0" style="font-size:13px; color:#cbd5e1; line-height:1.5;">
             <tr>
