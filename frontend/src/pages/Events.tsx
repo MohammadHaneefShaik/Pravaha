@@ -24,7 +24,7 @@ const technicalEvents = [
     icon: FileText,
     title: "Paper Presentation",
     slug: "paper-presentation",
-    price: 150,
+    price: 200,
     description:
       "Showcase your research and innovative ideas through structured academic papers. Present your findings before a panel of industry experts and gain invaluable professional feedback.",
     highlights: ["Battle of Ideaz", "Research Papers", "Expert Feedback"],
@@ -33,7 +33,7 @@ const technicalEvents = [
     icon: Cpu,
     title: "Project Expo",
     slug: "project-Expo",
-    price: 150,
+    price: 200,
     description:
       "Bring your engineering projects to life with live demonstrations. Exhibit your technical solutions, prototypes, and innovations to judges and peers in a competitive expo setting.",
     highlights: ["Pragma", "Live Demo", "Innovation Awards"],
@@ -42,7 +42,7 @@ const technicalEvents = [
     icon: Image,
     title: "Poster Presentation",
     slug: "poster-presentation",
-    price: 150,
+    price: 200,
     description:
       "Communicate complex technical concepts through compelling visual design. Create an impactful poster that effectively conveys your research, analysis, or engineering solution.",
     highlights: ["Blue Print", "Visual Display", "Best Poster Award"],
@@ -51,7 +51,7 @@ const technicalEvents = [
     icon: HelpCircle,
     title: "Technical Quiz",
     slug: "technical-quiz",
-    price: 150,
+    price: 200,
     description:
       "Test your depth of technical knowledge across engineering domains in a fast-paced, multi-round quiz challenge. Compete against the brightest minds and prove your expertise.",
     highlights: ["Technozen", "Multiple Rounds", "Top Prizes"],
@@ -60,7 +60,7 @@ const technicalEvents = [
     icon: Zap,
     title: "Coding Competition",
     slug: "coding-competition",
-    price: 150,
+    price: 200,
     description:
       "Tackle real-world algorithmic challenges under time pressure. Demonstrate your problem-solving skills, coding efficiency, and logical thinking to claim the top spot on the leaderboard.",
     highlights: ["Codathon", "Problem Solving", "Cash Prize"],
@@ -69,7 +69,7 @@ const technicalEvents = [
     icon: BatteryCharging,
     title: "Circuit Twisting",
     slug: "circuit-twisting",
-    price: 150,
+    price: 200,
     description:
       "Put your electronics and circuit design skills to the ultimate test. Analyze, troubleshoot, and build functional circuits within a stipulated time in this hands-on hardware challenge.",
     highlights: ["Circuit Design", "Problem Solving", "Cash Prize"],
@@ -78,7 +78,7 @@ const technicalEvents = [
     icon: Palette,
     title: "Logo Design",
     slug: "logo-design",
-    price: 150,
+    price: 200,
     description:
       "Blend creativity with technical precision to craft a distinctive brand identity. Design a professional and memorable logo that communicates vision, purpose, and innovation.",
     highlights: ["Logo Craft", "Cash Prize"],
@@ -87,7 +87,7 @@ const technicalEvents = [
     icon: Bike,
     title: "EV Spark",
     slug: "ev-spark",
-    price: 150,
+    price: 200,
     description:
       "Dive into the future of sustainable transportation through an immersive electric vehicle workshop. Explore EV architecture, battery technology, and the engineering behind green mobility.",
     highlights: ["Electric Vehicle", "Workshop"],
