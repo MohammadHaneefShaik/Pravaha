@@ -63,14 +63,14 @@ const technicalEvents = [
     title: "Logo Design",
     slug: "logo-design",
     price: 150,
-    highlights: ["Logo design", "Cash Prize"],
+    highlights: ["Logo Craft", "Cash Prize"],
   },
     {
     icon: Bike,
     title: "EV Spark",
     slug:  "ev-spark",
     price: 150,
-    highlights: ["Electric vehicle", "Cash Prize"],
+    highlights: ["Electric vehicle", "Workshop"],
   },
   
   
