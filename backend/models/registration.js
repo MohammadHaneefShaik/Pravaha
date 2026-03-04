@@ -67,7 +67,7 @@ const registrationSchema = new Schema(
       default: "pending"
     },
 
-    transactionId: { type: String, sparse: true },   // not unique-required for paper-pres step1
+    transactionId: { type: String },   // duplicate check handled in controller
     paymentScreenshot: { type: String },
     paymentScreenshotId: { type: String },
   },
