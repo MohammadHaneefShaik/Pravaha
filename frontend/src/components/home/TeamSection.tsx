@@ -16,7 +16,7 @@ export default function TeamSection(): JSX.Element {
       instagram: "https://www.instagram.com/mdariif_07_?igsh=dnBmZmpoemdmY2tz_",
     },
     {
-      name: "Shaik Mohammad Umar Farook",
+      name: "Shaik Mahammad Umar Farook",
       year: "III EEE (24095A0218)",
       instagram: "https://www.instagram.com/__umarrr._?igsh=M21pa29tOHJ5M3Uw",
     },
