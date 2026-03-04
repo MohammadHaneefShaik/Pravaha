@@ -50,8 +50,27 @@ app.use(cors(corsOptions));
 /* ---------------------------------- */
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("Mongoose connected"))
-  .catch((err) => console.error(err));
+  .then(async () => {
+    console.log("Mongoose connected");
+
+    // ✅ Drop the old unique index on transactionId if it still exists.
+    // This is needed because we now allow documents without a transactionId
+    // (paper presentation step-1 abstract submissions).
+    try {
+      const registrationCollection = mongoose.connection.collection("registrationmodels");
+      const indexes = await registrationCollection.indexes();
+      const hasOldUniqueIndex = indexes.some(
+        (idx) => idx.key && idx.key.transactionId !== undefined && idx.unique
+      );
+      if (hasOldUniqueIndex) {
+        await registrationCollection.dropIndex("transactionId_1");
+        console.log("✅ Dropped old unique index on transactionId");
+      }
+    } catch (err) {
+      // Index may already not exist — safe to ignore
+      console.log("ℹ️ transactionId index cleanup:", err.message);
+    }
+  }).catch((err) => console.error(err));
 
 /* ---------------------------------- */
 /* API ROUTES */
