@@ -22,22 +22,42 @@ const paymentStorage = new CloudinaryStorage({
 
 /* ============================
    STORAGE — Abstract Documents
+   NOTE: resource_type "raw" is required for PDFs/docs.
+   Do NOT set allowed_formats here — it conflicts with raw uploads.
+   File type filtering is handled by multer's fileFilter below.
 ============================ */
 const abstractStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
     return {
       folder: "event_abstracts",
-      allowed_formats: ["pdf", "doc", "docx"],
       resource_type: "raw",
       public_id: `abstract_${Date.now()}`,
     };
   },
 });
 
+/* Abstract file type filter — only PDF/DOC/DOCX */
+function abstractFileFilter(req, file, cb) {
+  const allowed = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  ];
+  if (allowed.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only PDF, DOC, and DOCX files are allowed"), false);
+  }
+}
+
 /* MULTER INSTANCES */
 const upload = multer({ storage: paymentStorage });
-const uploadAbstract = multer({ storage: abstractStorage });
+const uploadAbstract = multer({
+  storage: abstractStorage,
+  fileFilter: abstractFileFilter,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
+});
 
 export { uploadAbstract };
 export default upload;
