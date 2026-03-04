@@ -6,8 +6,10 @@ import cloudinary from "../service/cloudinary.js";
 console.log("Cloudinary config inside upload.js:");
 console.log(cloudinary.config());
 
-/* STORAGE */
-const storage = new CloudinaryStorage({
+/* ============================
+   STORAGE — Payment Screenshots
+============================ */
+const paymentStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
     return {
@@ -18,9 +20,24 @@ const storage = new CloudinaryStorage({
   },
 });
 
-/* MULTER */
-const upload = multer({
-  storage: storage,
+/* ============================
+   STORAGE — Abstract Documents
+============================ */
+const abstractStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (req, file) => {
+    return {
+      folder: "event_abstracts",
+      allowed_formats: ["pdf", "doc", "docx"],
+      resource_type: "raw",
+      public_id: `abstract_${Date.now()}`,
+    };
+  },
 });
 
+/* MULTER INSTANCES */
+const upload = multer({ storage: paymentStorage });
+const uploadAbstract = multer({ storage: abstractStorage });
+
+export { uploadAbstract };
 export default upload;
