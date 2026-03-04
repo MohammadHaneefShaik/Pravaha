@@ -175,7 +175,7 @@ const EventRegistration = () => {
               {event.eventName}
             </h1>
             <p className="text-muted-foreground mt-2 text-sm sm:text-base">
-              Entry Fee: ₹{event.price}
+              Entry Fee: ₹{200}
             </p>
             {(slug === "paper-presentation" || slug === "project-Expo") && (
               <p className="text-cyan-400 mt-1 text-sm sm:text-base font-medium">
