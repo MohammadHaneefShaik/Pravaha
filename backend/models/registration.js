@@ -27,6 +27,8 @@ const registrationSchema = new Schema(
       default: 1,
     },
 
+    teamName: { type: String },        // Paper Presentation team name
+
     member2: {
       fullName: { type: String },
       registerNumber: { type: String },
