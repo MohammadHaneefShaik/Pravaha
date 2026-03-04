@@ -14,10 +14,7 @@ const EventRegistration = () => {
   const [loading, setLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
 
-  const isTeamEvent = slug === "paper-presentation" || slug === "project-Expo";
-
   const [formData, setFormData] = useState({
-    fullName: "",
     fullName: "",
     registerNumber: "",
     email: "",
@@ -69,12 +66,6 @@ const EventRegistration = () => {
     });
 
     fd.append("eventName", event.eventName);
-
-    if (isTeamEvent) {
-      Object.entries(member2).forEach(([key, value]) => {
-        fd.append(`member2_${key}`, value);
-      });
-    }
 
     if (file) fd.append("screenshot", file);
 
@@ -168,11 +159,6 @@ const EventRegistration = () => {
             <p className="text-muted-foreground mt-2 text-sm sm:text-base">
               Entry Fee: ₹{event.price}
             </p>
-            {(slug === "paper-presentation" || slug === "project-Expo") && (
-              <p className="text-cyan-400 mt-1 text-sm sm:text-base font-medium">
-                Team members: 2
-              </p>
-            )}
           </motion.div>
 
           {/* Form Card */}
@@ -183,22 +169,27 @@ const EventRegistration = () => {
             className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 glow-border space-y-3 sm:space-y-4"
           >
 
-            {/* Member Fields Helper */}
-            {(() => {
-              const memberFields = [
-                { label: "Name of participant 1", key: "fullName" },
-                { label: "Name of participant 2", key: "fullName" },
-                { label: "Register Number", key: "registerNumber" },
-                { label: "Phone Number", key: "phoneNumber" },
-                { label: "Email", key: "email" },
-                { label: "College Name", key: "collegeName" },
-                { label: "Branch", key: "branch" },
-                { label: "Study Year", key: "studyYear" },
-              ];
-              return (
-                <>
-              
-               
+            {/* Inputs */}
+            {[
+              { label: "Full Name", key: "fullName" },
+              { label: "Register Number", key: "registerNumber" },
+              { label: "Phone Number", key: "phoneNumber" },
+              { label: "Email", key: "email" },
+              { label: "College Name", key: "collegeName" },
+              { label: "Branch", key: "branch" },
+              { label: "Study Year", key: "studyYear" },
+            ].map((field) => (
+              <input
+                key={field.key}
+                placeholder={field.label}
+                required
+                onChange={(e) =>
+                  setFormData({ ...formData, [field.key]: e.target.value })
+                }
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+              />
+            ))}
+
             {/* Payment Section */}
             <div className="bg-secondary/20 border border-border rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 text-center space-y-4">
 
@@ -282,3 +273,4 @@ const EventRegistration = () => {
 };
 
 export default EventRegistration;
+
