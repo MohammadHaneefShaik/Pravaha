@@ -150,7 +150,7 @@ const Events = () => {
           Events &amp; Activities
         </h1>
         <p className="text-muted-foreground mt-3 text-sm sm:text-base max-w-xl mx-auto">
-          Choose your challenge and register to compete at PRAVAHA-2K26.
+          Choose your challenge and register to compete at PRAVAHA-2K26
         </p>
       </section>
 
