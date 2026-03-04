@@ -1,423 +1,458 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import { motion } from "framer-motion";
-import {
-  Users,
-  CheckCircle,
-  Clock,
-  XCircle,
-  Search,
-  FileText,
-} from "lucide-react";
+import RegistrationModel from "../models/registration.js";
+import EventModel from "../models/event.js";
+import mailer from "../service/mailer.js";
 
-const API = import.meta.env.VITE_API_URL;
+const { sendPaymentApprovalMail, transactionRejectedMail, abstractAcceptedMail, abstractRejectedMail } = mailer;
 
-type TabType = "registrations" | "abstracts";
+/* =========================
+   GET ALL REGISTRATIONS
+========================= */
+export async function getAllRegistrations(req, res) {
+  try {
+    const registrations = await RegistrationModel.find().sort({ createdAt: -1 });
 
-export default function AdminDashboard() {
-  const [registrations, setRegistrations] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [admin, setAdmin] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<TabType>("registrations");
-  const [search, setSearch] = useState("");
-
-  /* =========== CHECK ADMIN =========== */
-  useEffect(() => {
-    fetch(`${API}/api/admin/me`, { credentials: "include" })
-      .then(res => res.json())
-      .then(data => {
-        if (!data.success) window.location.href = "/admin-login";
-        else setAdmin(data);
-      })
-      .catch(() => { window.location.href = "/admin-login"; })
-      .finally(() => setLoading(false));
-  }, []);
-
-  /* =========== FETCH DATA =========== */
-  useEffect(() => {
-    if (!admin) return;
-    fetch(`${API}/api/user/getRegistrations`, { credentials: "include" })
-      .then(res => res.json())
-      .then(data => { if (data.success) setRegistrations(data.data); })
-      .finally(() => setLoading(false));
-  }, [admin]);
-
-  /* =========== UPDATE PAYMENT STATUS =========== */
-  const updatePaymentStatus = async (id: string, status: string, reg: any) => {
-    await fetch(`${API}/api/user/updatePaymentStatus`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        registrationId: id,
-        paymentStatus: status,
-        email: reg.email,
-        fullName: reg.fullName,
-        eventName: reg.eventName,
-        transactionId: reg.transactionId,
-      }),
+    return res.json({
+      success: true,
+      data: registrations,
     });
-    window.location.reload();
-  };
-
-  /* =========== UPDATE ABSTRACT STATUS =========== */
-  const updateAbstractStatus = async (id: string, status: string, reg: any) => {
-    await fetch(`${API}/api/user/updateAbstractStatus`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        registrationId: id,
-        abstractStatus: status,
-        email: reg.email,
-        fullName: reg.fullName,
-        eventName: reg.eventName,
-      }),
+  } catch (err) {
+    console.error("❌ Fetch registrations error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
     });
-    window.location.reload();
-  };
-
-  /* =========== FILTERED DATA =========== */
-  const filteredRegistrations = registrations.filter(r =>
-    r.abstractStatus === "not_required" || !r.abstractStatus
-      ? r.fullName?.toLowerCase().includes(search.toLowerCase())
-      : false
-  );
-
-  // Paper presentation entries (have abstract flow)
-  const abstractEntries = registrations.filter(r =>
-    r.abstractStatus && r.abstractStatus !== "not_required"
-  ).filter(r =>
-    r.fullName?.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const stats = {
-    total: registrations.length,
-    approved: registrations.filter(r => r.paymentStatus === "approved").length,
-    pending: registrations.filter(r => r.paymentStatus === "pending" && (r.abstractStatus === "not_required" || !r.abstractStatus)).length,
-    rejected: registrations.filter(r => r.paymentStatus === "rejected").length,
-    abstractPending: registrations.filter(r => r.abstractStatus === "pending").length,
-    abstractAccepted: registrations.filter(r => r.abstractStatus === "accepted").length,
-    abstractRejected: registrations.filter(r => r.abstractStatus === "rejected").length,
-  };
-
-  if (loading || admin === null) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-white bg-[#060A1F]">
-        Loading...
-      </div>
-    );
   }
-
-  return (
-    <div className="min-h-screen bg-[#060A1F] text-white">
-      <Navbar />
-
-      <main className="px-6 py-28 max-w-7xl mx-auto">
-
-        {/* HEADER */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-10 text-center"
-        >
-          <h1 className="text-4xl font-bold">
-            Admin <span className="text-cyan-400">Dashboard</span>
-          </h1>
-        </motion.div>
-
-        {/* STATS */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"
-        >
-          <StatCard title="Total" value={stats.total} icon={<Users />} color="cyan" />
-          <StatCard title="Approved" value={stats.approved} icon={<CheckCircle />} color="green" />
-          <StatCard title="Pending" value={stats.pending} icon={<Clock />} color="yellow" />
-          <StatCard title="Rejected" value={stats.rejected} icon={<XCircle />} color="red" />
-        </motion.div>
-
-        {/* ABSTRACT STATS (paper presentation) */}
-        {stats.abstractPending + stats.abstractAccepted + stats.abstractRejected > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="grid grid-cols-3 gap-4 mb-8"
-          >
-            <StatCard title="Abstract Pending" value={stats.abstractPending} icon={<Clock />} color="yellow" />
-            <StatCard title="Abstract Accepted" value={stats.abstractAccepted} icon={<CheckCircle />} color="emerald" />
-            <StatCard title="Abstract Rejected" value={stats.abstractRejected} icon={<XCircle />} color="red" />
-          </motion.div>
-        )}
-
-        {/* TABS */}
-        <div className="flex gap-2 mb-6">
-          <button
-            onClick={() => setActiveTab("registrations")}
-            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition ${activeTab === "registrations"
-                ? "bg-cyan-500/20 text-cyan-400 border border-cyan-400/40"
-                : "bg-white/5 text-gray-400 border border-white/10 hover:border-cyan-400/30"
-              }`}
-          >
-            <Users className="inline w-4 h-4 mr-1.5" />
-            All Registrations
-          </button>
-          <button
-            onClick={() => setActiveTab("abstracts")}
-            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition ${activeTab === "abstracts"
-                ? "bg-cyan-500/20 text-cyan-400 border border-cyan-400/40"
-                : "bg-white/5 text-gray-400 border border-white/10 hover:border-cyan-400/30"
-              }`}
-          >
-            <FileText className="inline w-4 h-4 mr-1.5" />
-            Paper Abstracts
-            {stats.abstractPending > 0 && (
-              <span className="ml-2 px-1.5 py-0.5 bg-yellow-400 text-yellow-900 rounded-full text-xs font-bold">
-                {stats.abstractPending}
-              </span>
-            )}
-          </button>
-        </div>
-
-        {/* SEARCH */}
-        <div className="mb-6 relative">
-          <Search className="absolute left-3 top-3 text-gray-400 w-4" />
-          <input
-            placeholder="Search by name..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 pr-4 py-3 w-full bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-cyan-400"
-          />
-        </div>
-
-        {/* ===================== REGISTRATIONS TABLE ===================== */}
-        {activeTab === "registrations" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-white/5 border border-white/10 rounded-3xl overflow-x-auto"
-          >
-            <table className="w-full">
-              <thead className="bg-white/10">
-                <tr>
-                  <th className="p-4 text-left">Name</th>
-                  <th>Email</th>
-                  <th>Event</th>
-                  <th>Txn</th>
-                  <th>Status</th>
-                  <th>Proof</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {registrations
-                  .filter(r => r.fullName?.toLowerCase().includes(search.toLowerCase()))
-                  .map(reg => (
-                    <tr key={reg._id} className="border-t border-white/10">
-                      <td className="p-4">
-                        <div>{reg.fullName}</div>
-                        {reg.member2?.fullName && (
-                          <div className="text-xs text-cyan-400 mt-0.5">+ {reg.member2.fullName}</div>
-                        )}
-                      </td>
-                      <td className="text-sm">{reg.email}</td>
-                      <td className="text-cyan-400">{reg.eventName}</td>
-                      <td className="text-xs">{reg.transactionId || "—"}</td>
-                      <td>
-                        <StatusBadge status={reg.paymentStatus} />
-                      </td>
-                      <td>
-                        {reg.paymentScreenshot ? (
-                          <img src={reg.paymentScreenshot} className="w-12 rounded" alt="proof" />
-                        ) : (
-                          <span className="text-xs text-gray-500">—</span>
-                        )}
-                      </td>
-                      <td>
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => updatePaymentStatus(reg._id, "approved", reg)}
-                            className="px-3 py-1 bg-green-500/20 text-green-400 rounded hover:bg-green-500/40 text-sm"
-                          >
-                            Approve
-                          </button>
-                          <button
-                            onClick={() => updatePaymentStatus(reg._id, "rejected", reg)}
-                            className="px-3 py-1 bg-red-500/20 text-red-400 rounded hover:bg-red-500/40 text-sm"
-                          >
-                            Reject
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </motion.div>
-        )}
-
-        {/* ===================== ABSTRACTS TABLE ===================== */}
-        {activeTab === "abstracts" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-white/5 border border-white/10 rounded-3xl overflow-x-auto"
-          >
-            {abstractEntries.length === 0 ? (
-              <div className="text-center py-16 text-gray-500">
-                <FileText className="w-10 h-10 mx-auto mb-3 opacity-30" />
-                No abstract submissions yet.
-              </div>
-            ) : (
-              <table className="w-full">
-                <thead className="bg-white/10">
-                  <tr>
-                    <th className="p-4 text-left">Name / Members</th>
-                    <th>Email</th>
-                    <th>College</th>
-                    <th>Members</th>
-                    <th>Abstract</th>
-                    <th>Abstract Status</th>
-                    <th>Payment</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {abstractEntries.map(reg => (
-                    <tr key={reg._id} className="border-t border-white/10">
-                      <td className="p-4">
-                        <div className="font-medium">{reg.fullName}</div>
-                        {reg.member2?.fullName && (
-                          <div className="text-xs text-cyan-400 mt-0.5">+ {reg.member2.fullName}</div>
-                        )}
-                        <div className="text-xs text-gray-500 mt-0.5">{reg.registerNumber}</div>
-                      </td>
-                      <td className="text-sm">{reg.email}</td>
-                      <td className="text-xs text-gray-300">{reg.collegeName}</td>
-                      <td className="text-center">
-                        <span className="text-cyan-400 font-bold">{reg.memberCount || 1}</span>
-                      </td>
-                      <td>
-                        {reg.abstractFile ? (
-                          <a
-                            href={reg.abstractFile}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition text-xs"
-                          >
-                            <FileText className="w-3.5 h-3.5" />
-                            View PDF
-                          </a>
-                        ) : (
-                          <span className="text-xs text-gray-500">—</span>
-                        )}
-                      </td>
-                      <td>
-                        <AbstractStatusBadge status={reg.abstractStatus} />
-                      </td>
-                      <td>
-                        <StatusBadge status={reg.paymentStatus} />
-                      </td>
-                      <td>
-                        {reg.abstractStatus === "pending" ? (
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => updateAbstractStatus(reg._id, "accepted", reg)}
-                              className="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg hover:bg-emerald-500/40 text-xs font-medium transition"
-                            >
-                              ✅ Accept
-                            </button>
-                            <button
-                              onClick={() => updateAbstractStatus(reg._id, "rejected", reg)}
-                              className="px-3 py-1.5 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/40 text-xs font-medium transition"
-                            >
-                              ❌ Reject
-                            </button>
-                          </div>
-                        ) : reg.abstractStatus === "accepted" && reg.transactionId ? (
-                          // Abstract accepted + payment submitted → approve/reject payment
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => updatePaymentStatus(reg._id, "approved", reg)}
-                              className="px-3 py-1.5 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/40 text-xs font-medium transition"
-                            >
-                              Approve Pay
-                            </button>
-                            <button
-                              onClick={() => updatePaymentStatus(reg._id, "rejected", reg)}
-                              className="px-3 py-1.5 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/40 text-xs font-medium transition"
-                            >
-                              Reject Pay
-                            </button>
-                          </div>
-                        ) : (
-                          <span className="text-xs text-gray-500">
-                            {reg.abstractStatus === "accepted" ? "Awaiting payment" : "—"}
-                          </span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </motion.div>
-        )}
-
-      </main>
-
-      <Footer />
-    </div>
-  );
 }
 
-/* ============================================================
-   STAT CARD
-============================================================ */
-function StatCard({ title, value, icon, color }: { title: string; value: number; icon: React.ReactNode; color: string }) {
-  return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-      <div className={`text-${color}-400 mb-2`}>{icon}</div>
-      <div className="text-3xl font-bold">{value}</div>
-      <div className="text-gray-400">{title}</div>
-    </div>
-  );
+/* =========================
+   UPDATE PAYMENT STATUS
+========================= */
+export async function updatePaymentStatus(req, res) {
+  try {
+    const { registrationId, paymentStatus, email, fullName, eventName, transactionId } =
+      req.body;
+
+    if (!registrationId || !paymentStatus) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields",
+      });
+    }
+
+    const validStatuses = ["pending", "approved", "rejected"];
+    if (!validStatuses.includes(paymentStatus)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid payment status",
+      });
+    }
+
+    const updated = await RegistrationModel.findByIdAndUpdate(
+      registrationId,
+      { paymentStatus },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({
+        success: false,
+        message: "Registration not found",
+      });
+    }
+
+    // Collect all member emails to notify
+    const emailTargets = [{ to: email, fullName }];
+    if (updated.member2?.email) {
+      emailTargets.push({ to: updated.member2.email, fullName: updated.member2.fullName || fullName });
+    }
+
+    if (paymentStatus === "approved") {
+      for (const target of emailTargets) {
+        try {
+          await sendPaymentApprovalMail({
+            to: target.to,
+            fullName: target.fullName,
+            eventName,
+            transactionId,
+          });
+          console.log(`✅ Approval mail sent to ${target.to}`);
+        } catch (mailErr) {
+          console.error("❌ Approval Mail failed:", mailErr.message);
+        }
+      }
+    } else if (paymentStatus === "rejected") {
+      for (const target of emailTargets) {
+        try {
+          await transactionRejectedMail({
+            to: target.to,
+            fullName: target.fullName,
+            eventName,
+            transactionId,
+          });
+          console.log(`✅ Reject mail sent to ${target.to}`);
+        } catch (mailErr) {
+          console.error("❌ Reject Mail failed:", mailErr.message);
+        }
+      }
+    }
+
+    return res.json({
+      success: true,
+      message: "Payment status updated successfully",
+    });
+  } catch (err) {
+    console.error("❌ Update payment status error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
 }
 
-/* ============================================================
-   STATUS BADGES
-============================================================ */
-function StatusBadge({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    approved: "bg-green-500/20 text-green-400",
-    rejected: "bg-red-500/20 text-red-400",
-    pending: "bg-yellow-500/20 text-yellow-400",
-  };
-  return (
-    <span className={`px-3 py-1 rounded-full text-xs ${colors[status] || "bg-white/10 text-gray-400"}`}>
-      {status || "—"}
-    </span>
-  );
+/* =========================
+   REGISTER FOR EVENT (SINGLE-STEP, non-paper-presentation)
+========================= */
+export async function registerForEvent(req, res) {
+  try {
+    console.log("========== NEW REGISTRATION ==========");
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+
+    const data = req.body;
+    const screenshot = req.file;
+
+    if (!screenshot) {
+      return res.status(400).json({
+        success: false,
+        message: "Payment screenshot is required",
+      });
+    }
+
+    const requiredFields = [
+      "fullName",
+      "registerNumber",
+      "email",
+      "phoneNumber",
+      "collegeName",
+      "branch",
+      "studyYear",
+      "transactionId",
+      "eventName",
+    ];
+
+    for (const field of requiredFields) {
+      if (!data[field]) {
+        return res.status(400).json({
+          success: false,
+          message: `${field} is missing`,
+        });
+      }
+    }
+
+    const eventData = await EventModel.findOne({ eventName: data.eventName });
+    if (!eventData) {
+      return res.status(404).json({ success: false, message: "Event not found" });
+    }
+
+    const txnExists = await RegistrationModel.findOne({ transactionId: data.transactionId });
+    if (txnExists) {
+      return res.status(400).json({ success: false, message: "Transaction ID already used" });
+    }
+
+    const alreadyRegistered = await RegistrationModel.findOne({
+      email: data.email,
+      eventId: eventData._id,
+    });
+    if (alreadyRegistered) {
+      return res.status(400).json({ success: false, message: "You are already registered for this event" });
+    }
+
+    const savedRegistration = await RegistrationModel.create({
+      fullName: data.fullName,
+      registerNumber: data.registerNumber,
+      email: data.email,
+      phone: data.phoneNumber,
+      collegeName: data.collegeName,
+      department: data.branch,
+      year: data.studyYear,
+      transactionId: data.transactionId,
+      eventId: eventData._id,
+      eventName: eventData.eventName,
+      paymentScreenshot: screenshot.path,
+      paymentScreenshotId: screenshot.filename,
+      registrationStatus: "registered",
+      paymentStatus: "pending",
+      abstractStatus: "not_required",
+      // Member 2 (for team events other than paper-presentation)
+      memberCount: data.member2_fullName ? 2 : 1,
+      member2: data.member2_fullName
+        ? {
+          fullName: data.member2_fullName,
+          registerNumber: data.member2_registerNumber,
+          phoneNumber: data.member2_phoneNumber,
+          email: data.member2_email,
+          collegeName: data.member2_collegeName,
+          branch: data.member2_branch,
+          studyYear: data.member2_studyYear,
+        }
+        : undefined,
+    });
+
+    console.log("✅ Registration saved:", savedRegistration);
+
+    return res.json({
+      success: true,
+      message: "Registration submitted for verification",
+      data: savedRegistration,
+    });
+  } catch (err) {
+    console.error("❌ Registration error:", err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
 }
 
-function AbstractStatusBadge({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    pending: "bg-yellow-500/20 text-yellow-400",
-    accepted: "bg-emerald-500/20 text-emerald-400",
-    rejected: "bg-red-500/20 text-red-400",
-    not_required: "bg-white/10 text-gray-400",
-  };
-  const labels: Record<string, string> = {
-    pending: "Under Review",
-    accepted: "Accepted",
-    rejected: "Rejected",
-    not_required: "N/A",
-  };
-  return (
-    <span className={`px-3 py-1 rounded-full text-xs ${colors[status] || "bg-white/10 text-gray-400"}`}>
-      {labels[status] || status}
-    </span>
-  );
+/* =========================
+   SUBMIT ABSTRACT (Paper Presentation — Step 1)
+========================= */
+export async function submitAbstract(req, res) {
+  try {
+    console.log("========== ABSTRACT SUBMISSION ==========");
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+
+    const data = req.body;
+    const abstractFile = req.file;
+
+    if (!abstractFile) {
+      return res.status(400).json({
+        success: false,
+        message: "Abstract file is required",
+      });
+    }
+
+    const requiredFields = [
+      "fullName", "registerNumber", "email",
+      "phoneNumber", "collegeName", "branch", "studyYear", "eventName",
+    ];
+
+    for (const field of requiredFields) {
+      if (!data[field]) {
+        return res.status(400).json({ success: false, message: `${field} is missing` });
+      }
+    }
+
+    const eventData = await EventModel.findOne({ eventName: data.eventName });
+    if (!eventData) {
+      return res.status(404).json({ success: false, message: "Event not found" });
+    }
+
+    // Check if already submitted an abstract for this event
+    const alreadySubmitted = await RegistrationModel.findOne({
+      email: data.email,
+      eventId: eventData._id,
+    });
+    if (alreadySubmitted) {
+      // Return the existing registration ID so the user can track status
+      return res.json({
+        success: true,
+        message: "Already submitted",
+        registrationId: alreadySubmitted._id,
+        abstractStatus: alreadySubmitted.abstractStatus,
+      });
+    }
+
+    const memberCount = parseInt(data.memberCount) || 1;
+
+    const savedRegistration = await RegistrationModel.create({
+      fullName: data.fullName,
+      registerNumber: data.registerNumber,
+      email: data.email,
+      phone: data.phoneNumber,
+      collegeName: data.collegeName,
+      department: data.branch,
+      year: data.studyYear,
+      teamName: data.teamName || undefined,
+      eventId: eventData._id,
+      eventName: eventData.eventName,
+      abstractFile: abstractFile.path,
+      abstractFileId: abstractFile.filename,
+      abstractStatus: "pending",
+      registrationStatus: "registered",
+      paymentStatus: "pending",
+      memberCount,
+      member2: memberCount === 2
+        ? {
+          fullName: data.member2_fullName,
+          registerNumber: data.member2_registerNumber,
+          phoneNumber: data.member2_phoneNumber,
+          email: data.member2_email,
+          collegeName: data.member2_collegeName,
+          branch: data.member2_branch,
+          studyYear: data.member2_studyYear,
+        }
+        : undefined,
+    });
+
+    console.log("✅ Abstract submitted:", savedRegistration._id);
+
+    return res.json({
+      success: true,
+      message: "Abstract submitted successfully. Awaiting review.",
+      registrationId: savedRegistration._id,
+    });
+  } catch (err) {
+    console.error("❌ Abstract submission error:", err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+/* =========================
+   CHECK ABSTRACT STATUS (Paper Presentation)
+========================= */
+export async function checkAbstractStatus(req, res) {
+  try {
+    const { id } = req.query;
+
+    if (!id) {
+      return res.status(400).json({ success: false, message: "Registration ID is required" });
+    }
+
+    const reg = await RegistrationModel.findById(id).select(
+      "abstractStatus email fullName eventName paymentStatus transactionId"
+    );
+
+    if (!reg) {
+      return res.status(404).json({ success: false, message: "Registration not found" });
+    }
+
+    return res.json({
+      success: true,
+      abstractStatus: reg.abstractStatus,
+      paymentStatus: reg.paymentStatus,
+      email: reg.email,
+      fullName: reg.fullName,
+      eventName: reg.eventName,
+    });
+  } catch (err) {
+    console.error("❌ Check abstract status error:", err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+/* =========================
+   COMPLETE PAYMENT (Paper Presentation — Step 2)
+========================= */
+export async function completePayment(req, res) {
+  try {
+    console.log("========== COMPLETE PAYMENT ==========");
+    const data = req.body;
+    const screenshot = req.file;
+
+    if (!screenshot) {
+      return res.status(400).json({ success: false, message: "Payment screenshot is required" });
+    }
+
+    const { registrationId, transactionId } = data;
+
+    if (!registrationId || !transactionId) {
+      return res.status(400).json({ success: false, message: "Registration ID and transaction ID are required" });
+    }
+
+    const reg = await RegistrationModel.findById(registrationId);
+    if (!reg) {
+      return res.status(404).json({ success: false, message: "Registration not found" });
+    }
+
+    if (reg.abstractStatus !== "accepted") {
+      return res.status(403).json({
+        success: false,
+        message: "Abstract has not been accepted yet. Payment is not allowed.",
+      });
+    }
+
+    if (reg.transactionId) {
+      return res.status(400).json({ success: false, message: "Payment already submitted" });
+    }
+
+    // Check duplicate transaction ID globally
+    const txnExists = await RegistrationModel.findOne({ transactionId });
+    if (txnExists) {
+      return res.status(400).json({ success: false, message: "Transaction ID already used" });
+    }
+
+    reg.transactionId = transactionId;
+    reg.paymentScreenshot = screenshot.path;
+    reg.paymentScreenshotId = screenshot.filename;
+    reg.paymentStatus = "pending";
+    await reg.save();
+
+    console.log("✅ Payment completed for:", registrationId);
+
+    return res.json({
+      success: true,
+      message: "Payment submitted for verification",
+    });
+  } catch (err) {
+    console.error("❌ Complete payment error:", err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+/* =========================
+   UPDATE ABSTRACT STATUS (Admin Action)
+========================= */
+export async function updateAbstractStatus(req, res) {
+  try {
+    const { registrationId, abstractStatus, email, fullName, eventName } = req.body;
+
+    if (!registrationId || !abstractStatus) {
+      return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
+
+    const validStatuses = ["accepted", "rejected"];
+    if (!validStatuses.includes(abstractStatus)) {
+      return res.status(400).json({ success: false, message: "Invalid abstract status" });
+    }
+
+    const updated = await RegistrationModel.findByIdAndUpdate(
+      registrationId,
+      { abstractStatus },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ success: false, message: "Registration not found" });
+    }
+
+    // Collect all member emails to notify
+    const emailTargets = [{ to: email, fullName }];
+    if (updated.member2?.email) {
+      emailTargets.push({ to: updated.member2.email, fullName: updated.member2.fullName || fullName });
+    }
+
+    if (abstractStatus === "accepted") {
+      for (const target of emailTargets) {
+        try {
+          await abstractAcceptedMail({ to: target.to, fullName: target.fullName, eventName });
+          console.log(`✅ Abstract acceptance mail sent to ${target.to}`);
+        } catch (mailErr) {
+          console.error("❌ Abstract acceptance mail failed:", mailErr.message);
+        }
+      }
+    } else if (abstractStatus === "rejected") {
+      for (const target of emailTargets) {
+        try {
+          await abstractRejectedMail({ to: target.to, fullName: target.fullName, eventName });
+          console.log(`✅ Abstract rejection mail sent to ${target.to}`);
+        } catch (mailErr) {
+          console.error("❌ Abstract rejection mail failed:", mailErr.message);
+        }
+      }
+    }
+
+    return res.json({ success: true, message: `Abstract ${abstractStatus} successfully` });
+  } catch (err) {
+    console.error("❌ Update abstract status error:", err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
 }
