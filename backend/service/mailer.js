@@ -350,7 +350,7 @@ export async function transactionRejectedMail({ to, fullName }) {
         </p>
 
         <div style="margin-top:30px; padding:20px; background:#020617; border:1px solid #1e293b; border-radius:14px;">
-          <p style="margin-top:0; color:#22d3ee; font-size:14px; font-weight:bold;">Need help? Contact our coordinators:</p>
+          <p style="margin-top:0; color:#22d3ee; font-size:14px; font-weight:bold;">Need help? Contact our Website incharges:</p>
           
           <table width="100%" cellspacing="0" cellpadding="0" style="font-size:13px; color:#cbd5e1; line-height:1.5;">
             <tr>
