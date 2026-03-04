@@ -16,26 +16,60 @@ const registrationSchema = new Schema(
 
     eventName: { type: String, required: true },
     department: { type: String },
-    //year: { type: Number, min: 1, max: 5 },
-     // 🔁 changed from Number to String
     year: { type: String },
 
+    /* =====================
+       MEMBER (TEAM) FIELDS
+    ===================== */
+    memberCount: {
+      type: Number,
+      enum: [1, 2],
+      default: 1,
+    },
+
+    member2: {
+      fullName: { type: String },
+      registerNumber: { type: String },
+      phoneNumber: { type: String },
+      email: { type: String },
+      collegeName: { type: String },
+      branch: { type: String },
+      studyYear: { type: String },
+    },
+
+    /* =====================
+       ABSTRACT (PAPER PRESENTATION)
+    ===================== */
+    abstractFile: { type: String },        // Cloudinary URL
+    abstractFileId: { type: String },      // Cloudinary public_id
+    abstractStatus: {
+      type: String,
+      enum: ["not_required", "pending", "accepted", "rejected"],
+      default: "not_required",
+    },
+
+    /* =====================
+       REGISTRATION STATUS
+    ===================== */
     registrationStatus: {
       type: String,
       enum: ["registered", "cancelled", "attended"],
       default: "registered"
     },
 
+    /* =====================
+       PAYMENT FIELDS
+       (optional — filled in step 2 for paper-presentation)
+    ===================== */
     paymentStatus: {
       type: String,
-      enum: ["pending", "paid"],
+      enum: ["pending", "approved", "rejected"],
       default: "pending"
     },
 
-    transactionId: { type: String, unique: true },
-
-    paymentScreenshot: { type: String, required: true },
-    paymentScreenshotId: { type: String, required: true }
+    transactionId: { type: String, sparse: true },   // not unique-required for paper-pres step1
+    paymentScreenshot: { type: String },
+    paymentScreenshotId: { type: String },
   },
   { timestamps: true }
 );
