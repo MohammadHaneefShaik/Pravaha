@@ -35,6 +35,24 @@ const technicalTeams = [
         organizers: ["R. Jagadeesh", "K. Akhilesh Kumar", "G. Harika", "K. Lohitha", "M. Manoj Kumar", "M. Md. Faiz", "C. Ravi Shankar", "S. Hemalatha"],
         mobiles: ["9014334564", "9710101373", "7380987890", "9550844818", "9441155518", "9030314289", "6309441460", "9110381734"],
     },
+      {
+        sno: 6,
+        team: "CIRCUIT TWISTING",
+        organizers: ["R. Jagadeesh", "K. Akhilesh Kumar", "G. Harika", "K. Lohitha", "M. Manoj Kumar", "M. Md. Faiz", "C. Ravi Shankar", "S. Hemalatha"],
+        mobiles: ["9014334564", "9710101373", "7380987890", "9550844818", "9441155518", "9030314289", "6309441460", "9110381734"],
+    },
+      {
+        sno: 7,
+        team: "LOGO CRAFT",
+        organizers: ["R. Jagadeesh", "K. Akhilesh Kumar", "G. Harika", "K. Lohitha", "M. Manoj Kumar", "M. Md. Faiz", "C. Ravi Shankar", "S. Hemalatha"],
+        mobiles: ["9014334564", "9710101373", "7380987890", "9550844818", "9441155518", "9030314289", "6309441460", "9110381734"],
+    },
+      {
+        sno: 8,
+        team: "EV SPARK",
+        organizers: ["R. Jagadeesh", "K. Akhilesh Kumar", "G. Harika", "K. Lohitha", "M. Manoj Kumar", "M. Md. Faiz", "C. Ravi Shankar", "S. Hemalatha"],
+        mobiles: ["9014334564", "9710101373", "7380987890", "9550844818", "9441155518", "9030314289", "6309441460", "9110381734"],
+    },
 ];
 
 
