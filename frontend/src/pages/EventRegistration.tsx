@@ -42,6 +42,7 @@ const EventRegistration = () => {
   const [ppStep, setPpStep] = useState<"form" | "pending" | "accepted" | "rejected">("form");
   const [storedRegId, setStoredRegId] = useState<string | null>(null);
   const [memberCount, setMemberCount] = useState<1 | 2>(1);
+  const [teamName, setTeamName] = useState("");
   const [abstractFile, setAbstractFile] = useState<File | null>(null);
   const [ppSubmitting, setPpSubmitting] = useState(false);
 
@@ -121,6 +122,7 @@ const EventRegistration = () => {
     });
     fd.append("eventName", event.eventName);
     fd.append("memberCount", String(memberCount));
+    if (teamName) fd.append("teamName", teamName);
     fd.append("abstract", abstractFile);
 
     if (memberCount === 2) {
@@ -366,14 +368,26 @@ const EventRegistration = () => {
                 <span className="text-sm text-muted-foreground font-medium">Member Details &amp; Abstract Upload</span>
               </div>
 
-              {/* Member count toggle */}
+              {/* Team Name */}
+              <div>
+                <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mb-2">
+                  🏷️ Team Name
+                </p>
+                <input
+                  placeholder="Team Name (e.g. Tech Titans)"
+                  value={teamName}
+                  onChange={(e) => setTeamName(e.target.value)}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              </div>
+
               <div className="flex gap-3 mb-1">
                 <button
                   type="button"
                   onClick={() => setMemberCount(1)}
                   className={`flex-1 py-2.5 rounded-lg border text-sm font-medium transition ${memberCount === 1
-                      ? "border-cyan-400 text-cyan-400 bg-cyan-400/10"
-                      : "border-border text-muted-foreground hover:border-cyan-400/50"
+                    ? "border-cyan-400 text-cyan-400 bg-cyan-400/10"
+                    : "border-border text-muted-foreground hover:border-cyan-400/50"
                     }`}
                 >
                   👤 1 Member
@@ -382,8 +396,8 @@ const EventRegistration = () => {
                   type="button"
                   onClick={() => setMemberCount(2)}
                   className={`flex-1 py-2.5 rounded-lg border text-sm font-medium transition ${memberCount === 2
-                      ? "border-cyan-400 text-cyan-400 bg-cyan-400/10"
-                      : "border-border text-muted-foreground hover:border-cyan-400/50"
+                    ? "border-cyan-400 text-cyan-400 bg-cyan-400/10"
+                    : "border-border text-muted-foreground hover:border-cyan-400/50"
                     }`}
                 >
                   👥 2 Members
