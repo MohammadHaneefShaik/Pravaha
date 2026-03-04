@@ -195,7 +195,8 @@ const EventRegistration = () => {
             {/* Member Fields Helper */}
             {(() => {
               const memberFields = [
-                { label: "Full Name", key: "fullName" },
+                { label: "Name of participant 1", key: "fullName" },
+                { label: "Name of participant 2", key: "fullName" },
                 { label: "Register Number", key: "registerNumber" },
                 { label: "Phone Number", key: "phoneNumber" },
                 { label: "Email", key: "email" },
@@ -205,47 +206,8 @@ const EventRegistration = () => {
               ];
               return (
                 <>
-                  {/* Member 1 */}
-                  {isTeamEvent && (
-                    <p className="text-cyan-400 font-semibold text-sm sm:text-base border-b border-border pb-1">
-                      👤 Member 1
-                    </p>
-                  )}
-                  {memberFields.map((field) => (
-                    <input
-                      key={field.key}
-                      placeholder={field.label}
-                      required
-                      onChange={(e) =>
-                        setFormData({ ...formData, [field.key]: e.target.value })
-                      }
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
-                    />
-                  ))}
-
-                  {/* Member 2 — only for team events */}
-                  {isTeamEvent && (
-                    <>
-                      <p className="text-cyan-400 font-semibold text-sm sm:text-base border-b border-border pb-1 mt-2">
-                        👤 Member 2
-                      </p>
-                      {memberFields.map((field) => (
-                        <input
-                          key={`m2-${field.key}`}
-                          placeholder={field.label}
-                          required
-                          onChange={(e) =>
-                            setMember2({ ...member2, [field.key]: e.target.value })
-                          }
-                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
-                        />
-                      ))}
-                    </>
-                  )}
-                </>
-              );
-            })()}
-
+              
+               
             {/* Payment Section */}
             <div className="bg-secondary/20 border border-border rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 text-center space-y-4">
 
