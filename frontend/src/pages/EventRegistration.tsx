@@ -18,6 +18,7 @@ const EventRegistration = () => {
 
   const [formData, setFormData] = useState({
     fullName: "",
+    fullName: "",
     registerNumber: "",
     email: "",
     phoneNumber: "",
@@ -25,16 +26,6 @@ const EventRegistration = () => {
     branch: "",
     studyYear: "",
     transactionId: "",
-  });
-
-  const [member2, setMember2] = useState({
-    fullName: "",
-    registerNumber: "",
-    phoneNumber: "",
-    email: "",
-    collegeName: "",
-    branch: "",
-    studyYear: "",
   });
 
   const [file, setFile] = useState<File | null>(null);
