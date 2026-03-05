@@ -228,13 +228,23 @@ export default function AdminDashboard() {
                       <td>
                         <StatusBadge status={reg.paymentStatus} />
                       </td>
-                      <td>
-                        {reg.paymentScreenshot ? (
-                          <img src={reg.paymentScreenshot} className="w-12 rounded" alt="proof" />
-                        ) : (
-                          <span className="text-xs text-gray-500">—</span>
-                        )}
-                      </td>
+                     <td>
+  {reg.paymentScreenshot ? (
+    <a
+      href={reg.paymentScreenshot}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src={reg.paymentScreenshot}
+        className="w-12 rounded cursor-pointer hover:scale-110 transition"
+        alt="payment proof"
+      />
+    </a>
+  ) : (
+    <span className="text-xs text-gray-500">—</span>
+  )}
+</td>
                       <td>
                         <div className="flex gap-2">
                           <button
