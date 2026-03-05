@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
 
-
-
+/* ─────────────────────────────────────────
+   DATA
+───────────────────────────────────────── */
 
 const technicalTeams = [
-     {
+    {
         sno: 1,
         team: "PAPER PRESENTATION",
         organizers: ["S.MD.Arif", "V.Mounesh", "N.Ayyappa Reddy", "K.Venkata Harini", "Y.Vishwanth", "S.Salman"],
@@ -63,7 +64,6 @@ const technicalTeams = [
     },
 ];
 
-
 const additionalTeams = [
     {
         sno: 1,
@@ -84,7 +84,7 @@ const additionalTeams = [
         mobiles: ["6309595189", "9391434805", "6281001271", "6309291020", "8347796637", "8142325962", "9177448808"],
     },
     {
-        sno: 5,
+        sno: 4,
         team: "RANGOLI",
         organizers: ["J. Ruparani", "B. Manasa", "D. Saneha", "B. Namitha"],
         mobiles: ["9963685388", "9963678138", "9003117271", "8125874816"],
@@ -150,7 +150,6 @@ const Committee = () => {
         <Layout>
             {/* ── HERO ── */}
             <section className="pt-24 sm:pt-32 pb-10 text-center px-4 sm:px-6 relative overflow-hidden">
-                {/* decorative glows */}
                 <div className="absolute inset-0 -z-10 overflow-hidden">
                     <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
                 </div>
@@ -173,10 +172,10 @@ const Committee = () => {
             </section>
 
             {/* ══════════════════════════════════════
-          3. TECHNICAL TEAM ORGANIZERS
+          TECHNICAL TEAM ORGANIZERS
       ══════════════════════════════════════ */}
             <section className="py-10 px-4 sm:px-6">
-                <div className="container mx-auto max-w-5xl">
+                <div className="container mx-auto max-w-6xl">
                     <SectionHeading title="Technical Team Organizers" />
                     <motion.div
                         initial="hidden"
@@ -191,6 +190,7 @@ const Committee = () => {
                                     <Th>Team</Th>
                                     <Th>Student Organizers</Th>
                                     <Th>Mobile</Th>
+                                    <Th>Committee Head</Th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -214,8 +214,13 @@ const Committee = () => {
                                             ))}
                                         </Td>
                                         <Td>
-                                            {t.mobiles.map((m, j) => (
+                                            {t.mobiles.filter(m => m !== "").map((m, j) => (
                                                 <div key={j}>{m}</div>
+                                            ))}
+                                        </Td>
+                                        <Td>
+                                            {t.committeeHead.map((h, j) => (
+                                                <div key={j} className="font-medium text-foreground/80">{h}</div>
                                             ))}
                                         </Td>
                                     </motion.tr>
@@ -227,10 +232,10 @@ const Committee = () => {
             </section>
 
             {/* ══════════════════════════════════════
-          5. ADDITIONAL TEAM ORGANIZERS
+          ADDITIONAL TEAM ORGANIZERS
       ══════════════════════════════════════ */}
             <section className="py-10 pb-20 px-4 sm:px-6">
-                <div className="container mx-auto max-w-5xl">
+                <div className="container mx-auto max-w-6xl">
                     <SectionHeading title="Additional Team Organizers" />
                     <motion.div
                         initial="hidden"
@@ -284,4 +289,3 @@ const Committee = () => {
 };
 
 export default Committee;
-
