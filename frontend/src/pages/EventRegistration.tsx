@@ -90,6 +90,7 @@ const EventRegistration = () => {
           if (data.abstractStatus === "accepted") {
             // Check if payment was already completed
             if (data.paymentStatus === "approved") {
+               localStorage.removeItem(STORAGE_KEY); // clear so next visit shows form
               setSubmitted(true);
             } else {
               setPpStep("accepted");
