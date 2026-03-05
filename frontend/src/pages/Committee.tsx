@@ -5,56 +5,63 @@ import Layout from "@/components/layout/Layout";
 
 
 const technicalTeams = [
-    {
+     {
         sno: 1,
-        team: "BATTLE OF IDEAZ",
-        organizers: ["E.Akshya", "V.Vishnupriya", "D.Sneha", "B.Krishna Mohan"],
-        mobiles: ["6309860285", "9480058809", "9000197214", "8919075558"],
+        team: "PAPER PRESENTATION",
+        organizers: ["S.MD.Arif", "V.Mounesh", "N.Ayyappa Reddy", "K.Venkata Harini", "Y.Vishwanth", "S.Salman"],
+        mobiles: ["9398875293", "7569359885", "6300672089", "8374068843", "7893676810", ""],
+        committeeHead: ["Dr.D.Lenine", "Mr.T.Ashok Kumar", "Mr.G.Siva Krishna"],
     },
     {
         sno: 2,
-        team: "BLUE PRINT",
-        organizers: ["A.Sinduja", "N.Sreelakha", "C.Harashavardan Reddy", "K.Poojitha", "C.Renuka"],
-        mobiles: ["8688322018", "8682147677", "8639166711", "9182185078", "7981533071", "9036773089"],
+        team: "POSTER PRESENTATION",
+        organizers: ["K.Chaitanya Kumar", "K.Santhosh Kumar", "Y.Jahnavi", "N.Bharath Kumar", "P.Harish Kumar Reddy", "T.Banu Deekshitha"],
+        mobiles: ["9390628457", "6302495127", "9398682670", "7989228310", "9014989985", ""],
+        committeeHead: ["Dr.J.Surya Kumari", "Dr.V.Narasimhulu"],
     },
     {
         sno: 3,
-        team: "PRAGMA",
-        organizers: ["C.Chandra Sekhar", "P.Shashavalli", "S.Hootamvelli", "B.Dhanush", "U.Harinath Reddy", "K.Bhanumanee"],
-        mobiles: ["7337512081", "9640770188", "7995849848", "9966066258", "9398503558", "9346008378"],
+        team: "PROJECT EXPO",
+        organizers: ["B.Swetha Dimpul", "S.Sindura", "V.Viswasipi", "P.Anand Bhupathi Raju", "C.Mohith Kumar", "P.Sreenivasulu"],
+        mobiles: ["8121295602", "8074442944", "6305146493", "8142254931", "6304843866", ""],
+        committeeHead: ["Mr.G.Kumara Swamy", "Mr.J.Nagarjuna Reddy"],
     },
     {
         sno: 4,
-        team: "TECHNOZEN",
-        organizers: ["G. Usha Rani", "E. Rajendra", "N. Lokesh", "Shalini", "M. Harshitha"],
-        mobiles: ["8978210119", "8978368532", "9398721622", "8839293358", "9346630966"],
+        team: "CODING",
+        organizers: ["P.Kathyayani", "D.Likith Kumar", "K.Arshad", "V.Siva Rama Krishna", "N.Venkata Narayana", "K.Ganesh"],
+        mobiles: ["9398020336", "9441066252", "8179479455", "9019069186", "8555822945", ""],
+        committeeHead: ["Mr.Y.Vijaya Suresh", "Mr.E.Narasimhulu"],
     },
     {
         sno: 5,
-        team: "CODATHON",
-        organizers: ["R. Jagadeesh", "K. Akhilesh Kumar", "G. Harika", "K. Lohitha", "M. Manoj Kumar", "M. Md. Faiz", "C. Ravi Shankar", "S. Hemalatha"],
-        mobiles: ["9014334564", "9710101373", "7380987890", "9550844818", "9441155518", "9030314289", "6309441460", "9110381734"],
-    },
-      {
-        sno: 6,
         team: "CIRCUIT TWISTING",
-        organizers: ["R. Jagadeesh", "K. Akhilesh Kumar", "G. Harika", "K. Lohitha", "M. Manoj Kumar", "M. Md. Faiz", "C. Ravi Shankar", "S. Hemalatha"],
-        mobiles: ["9014334564", "9710101373", "7380987890", "9550844818", "9441155518", "9030314289", "6309441460", "9110381734"],
+        organizers: ["R.Siva Nanda Reddy", "V.Pravallika", "G.Harsha Vardhan Reddy", "M.Prem Sudhakar", "C.VaraLakshmi", "S.Dilshad"],
+        mobiles: ["8309246760", "9182290655", "9059820609", "8977563727", "9063760676", ""],
+        committeeHead: ["Mr.P.Sai Sampath Kumar", "Mr.P.Sesi Kiran"],
     },
-      {
+    {
+        sno: 6,
+        team: "TECHNICAL QUIZ",
+        organizers: ["P.Firoza Shabnam", "M.Deepika", "P.Thimothy Babu", "P.Jagadish", "A.Khaja Hussain Khan", "V.Sireesha"],
+        mobiles: ["8500602016", "8978224811", "6301475328", "6304002005", "9949407041", ""],
+        committeeHead: ["Mr.E.Narasimhulu", "Mr.P.Kasi Rao", "Ms.G.Priyanaka"],
+    },
+    {
         sno: 7,
-        team: "LOGO CRAFT",
-        organizers: ["R. Jagadeesh", "K. Akhilesh Kumar", "G. Harika", "K. Lohitha", "M. Manoj Kumar", "M. Md. Faiz", "C. Ravi Shankar", "S. Hemalatha"],
-        mobiles: ["9014334564", "9710101373", "7380987890", "9550844818", "9441155518", "9030314289", "6309441460", "9110381734"],
+        team: "LOGO DESIGN",
+        organizers: ["S.MD.Umar Farook", "D.Bhavana", "T.Jagadeesh", "M.Trishanjali", "S.Salmi Omer", "I.Divyasree"],
+        mobiles: ["9014185582", "9440326488", "9515711467", "6303054035", "9676628270", ""],
+        committeeHead: ["Mr.R.Satish Kumar", "Mr.K.Prahalada Reddy"],
     },
-      {
+    {
         sno: 8,
         team: "EV SPARK",
-        organizers: ["R. Jagadeesh", "K. Akhilesh Kumar", "G. Harika", "K. Lohitha", "M. Manoj Kumar", "M. Md. Faiz", "C. Ravi Shankar", "S. Hemalatha"],
-        mobiles: ["9014334564", "9710101373", "7380987890", "9550844818", "9441155518", "9030314289", "6309441460", "9110381734"],
+        organizers: ["P.Firoz Khan", "D.M.Hemanth", "A.Ramana", "M.Suveni", "K.Ram Charan", "S.Afreen"],
+        mobiles: ["9133715935", "8333855162", "6303881354", "8519926820", "7386987505", ""],
+        committeeHead: ["Dr.V.Naga Bhaskar Reddy", "Dr.A.Suresh Kumar", "Mr.K.Prahalada Reddy"],
     },
 ];
-
 
 
 const additionalTeams = [
