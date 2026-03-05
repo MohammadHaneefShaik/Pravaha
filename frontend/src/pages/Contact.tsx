@@ -6,18 +6,26 @@ const coordinators = {
   faculty: [
     {
       name: "Dr. D.Lenine",
-      role: " Professor, EEE",
+      role: "Professor, EEE",
       phone: "+91 9866723784",
       email: "Lenine@rgmcet.edu.in",
     },
     {
-      name: "Mr.Y.Vijaya Suresh",
+      name: "Mr. Y.Vijaya Suresh",
       role: "Associate Professor, EEE",
       phone: "+91 9441243353",
       email: "vijayasuresh@rgmcet.edu.in",
     },
   ],
-  };
+  students: [
+    { name: "P.Firoza Shabnam", phone: "+91 8500602016" },
+    { name: "P.Firoz Khan", phone: "+91 9133715935" },
+    { name: "R.Siva Nanda Reddy", phone: "+91 8309246760" },
+    { name: "B.Swetha Dimpul", phone: "+91 8121295602" },
+    { name: "S.MD.Arif", phone: "+91 9398875293" },
+    { name: "S.MD.Umar Farook", phone: "+91 9014185582" },
+  ],
+};
 
 const Contact = () => {
   return (
@@ -43,7 +51,7 @@ const Contact = () => {
       {/* Organizer Directory */}
       <section className="pb-20">
         <div className="container mx-auto px-4 max-w-5xl">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -52,7 +60,9 @@ const Contact = () => {
             {/* Faculty Section */}
             <div className="space-y-8">
               <div className="flex items-center gap-4">
-                <h3 className="text-2xl font-orbitron font-bold text-foreground uppercase tracking-wider">Faculty Leads</h3>
+                <h3 className="text-2xl font-orbitron font-bold text-foreground uppercase tracking-wider">
+                  Faculty Leads
+                </h3>
                 <div className="h-[1px] flex-1 bg-gradient-to-r from-border to-transparent"></div>
               </div>
               <div className="grid gap-6">
@@ -61,11 +71,45 @@ const Contact = () => {
                 ))}
               </div>
             </div>
+
+            {/* Student Coordinators Section */}
+            <div className="space-y-8">
+              <div className="flex items-center gap-4">
+                <h3 className="text-2xl font-orbitron font-bold text-foreground uppercase tracking-wider">
+                  Student Coordinators
+                </h3>
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-border to-transparent"></div>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {coordinators.students.map((coord, i) => (
+                  <div
+                    key={i}
+                    className="p-5 rounded-2xl bg-card/30 border border-border flex items-center justify-between gap-4 hover:bg-card/60 hover:border-primary/40 transition-all group backdrop-blur-sm"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-xl bg-primary/10 text-primary">
+                        <User className="w-5 h-5" />
+                      </div>
+                      <p className="font-bold text-foreground group-hover:text-primary transition-colors text-sm">
+                        {coord.name}
+                      </p>
+                    </div>
+                    <a
+                      href={`tel:${coord.phone}`}
+                      className="flex items-center gap-2 text-sm font-black bg-secondary hover:bg-primary hover:text-primary-foreground px-4 py-2 rounded-xl transition-all shadow uppercase tracking-wider whitespace-nowrap"
+                    >
+                      <Phone size={14} />
+                      {coord.phone}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
-            
-      {/* Communication Hub (Final Footer Contact) */}
+
+      {/* Communication Hub */}
       <section className="py-20 bg-secondary/10 border-t border-border/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -108,19 +152,24 @@ const Contact = () => {
   );
 };
 
-/* Internal Helper Component for Coordinator Rows */
-function CoordinatorRow({ coord, isFaculty }: { coord: any, isFaculty: boolean }) {
+/* Internal Helper Component for Faculty Coordinator Rows */
+function CoordinatorRow({ coord, isFaculty }: { coord: any; isFaculty: boolean }) {
   return (
     <div className="p-8 rounded-3xl bg-card/30 border border-border flex flex-col md:flex-row md:items-center justify-between gap-8 hover:bg-card/60 hover:border-primary/40 transition-all group backdrop-blur-sm">
       <div className="flex items-center gap-6">
-        <div className={`p-5 rounded-2xl shadow-inner ${isFaculty ? 'bg-cyan-500/10 text-cyan-400' : 'bg-primary/10 text-primary'}`}>
+        <div
+          className={`p-5 rounded-2xl shadow-inner ${isFaculty ? "bg-cyan-500/10 text-cyan-400" : "bg-primary/10 text-primary"
+            }`}
+        >
           {isFaculty ? <Briefcase className="w-7 h-7" /> : <User className="w-7 h-7" />}
         </div>
         <div>
           <p className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
             {coord.name}
           </p>
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-[0.2em] mt-1">{coord.role}</p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-[0.2em] mt-1">
+            {coord.role}
+          </p>
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-4">
