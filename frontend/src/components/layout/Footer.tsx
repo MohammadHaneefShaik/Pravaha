@@ -50,14 +50,14 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               {[
-                "Paper Presentation",
-                "Poster Presentation",
-                "Technical Quiz",
-                "EV Spark",
-                "Project Expo",
-                "Coding",
-                "Circuit Twisting",
-                "Logo Design",
+                "BATTLE OF IDEAZ",
+                "PRAGMA",
+                "BLUE PRINT",
+                "TECHNOZEN",
+                "CODETHON",
+                "CIRCUIT TWISTING",
+                "LOGO DESIGN",
+                 "EV SPARK",
               ].map((item) => (
                 <li key={item}>
                   <Link
