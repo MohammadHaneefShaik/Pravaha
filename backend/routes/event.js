@@ -15,7 +15,7 @@ router.get("/:slug", async (req, res) => {
   console.log("SLUG RECEIVED:", req.params.slug);
   console.log("MONGO HOST:", mongoose.connection.host);
 
-  const event = await Event.findOne({ slug: req.params.slug });
+  const event = await Event.findOne({ slug: { $regex: `^${req.params.slug}$`, $options: "i" } });
 
   console.log("EVENT FOUND:", event);
 
