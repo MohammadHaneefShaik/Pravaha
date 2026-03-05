@@ -1,9 +1,8 @@
-
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { motion, AnimatePresence } from "framer-motion";
-import { Upload, CreditCard, FileText, CheckCircle, Clock, XCircle } from "lucide-react";
+import { CreditCard, FileText, CheckCircle, Clock, XCircle } from "lucide-react";
 import { QRCodeCanvas } from "qrcode.react";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -28,6 +27,73 @@ const emptyMember = {
 };
 
 /* ============================================================
+  ANIMATED LOADING SPINNER
+============================================================ */
+const PageLoader = () => (
+  <div className="min-h-screen flex flex-col items-center justify-center bg-[#050814] gap-6">
+    <div className="relative w-20 h-20">
+      {/* Outer ring */}
+      <motion.div
+        className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-400"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+      />
+      {/* Middle ring */}
+      <motion.div
+        className="absolute inset-2 rounded-full border-4 border-transparent border-t-emerald-400"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+      />
+      {/* Inner dot */}
+      <motion.div
+        className="absolute inset-6 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400"
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
+    <motion.p
+      className="text-sm text-muted-foreground tracking-widest uppercase"
+      animate={{ opacity: [0.4, 1, 0.4] }}
+      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+    >
+      Loading event…
+    </motion.p>
+  </div>
+);
+
+/* ============================================================
+  SUBMISSION OVERLAY
+============================================================ */
+const SubmitOverlay = ({ label = "Submitting…" }: { label?: string }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050814]/80 backdrop-blur-sm gap-6"
+  >
+    <div className="relative w-16 h-16">
+      <motion.div
+        className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-400"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div
+        className="absolute inset-2 rounded-full border-4 border-transparent border-t-emerald-400"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
+      />
+    </div>
+    <motion.p
+      className="text-white text-sm font-semibold tracking-wider"
+      animate={{ opacity: [0.5, 1, 0.5] }}
+      transition={{ duration: 1.2, repeat: Infinity }}
+    >
+      {label}
+    </motion.p>
+  </motion.div>
+);
+
+/* ============================================================
   MAIN COMPONENT
 ============================================================ */
 const EventRegistration = () => {
@@ -38,23 +104,23 @@ const EventRegistration = () => {
 
   const isPaperPresentation = slug === "paper-presentation";
   const isProjectExpo = slug === "project-Expo"; // 2-member, no abstract, has project title
-  const isTeamEvent = isProjectExpo; // alias kept for backward compat
+  const isTeamEvent = isProjectExpo;
 
   /* ---- Paper Presentation state ---- */
   const [ppStep, setPpStep] = useState<"form" | "pending" | "accepted" | "rejected">("form");
   const [storedRegId, setStoredRegId] = useState<string | null>(null);
-  const [memberCount, setMemberCount] = useState<1 | 2>(1);
   const [teamName, setTeamName] = useState("");
   const [abstractFile, setAbstractFile] = useState<File | null>(null);
   const [ppSubmitting, setPpSubmitting] = useState(false);
 
   /* ---- Project Expo state ---- */
   const [projectTitle, setProjectTitle] = useState("");
+  const [regularSubmitting, setRegularSubmitting] = useState(false);
 
   /* ---- Shared form state ---- */
   const [formData, setFormData] = useState({ ...emptyMember, transactionId: "" });
   const [member2, setMember2] = useState({ ...emptyMember });
-  const [file, setFile] = useState<File | null>(null); // payment screenshot
+  const [file, setFile] = useState<File | null>(null);
 
   const upiString = event
     ? `upi://pay?pa=${event.upiId}&pn=${event.eventName}&am=${event.price}&cu=INR`
@@ -93,9 +159,8 @@ const EventRegistration = () => {
       .then(data => {
         if (data.success) {
           if (data.abstractStatus === "accepted") {
-            // Check if payment was already completed
             if (data.paymentStatus === "approved") {
-              localStorage.removeItem(STORAGE_KEY); // clear so next visit shows form
+              localStorage.removeItem(STORAGE_KEY);
               setSubmitted(true);
             } else {
               setPpStep("accepted");
@@ -107,11 +172,12 @@ const EventRegistration = () => {
           }
         }
       })
-      .catch(() => { }); // silently fail — show form by default
+      .catch(() => { });
   }, [isPaperPresentation]);
 
   /* ============================================================
     SUBMIT ABSTRACT (Paper Presentation — Step 1)
+    Always 2 members
   ============================================================ */
   const handleAbstractSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,15 +193,14 @@ const EventRegistration = () => {
       if (key !== "transactionId") fd.append(key, value);
     });
     fd.append("eventName", event.eventName);
-    fd.append("memberCount", String(memberCount));
+    fd.append("memberCount", "2");
     if (teamName) fd.append("teamName", teamName);
     fd.append("abstract", abstractFile);
 
-    if (memberCount === 2) {
-      Object.entries(member2).forEach(([key, value]) => {
-        fd.append(`member2_${key}`, value);
-      });
-    }
+    // Always include member 2
+    Object.entries(member2).forEach(([key, value]) => {
+      fd.append(`member2_${key}`, value);
+    });
 
     try {
       const res = await fetch(`${API_URL}/api/user/submitAbstract`, {
@@ -172,6 +237,7 @@ const EventRegistration = () => {
       return;
     }
 
+    setPpSubmitting(true);
     const fd = new FormData();
     fd.append("registrationId", storedRegId!);
     fd.append("transactionId", formData.transactionId);
@@ -182,6 +248,7 @@ const EventRegistration = () => {
       body: fd,
     });
     const data = await res.json();
+    setPpSubmitting(false);
 
     if (data.success) {
       localStorage.removeItem(STORAGE_KEY);
@@ -202,6 +269,7 @@ const EventRegistration = () => {
       return;
     }
 
+    setRegularSubmitting(true);
     const fd = new FormData();
     Object.entries(formData).forEach(([key, value]) => fd.append(key, value));
     fd.append("eventName", event.eventName);
@@ -209,9 +277,10 @@ const EventRegistration = () => {
     if (isProjectExpo) {
       if (!projectTitle.trim()) {
         alert("Please enter your project title.");
+        setRegularSubmitting(false);
         return;
       }
-      fd.append("teamName", projectTitle); // reuse teamName field for project title
+      fd.append("teamName", projectTitle);
       Object.entries(member2).forEach(([key, value]) =>
         fd.append(`member2_${key}`, value)
       );
@@ -224,6 +293,7 @@ const EventRegistration = () => {
       body: fd,
     });
     const data = await res.json();
+    setRegularSubmitting(false);
 
     if (data.success) {
       setSubmitted(true);
@@ -235,10 +305,24 @@ const EventRegistration = () => {
   /* ============================================================
     LOADING
   ============================================================ */
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center text-center py-20 text-muted-foreground">
-      Loading...
-    </div>
+  if (loading) return <PageLoader />;
+
+  /* ============================================================
+    EVENT NOT FOUND
+  ============================================================ */
+  if (!event) return (
+    <Layout>
+      <div className="min-h-screen flex items-center justify-center text-center py-20 px-4">
+        <div>
+          <p className="text-4xl mb-4">😕</p>
+          <h1 className="text-2xl font-bold mb-2">Event Not Found</h1>
+          <p className="text-muted-foreground mb-6">This event doesn't exist or is no longer available.</p>
+          <a href="/events" className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-semibold">
+            Browse Events
+          </a>
+        </div>
+      </div>
+    </Layout>
   );
 
   /* ============================================================
@@ -341,6 +425,13 @@ const EventRegistration = () => {
   ============================================================ */
   return (
     <Layout>
+      {/* Submission overlay */}
+      <AnimatePresence>
+        {(ppSubmitting || regularSubmitting) && (
+          <SubmitOverlay label={isPaperPresentation ? "Submitting abstract…" : "Submitting registration…"} />
+        )}
+      </AnimatePresence>
+
       <section className="pt-24 sm:pt-32 pb-12 sm:pb-20 bg-gradient-to-b from-background to-card/30">
         <div className="container mx-auto px-4 sm:px-6 max-w-2xl">
 
@@ -358,7 +449,7 @@ const EventRegistration = () => {
             </p>
             {isPaperPresentation && (
               <p className="text-cyan-400 mt-1 text-sm font-medium">
-                📄 Submit your abstract to register
+                📄 Submit your abstract to register &nbsp;·&nbsp; 👥 2 Members
               </p>
             )}
             {isProjectExpo && (
@@ -370,6 +461,7 @@ const EventRegistration = () => {
 
           {/* ====================================================
                 PAPER PRESENTATION — Abstract Form (Step 1)
+                Always 2 members — no toggle
             ==================================================== */}
           {isPaperPresentation && ppStep === "form" && (
             <motion.form
@@ -397,29 +489,6 @@ const EventRegistration = () => {
                 />
               </div>
 
-              <div className="flex gap-3 mb-1">
-                <button
-                  type="button"
-                  onClick={() => setMemberCount(1)}
-                  className={`flex-1 py-2.5 rounded-lg border text-sm font-medium transition ${memberCount === 1
-                    ? "border-cyan-400 text-cyan-400 bg-cyan-400/10"
-                    : "border-border text-muted-foreground hover:border-cyan-400/50"
-                    }`}
-                >
-                  👤 1 Member
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMemberCount(2)}
-                  className={`flex-1 py-2.5 rounded-lg border text-sm font-medium transition ${memberCount === 2
-                    ? "border-cyan-400 text-cyan-400 bg-cyan-400/10"
-                    : "border-border text-muted-foreground hover:border-cyan-400/50"
-                    }`}
-                >
-                  👥 2 Members
-                </button>
-              </div>
-
               {/* Member 1 */}
               <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
                 👤 Member 1
@@ -435,31 +504,20 @@ const EventRegistration = () => {
                 />
               ))}
 
-              {/* Member 2 */}
-              <AnimatePresence>
-                {memberCount === 2 && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="space-y-3 overflow-hidden"
-                  >
-                    <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
-                      👤 Member 2
-                    </p>
-                    {memberFields.map((field) => (
-                      <input
-                        key={`m2-${field.key}`}
-                        placeholder={field.label}
-                        required={memberCount === 2}
-                        value={(member2 as any)[field.key]}
-                        onChange={(e) => setMember2({ ...member2, [field.key]: e.target.value })}
-                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
-                      />
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* Member 2 — always shown */}
+              <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
+                👤 Member 2
+              </p>
+              {memberFields.map((field) => (
+                <input
+                  key={`m2-${field.key}`}
+                  placeholder={field.label}
+                  required
+                  value={(member2 as any)[field.key]}
+                  onChange={(e) => setMember2({ ...member2, [field.key]: e.target.value })}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              ))}
 
               {/* Abstract Upload */}
               <div className="bg-secondary/20 border border-border rounded-xl p-4 sm:p-5 mt-2 space-y-3">
@@ -490,7 +548,7 @@ const EventRegistration = () => {
                 disabled={ppSubmitting}
                 className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base disabled:opacity-60"
               >
-                {ppSubmitting ? "Submitting..." : "Submit Abstract →"}
+                Submit Abstract →
               </button>
             </motion.form>
           )}
@@ -567,7 +625,8 @@ const EventRegistration = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base"
+                  disabled={ppSubmitting}
+                  className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base disabled:opacity-60"
                 >
                   Complete Registration →
                 </button>
@@ -576,7 +635,7 @@ const EventRegistration = () => {
           )}
 
           {/* ====================================================
-              PROJECT EXPO FORM (2-member, project title, no abstract)
+              PROJECT EXPO FORM (2-member, project title, with payment)
           ==================================================== */}
           {isProjectExpo && (
             <motion.form
@@ -588,7 +647,7 @@ const EventRegistration = () => {
               {/* Step indicator */}
               <div className="flex items-center gap-3 mb-2">
                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold">1</span>
-                <span className="text-sm text-muted-foreground font-medium">Project Details & Member Info</span>
+                <span className="text-sm text-muted-foreground font-medium">Project Details &amp; Member Info</span>
               </div>
 
               {/* Project Title */}
@@ -680,7 +739,8 @@ const EventRegistration = () => {
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base"
+                disabled={regularSubmitting}
+                className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base disabled:opacity-60"
               >
                 Complete Registration →
               </button>
@@ -758,7 +818,8 @@ const EventRegistration = () => {
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base"
+                disabled={regularSubmitting}
+                className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base disabled:opacity-60"
               >
                 Complete Registration →
               </button>
