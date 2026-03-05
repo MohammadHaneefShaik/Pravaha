@@ -39,8 +39,8 @@ export const dignitariesData: Dignitary[] = [
     msg: "Join us in celebrating the spirit of innovation and creativity.",
   },
   {
-    name: "DR.DV. Ashok Kumar",
-    designation: "Dean",
+    name: "DR.D.V. Ashok Kumar",
+    designation: "Director",
     institution: "RGMCET",
     image: dean,
     msg: "RIPPLE 2K26 is the epitome of technical brilliance and teamwork.",
