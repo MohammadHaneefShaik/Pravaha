@@ -9,9 +9,11 @@ const schedule = [
     accent: "primary",
     events: [
       { time: "09:00 AM", activity: "Inauguration Ceremony" },
-      { time: "11:00 AM", activity: "Technical Events" },
-      { time: "01:00 PM", activity: "Lunch Break" },
-      { time: "02:00 PM", activity: "Coding Contest" },
+      { time: "11:00 AM", activity: "Battle of Ideaz" },
+      { time: "11:00 AM", activity: "Blue Print" },
+      { time: "12:00 PM", activity: "Lunch Break" },
+      { time: "1:00 PM", activity: "Logo Craft" },
+      { time: "2:00 PM", activity: "Technozen" },
     ],
   },
   {
@@ -20,7 +22,11 @@ const schedule = [
     icon: PartyPopper,
     accent: "accent",
     events: [
-      { time: "10:00 AM", activity: "Technical Events" },
+      { time: "9:00 AM", activity: "EV Spark" },
+      { time: "10:00 AM", activity: "Circuit Twisting" },
+       { time: "11:00 AM", activity: "Pragma" },
+       { time: "12:00 PM", activity: "Lunch Break" },
+       { time: "1:00 PM", activity: "Codethon" },
       { time: "12:30 PM", activity: "Guest Lecture" },
       { time: "03:00 PM", activity: "Awards & Closing Ceremony" },
     ],
