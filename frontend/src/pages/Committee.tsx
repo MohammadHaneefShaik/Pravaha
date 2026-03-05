@@ -210,12 +210,12 @@ const Committee = () => {
                                         </Td>
                                         <Td>
                                             {t.organizers.map((o, j) => (
-                                                <div key={j}>{o}</div>
+                                                <div key={j} className="font-medium text-foreground/80">{o}</div>
                                             ))}
                                         </Td>
                                         <Td>
                                             {t.mobiles.filter(m => m !== "").map((m, j) => (
-                                                <div key={j}>{m}</div>
+                                                <div key={j} className="font-medium text-foreground/80">{m}</div>
                                             ))}
                                         </Td>
                                         <Td>
