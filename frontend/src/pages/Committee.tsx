@@ -192,5 +192,8 @@ const Committee = () => {
                     </motion.div>
                 </div>
             </section>
+        </Layout>
+    );
+};
 
 export default Committee;
