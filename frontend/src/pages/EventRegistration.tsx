@@ -381,8 +381,17 @@ const EventRegistration = () => {
                 />
               </div>
 
-              <div className="flex gap-3 mb-2">
-              
+              <div className="flex gap-3 mb-1">
+                <button
+                  type="button"
+                  onClick={() => setMemberCount(1)}
+                  className={`flex-1 py-2.5 rounded-lg border text-sm font-medium transition ${memberCount === 1
+                    ? "border-cyan-400 text-cyan-400 bg-cyan-400/10"
+                    : "border-border text-muted-foreground hover:border-cyan-400/50"
+                    }`}
+                >
+                  👤 1 Member
+                </button>
                 <button
                   type="button"
                   onClick={() => setMemberCount(2)}
@@ -394,6 +403,21 @@ const EventRegistration = () => {
                   👥 2 Members
                 </button>
               </div>
+
+              {/* Member 1 */}
+              <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
+                👤 Member 1
+              </p>
+              {memberFields.map((field) => (
+                <input
+                  key={field.key}
+                  placeholder={field.label}
+                  required
+                  value={(formData as any)[field.key]}
+                  onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              ))}
 
               {/* Member 2 */}
               <AnimatePresence>
@@ -545,6 +569,23 @@ const EventRegistration = () => {
               animate={{ opacity: 1 }}
               className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 glow-border space-y-3 sm:space-y-4"
             >
+              {/* Member 1 */}
+              {isTeamEvent && (
+                <p className="text-cyan-400 font-semibold text-sm sm:text-base border-b border-border pb-1">
+                  👤 Member 1
+                </p>
+              )}
+              {memberFields.map((field) => (
+                <input
+                  key={field.key}
+                  placeholder={field.label}
+                  required
+                  onChange={(e) =>
+                    setFormData({ ...formData, [field.key]: e.target.value })
+                  }
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              ))}
 
               {/* Member 2 — only for other team events */}
               {isTeamEvent && (
