@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const STORAGE_KEY = "paperPresentationRegistrationId";
 
 /* ============================================================
-   MEMBER FIELDS LIST
+  MEMBER FIELDS LIST
 ============================================================ */
 const memberFields = [
   { label: "Full Name", key: "fullName" },
@@ -27,7 +27,7 @@ const emptyMember = {
 };
 
 /* ============================================================
-   MAIN COMPONENT
+  MAIN COMPONENT
 ============================================================ */
 const EventRegistration = () => {
   const { slug } = useParams();
@@ -36,7 +36,8 @@ const EventRegistration = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const isPaperPresentation = slug === "paper-presentation";
-  const isTeamEvent = slug === "project-Expo"; // other team events (non-abstract)
+  const isProjectExpo = slug === "project-Expo"; // 2-member, no abstract, has project title
+  const isTeamEvent = isProjectExpo; // alias kept for backward compat
 
   /* ---- Paper Presentation state ---- */
   const [ppStep, setPpStep] = useState<"form" | "pending" | "accepted" | "rejected">("form");
@@ -45,6 +46,9 @@ const EventRegistration = () => {
   const [teamName, setTeamName] = useState("");
   const [abstractFile, setAbstractFile] = useState<File | null>(null);
   const [ppSubmitting, setPpSubmitting] = useState(false);
+
+  /* ---- Project Expo state ---- */
+  const [projectTitle, setProjectTitle] = useState("");
 
   /* ---- Shared form state ---- */
   const [formData, setFormData] = useState({ ...emptyMember, transactionId: "" });
@@ -56,7 +60,7 @@ const EventRegistration = () => {
     : "";
 
   /* ============================================================
-     FETCH EVENT
+    FETCH EVENT
   ============================================================ */
   useEffect(() => {
     const fetchEvent = async () => {
@@ -73,7 +77,7 @@ const EventRegistration = () => {
   }, [slug]);
 
   /* ============================================================
-     CHECK ABSTRACT STATUS (Paper Presentation)
+    CHECK ABSTRACT STATUS (Paper Presentation)
   ============================================================ */
   useEffect(() => {
     if (!isPaperPresentation) return;
@@ -90,7 +94,7 @@ const EventRegistration = () => {
           if (data.abstractStatus === "accepted") {
             // Check if payment was already completed
             if (data.paymentStatus === "approved") {
-               localStorage.removeItem(STORAGE_KEY); // clear so next visit shows form
+              localStorage.removeItem(STORAGE_KEY); // clear so next visit shows form
               setSubmitted(true);
             } else {
               setPpStep("accepted");
@@ -106,7 +110,7 @@ const EventRegistration = () => {
   }, [isPaperPresentation]);
 
   /* ============================================================
-     SUBMIT ABSTRACT (Paper Presentation — Step 1)
+    SUBMIT ABSTRACT (Paper Presentation — Step 1)
   ============================================================ */
   const handleAbstractSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -154,7 +158,7 @@ const EventRegistration = () => {
   };
 
   /* ============================================================
-     COMPLETE PAYMENT (Paper Presentation — Step 2)
+    COMPLETE PAYMENT (Paper Presentation — Step 2)
   ============================================================ */
   const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -187,22 +191,32 @@ const EventRegistration = () => {
   };
 
   /* ============================================================
-     REGULAR EVENT SUBMIT (non-paper-presentation)
+    REGULAR EVENT SUBMIT (non-paper-presentation)
   ============================================================ */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!file) {
+      alert("Please upload your payment screenshot.");
+      return;
+    }
 
     const fd = new FormData();
     Object.entries(formData).forEach(([key, value]) => fd.append(key, value));
     fd.append("eventName", event.eventName);
 
-    if (isTeamEvent) {
+    if (isProjectExpo) {
+      if (!projectTitle.trim()) {
+        alert("Please enter your project title.");
+        return;
+      }
+      fd.append("teamName", projectTitle); // reuse teamName field for project title
       Object.entries(member2).forEach(([key, value]) =>
         fd.append(`member2_${key}`, value)
       );
     }
 
-    if (file) fd.append("screenshot", file);
+    fd.append("screenshot", file);
 
     const res = await fetch(`${API_URL}/api/user/sendRegistrationData`, {
       method: "POST",
@@ -218,7 +232,7 @@ const EventRegistration = () => {
   };
 
   /* ============================================================
-     LOADING
+    LOADING
   ============================================================ */
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center text-center py-20 text-muted-foreground">
@@ -227,7 +241,7 @@ const EventRegistration = () => {
   );
 
   /* ============================================================
-     SUCCESS SCREEN
+    SUCCESS SCREEN
   ============================================================ */
   if (submitted) {
     return (
@@ -257,7 +271,7 @@ const EventRegistration = () => {
   }
 
   /* ============================================================
-     PAPER PRESENTATION — PENDING SCREEN
+    PAPER PRESENTATION — PENDING SCREEN
   ============================================================ */
   if (isPaperPresentation && ppStep === "pending") {
     return (
@@ -287,7 +301,7 @@ const EventRegistration = () => {
   }
 
   /* ============================================================
-     PAPER PRESENTATION — REJECTED SCREEN
+    PAPER PRESENTATION — REJECTED SCREEN
   ============================================================ */
   if (isPaperPresentation && ppStep === "rejected") {
     return (
@@ -322,7 +336,7 @@ const EventRegistration = () => {
   }
 
   /* ============================================================
-     RENDER FORM
+    RENDER FORM
   ============================================================ */
   return (
     <Layout>
@@ -346,16 +360,16 @@ const EventRegistration = () => {
                 📄 Submit your abstract to register
               </p>
             )}
-            {(slug === "project-Expo") && (
+            {isProjectExpo && (
               <p className="text-cyan-400 mt-1 text-sm sm:text-base font-medium">
-                Team members: 2
+                👥 Team members: 2
               </p>
             )}
           </motion.div>
 
           {/* ====================================================
-              PAPER PRESENTATION — Abstract Form (Step 1)
-          ==================================================== */}
+                PAPER PRESENTATION — Abstract Form (Step 1)
+            ==================================================== */}
           {isPaperPresentation && ppStep === "form" && (
             <motion.form
               onSubmit={handleAbstractSubmit}
@@ -481,8 +495,8 @@ const EventRegistration = () => {
           )}
 
           {/* ====================================================
-              PAPER PRESENTATION — Payment Form (Step 2, accepted)
-          ==================================================== */}
+                PAPER PRESENTATION — Payment Form (Step 2, accepted)
+            ==================================================== */}
           {isPaperPresentation && ppStep === "accepted" && (
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -561,21 +575,127 @@ const EventRegistration = () => {
           )}
 
           {/* ====================================================
-              REGULAR EVENT FORM (non-paper-presentation)
+              PROJECT EXPO FORM (2-member, project title, no abstract)
           ==================================================== */}
-          {!isPaperPresentation && (
+          {isProjectExpo && (
             <motion.form
               onSubmit={handleSubmit}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 glow-border space-y-3 sm:space-y-4"
             >
-              {/* Member 1 */}
-              {isTeamEvent && (
-                <p className="text-cyan-400 font-semibold text-sm sm:text-base border-b border-border pb-1">
-                  👤 Member 1
+              {/* Step indicator */}
+              <div className="flex items-center gap-3 mb-2">
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold">1</span>
+                <span className="text-sm text-muted-foreground font-medium">Project Details & Member Info</span>
+              </div>
+
+              {/* Project Title */}
+              <div>
+                <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mb-2">
+                  🏷️ Project Title
                 </p>
-              )}
+                <input
+                  placeholder="Enter your project title"
+                  required
+                  value={projectTitle}
+                  onChange={(e) => setProjectTitle(e.target.value)}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              </div>
+
+              {/* Member 1 */}
+              <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
+                👤 Member 1
+              </p>
+              {memberFields.map((field) => (
+                <input
+                  key={field.key}
+                  placeholder={field.label}
+                  required
+                  value={(formData as any)[field.key]}
+                  onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              ))}
+
+              {/* Member 2 */}
+              <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
+                👤 Member 2
+              </p>
+              {memberFields.map((field) => (
+                <input
+                  key={`m2-${field.key}`}
+                  placeholder={field.label}
+                  required
+                  value={(member2 as any)[field.key]}
+                  onChange={(e) => setMember2({ ...member2, [field.key]: e.target.value })}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              ))}
+
+              {/* Payment Section */}
+              <div className="bg-secondary/20 border border-border rounded-xl p-4 sm:p-6 mt-2 text-center space-y-4">
+                <div className="flex flex-col items-center gap-2">
+                  <CreditCard className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
+                  <p className="text-muted-foreground text-xs sm:text-sm">
+                    Scan the QR code to complete your payment
+                  </p>
+                </div>
+
+                <div className="bg-white p-3 sm:p-4 rounded-xl shadow-md inline-block">
+                  <QRCodeCanvas value={upiString} size={160} level="H" includeMargin={true} />
+                </div>
+
+                <div className="text-xs sm:text-sm text-muted-foreground">
+                  UPI ID
+                  <div className="font-semibold text-primary text-sm sm:text-base mt-1 break-all">
+                    {event.upiId}
+                  </div>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="Transaction ID"
+                  required
+                  onChange={(e) => setFormData({ ...formData, transactionId: e.target.value })}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-background border border-border rounded-lg text-sm sm:text-base outline-none focus:ring-2 focus:ring-primary"
+                />
+
+                <div className="space-y-2">
+                  <label className="flex items-center justify-center gap-2 cursor-pointer border border-dashed border-primary p-3 rounded-lg hover:bg-primary/10 transition text-sm">
+                    📤 Upload Payment Screenshot
+                    <input
+                      type="file"
+                      accept="image/*"
+                      required
+                      onChange={(e) => setFile(e.target.files?.[0] || null)}
+                      className="hidden"
+                    />
+                  </label>
+                  {file && <p className="text-xs text-green-400">✅ {file.name}</p>}
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base"
+              >
+                Complete Registration →
+              </button>
+            </motion.form>
+          )}
+
+          {/* ====================================================
+              REGULAR EVENT FORM (non-paper-presentation, non-project-expo)
+          ==================================================== */}
+          {!isPaperPresentation && !isProjectExpo && (
+            <motion.form
+              onSubmit={handleSubmit}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 glow-border space-y-3 sm:space-y-4"
+            >
               {memberFields.map((field) => (
                 <input
                   key={field.key}
@@ -587,26 +707,6 @@ const EventRegistration = () => {
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
                 />
               ))}
-
-              {/* Member 2 — only for other team events */}
-              {isTeamEvent && (
-                <>
-                  <p className="text-cyan-400 font-semibold text-sm sm:text-base border-b border-border pb-1 mt-2">
-                    👤 Member 2
-                  </p>
-                  {memberFields.map((field) => (
-                    <input
-                      key={`m2-${field.key}`}
-                      placeholder={field.label}
-                      required
-                      onChange={(e) =>
-                        setMember2({ ...member2, [field.key]: e.target.value })
-                      }
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
-                    />
-                  ))}
-                </>
-              )}
 
               {/* Payment Section */}
               <div className="bg-secondary/20 border border-border rounded-xl p-4 sm:p-6 mt-4 sm:mt-6 text-center space-y-4">
