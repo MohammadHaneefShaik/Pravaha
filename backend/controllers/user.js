@@ -59,29 +59,40 @@ export async function updatePaymentStatus(req, res) {
         message: "Registration not found",
       });
     }
+
+    // Collect all member emails to notify
+    const emailTargets = [{ to: email, fullName }];
+    if (updated.member2?.email) {
+      emailTargets.push({ to: updated.member2.email, fullName: updated.member2.fullName || fullName });
+    }
+
     if (paymentStatus === "approved") {
-      try {
-        await sendPaymentApprovalMail({
-          to: email,
-          fullName,
-          eventName,
-          transactionId,
-        });
-        console.log("✅ Approval mail sent");
-      } catch (mailErr) {
-        console.error("❌ Approval Mail failed:", mailErr.message);
+      for (const target of emailTargets) {
+        try {
+          await sendPaymentApprovalMail({
+            to: target.to,
+            fullName: target.fullName,
+            eventName,
+            transactionId,
+          });
+          console.log(`✅ Approval mail sent to ${target.to}`);
+        } catch (mailErr) {
+          console.error("❌ Approval Mail failed:", mailErr.message);
+        }
       }
     } else if (paymentStatus === "rejected") {
-      try {
-        await transactionRejectedMail({
-          to: email,
-          fullName,
-          eventName,
-          transactionId,
-        });
-        console.log("✅ Reject mail sent");
-      } catch (mailErr) {
-        console.error("❌ Reject Mail failed:", mailErr.message);
+      for (const target of emailTargets) {
+        try {
+          await transactionRejectedMail({
+            to: target.to,
+            fullName: target.fullName,
+            eventName,
+            transactionId,
+          });
+          console.log(`✅ Reject mail sent to ${target.to}`);
+        } catch (mailErr) {
+          console.error("❌ Reject Mail failed:", mailErr.message);
+        }
       }
     }
 
@@ -172,6 +183,7 @@ export async function registerForEvent(req, res) {
       registrationStatus: "registered",
       paymentStatus: "pending",
       abstractStatus: "not_required",
+      teamName: data.teamName || undefined,  // project title for Project Expo
       // Member 2 (for team events other than paper-presentation)
       memberCount: data.member2_fullName ? 2 : 1,
       member2: data.member2_fullName
@@ -260,6 +272,7 @@ export async function submitAbstract(req, res) {
       collegeName: data.collegeName,
       department: data.branch,
       year: data.studyYear,
+      teamName: data.teamName || undefined,
       eventId: eventData._id,
       eventName: eventData.eventName,
       abstractFile: abstractFile.path,
@@ -412,20 +425,29 @@ export async function updateAbstractStatus(req, res) {
       return res.status(404).json({ success: false, message: "Registration not found" });
     }
 
-    // Send email notification
+    // Collect all member emails to notify
+    const emailTargets = [{ to: email, fullName }];
+    if (updated.member2?.email) {
+      emailTargets.push({ to: updated.member2.email, fullName: updated.member2.fullName || fullName });
+    }
+
     if (abstractStatus === "accepted") {
-      try {
-        await abstractAcceptedMail({ to: email, fullName, eventName });
-        console.log("✅ Abstract acceptance mail sent");
-      } catch (mailErr) {
-        console.error("❌ Abstract acceptance mail failed:", mailErr.message);
+      for (const target of emailTargets) {
+        try {
+          await abstractAcceptedMail({ to: target.to, fullName: target.fullName, eventName });
+          console.log(`✅ Abstract acceptance mail sent to ${target.to}`);
+        } catch (mailErr) {
+          console.error("❌ Abstract acceptance mail failed:", mailErr.message);
+        }
       }
     } else if (abstractStatus === "rejected") {
-      try {
-        await abstractRejectedMail({ to: email, fullName, eventName });
-        console.log("✅ Abstract rejection mail sent");
-      } catch (mailErr) {
-        console.error("❌ Abstract rejection mail failed:", mailErr.message);
+      for (const target of emailTargets) {
+        try {
+          await abstractRejectedMail({ to: target.to, fullName: target.fullName, eventName });
+          console.log(`✅ Abstract rejection mail sent to ${target.to}`);
+        } catch (mailErr) {
+          console.error("❌ Abstract rejection mail failed:", mailErr.message);
+        }
       }
     }
 
