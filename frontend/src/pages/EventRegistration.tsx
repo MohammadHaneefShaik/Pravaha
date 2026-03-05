@@ -42,7 +42,7 @@ const EventRegistration = () => {
   ---------------------------------------------------------- */
 
   const isPaperPresentation = normalizedSlug === "paper-presentation";
-  const isProjectExpo = normalizedSlug === "project-expo";
+  const isProjectExpo = normalizedSlug === "roject-Expo";
 
   /* ----------------------------------------------------------
       STATE
