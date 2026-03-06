@@ -9,7 +9,7 @@ const technicalTeams = [
     {
         sno: 1,
         team: "PAPER PRESENTATION",
-        organizers: ["S.MD.Arif", "V.Mounesh", "N.Ayyappa Reddy", "K.Venkata Harini", "Y.Vishwanth", "S.Salman"],
+        organizers: ["S.MD.Arif", "V.Mounesh", "D.M.Hemanth", "K.Venkata Harini", "Y.Vishwanth", "S.Salman"],
         mobiles: ["9398875293", ""],
         committeeHead: ["Dr.D.Lenine", "Mr.T.Ashok Kumar", "Mr.G.Siva Krishna"],
     },
@@ -58,7 +58,7 @@ const technicalTeams = [
     {
         sno: 8,
         team: "EV SPARK",
-        organizers: ["P.Firoz Khan", "D.M.Hemanth", "A.Ramana", "M.Suveni", "K.Ram Charan", "S.Afreen"],
+        organizers: ["P.Firoz Khan", "N.Ayyappa Reddy", "A.Ramana", "M.Suveni", "K.Ram Charan", "S.Afreen"],
         mobiles: ["9133715935",  ""],
         committeeHead: ["Dr.V.Naga Bhaskar Reddy", "Dr.A.Suresh Kumar", "Mr.K.Prahalada Reddy"],
     },
