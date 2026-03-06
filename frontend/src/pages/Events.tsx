@@ -19,7 +19,7 @@ import {
 const technicalEvents = [
   {
     icon: FileText,
-    title: "Paper Presentation",
+    title: "BATTLE OF IDEAZ",
     slug: "paper-presentation",
     price: 150,
     description:
@@ -28,7 +28,7 @@ const technicalEvents = [
   },
   {
     icon: Cpu,
-    title: "Project Expo",
+    title: "PRAGMA",
     slug: "project-Expo",
     price: 150,
     description:
@@ -37,7 +37,7 @@ const technicalEvents = [
   },
   {
     icon: Image,
-    title: "Poster Presentation",
+    title: "BLUE PRINT",
     slug: "poster-presentation",
     price: 150,
     description:
@@ -46,7 +46,7 @@ const technicalEvents = [
   },
   {
     icon: HelpCircle,
-    title: "Technical Quiz",
+    title: "TECHNOZEN",
     slug: "technical-quiz",
     price: 150,
     description:
@@ -55,7 +55,7 @@ const technicalEvents = [
   },
   {
     icon: Zap,
-    title: "Coding Competition",
+    title: "CODETHON",
     slug: "coding-competition",
     price: 150,
     description:
@@ -64,7 +64,7 @@ const technicalEvents = [
   },
   {
     icon: BatteryCharging,
-    title: "Circuit Twisting",
+    title: "CIRCUIT TWISTING",
     slug: "circuit-twisting",
     price: 150,
     description:
@@ -73,7 +73,7 @@ const technicalEvents = [
   },
   {
     icon: Palette,
-    title: "Logo Design",
+    title: "LOGO DESIGN",
     slug: "logo-design",
     price: 150,
     description:
@@ -82,7 +82,7 @@ const technicalEvents = [
   },
   {
     icon: Bike,
-    title: "EV Spark",
+    title: "EV SPARK",
     slug: "ev-spark",
     price: 150,
     description:
