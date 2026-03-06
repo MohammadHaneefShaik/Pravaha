@@ -185,10 +185,6 @@ const Events = () => {
       <section className="py-8 sm:py-10">
         <div className="container mx-auto px-4 sm:px-6">
 
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-orbitron text-primary mb-4 sm:mb-6 text-center sm:text-left">
-            Technical Events (₹150)
-          </h2>
-
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {technicalEvents.map((event) => (
               <EventCard key={event.slug} event={event} />
