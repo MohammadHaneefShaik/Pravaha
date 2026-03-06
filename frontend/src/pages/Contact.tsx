@@ -5,13 +5,13 @@ import { Mail, Phone, MapPin, User, Briefcase, Globe } from "lucide-react";
 const coordinators = {
   faculty: [
     {
-      name: "DR. D.Lenine",
+      name: "Dr. D.Lenine",
       role: "Professor, EEE",
       phone: "+91 9866723784",
       email: "Lenine@rgmcet.edu.in",
     },
     {
-      name: "MR. Y.Vijaya Suresh",
+      name: "Mr. Y.Vijaya Suresh",
       role: "Associate Professor, EEE",
       phone: "+91 9441243353",
       email: "vijayasuresh@rgmcet.edu.in",
