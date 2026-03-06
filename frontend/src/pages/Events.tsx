@@ -11,6 +11,8 @@ import {
   BatteryCharging,
   Palette,
   Bike,
+  Clock,
+  Calendar,
 } from "lucide-react";
 
 /* ===============================
@@ -22,72 +24,88 @@ const technicalEvents = [
     title: "BATTLE OF IDEAZ",
     slug: "paper-presentation",
     price: 150,
+    time: "11:00 AM",
+    date: "12th March 2026",
     description:
       "Showcase your research and innovative ideas through structured academic papers. Present your findings before a panel of industry experts and gain invaluable professional feedback.",
     highlights: ["Battle of Ideaz", "Research Papers", "Expert Feedback"],
-  },
-  {
-    icon: Cpu,
-    title: "PRAGMA",
-    slug: "project-Expo",
-    price: 150,
-    description:
-      "Bring your engineering projects to life with live demonstrations. Exhibit your technical solutions, prototypes, and innovations to judges and peers in a competitive expo setting.",
-    highlights: ["Pragma", "Live Demo", "Innovation Awards"],
   },
   {
     icon: Image,
     title: "BLUE PRINT",
     slug: "poster-presentation",
     price: 150,
+    time: "11:00 AM",
+    date: "12th March 2026",
     description:
       "Communicate complex technical concepts through compelling visual design. Create an impactful poster that effectively conveys your research, analysis, or engineering solution.",
     highlights: ["Blue Print", "Visual Display", "Best Poster Award"],
-  },
-  {
-    icon: HelpCircle,
-    title: "TECHNOZEN",
-    slug: "technical-quiz",
-    price: 150,
-    description:
-      "Test your depth of technical knowledge across engineering domains in a fast-paced, multi-round quiz challenge. Compete against the brightest minds and prove your expertise.",
-    highlights: ["Technozen", "Multiple Rounds", "Top Prizes"],
-  },
-  {
-    icon: Zap,
-    title: "CODETHON",
-    slug: "coding-competition",
-    price: 150,
-    description:
-      "Tackle real-world algorithmic challenges under time pressure. Demonstrate your problem-solving skills, coding efficiency, and logical thinking to claim the top spot on the leaderboard.",
-    highlights: ["Codathon", "Problem Solving", "Cash Prize"],
-  },
-  {
-    icon: BatteryCharging,
-    title: "CIRCUIT TWISTING",
-    slug: "circuit-twisting",
-    price: 150,
-    description:
-      "Put your electronics and circuit design skills to the ultimate test. Analyze, troubleshoot, and build functional circuits within a stipulated time in this hands-on hardware challenge.",
-    highlights: ["Circuit Design", "Problem Solving", "Cash Prize"],
   },
   {
     icon: Palette,
     title: "LOGO DESIGN",
     slug: "logo-design",
     price: 150,
+    time: "1:00 PM",
+    date: "12th March 2026",
     description:
       "Blend creativity with technical precision to craft a distinctive brand identity. Design a professional and memorable logo that communicates vision, purpose, and innovation.",
     highlights: ["Logo Craft", "Cash Prize"],
+  },
+  {
+    icon: HelpCircle,
+    title: "TECHNOZEN",
+    slug: "technical-quiz",
+    price: 150,
+    time: "2:00 PM",
+    date: "12th March 2026",
+    description:
+      "Test your depth of technical knowledge across engineering domains in a fast-paced, multi-round quiz challenge. Compete against the brightest minds and prove your expertise.",
+    highlights: ["Technozen", "Multiple Rounds", "Top Prizes"],
   },
   {
     icon: Bike,
     title: "EV SPARK",
     slug: "ev-spark",
     price: 150,
+    time: "9:00 AM",
+    date: "13th March 2026",
     description:
       "Dive into the future of sustainable transportation through an immersive electric vehicle workshop. Explore EV architecture, battery technology, and the engineering behind green mobility.",
     highlights: ["Electric Vehicle", "Workshop"],
+  },
+  {
+    icon: BatteryCharging,
+    title: "CIRCUIT TWISTING",
+    slug: "circuit-twisting",
+    price: 150,
+    time: "10:00 AM",
+    date: "13th March 2026",
+    description:
+      "Put your electronics and circuit design skills to the ultimate test. Analyze, troubleshoot, and build functional circuits within a stipulated time in this hands-on hardware challenge.",
+    highlights: ["Circuit Design", "Problem Solving", "Cash Prize"],
+  },
+  {
+    icon: Cpu,
+    title: "PRAGMA",
+    slug: "project-Expo",
+    price: 150,
+    time: "11:00 AM",
+    date: "13th March 2026",
+    description:
+      "Bring your engineering projects to life with live demonstrations. Exhibit your technical solutions, prototypes, and innovations to judges and peers in a competitive expo setting.",
+    highlights: ["Pragma", "Live Demo", "Innovation Awards"],
+  },
+  {
+    icon: Zap,
+    title: "CODETHON",
+    slug: "coding-competition",
+    price: 150,
+    time: "1:00 PM",
+    date: "13th March 2026",
+    description:
+      "Tackle real-world algorithmic challenges under time pressure. Demonstrate your problem-solving skills, coding efficiency, and logical thinking to claim the top spot on the leaderboard.",
+    highlights: ["Codethon", "Problem Solving", "Cash Prize"],
   },
 ];
 
@@ -125,6 +143,18 @@ const EventCard = ({ event }: any) => (
           {highlight}
         </span>
       ))}
+    </div>
+
+    {/* Time & Date */}
+    <div className="flex flex-wrap gap-3 mb-4 border-t border-border pt-3">
+      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+        <Clock className="w-3.5 h-3.5 text-primary" />
+        <span className="font-semibold text-foreground">{event.time}</span>
+      </div>
+      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+        <Calendar className="w-3.5 h-3.5 text-primary" />
+        <span className="font-semibold text-foreground">{event.date}</span>
+      </div>
     </div>
 
     <div className="mt-auto">
