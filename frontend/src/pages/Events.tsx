@@ -23,7 +23,7 @@ const technicalEvents = [
     icon: FileText,
     title: "BATTLE OF IDEAZ",
     slug: "paper-presentation",
-    price: 150,
+    price: 200,
     time: "11:00 AM",
     date: "12th March 2026",
     description:
@@ -34,7 +34,7 @@ const technicalEvents = [
     icon: Image,
     title: "BLUE PRINT",
     slug: "poster-presentation",
-    price: 150,
+    price: 200,
     time: "11:00 AM",
     date: "12th March 2026",
     description:
@@ -45,7 +45,7 @@ const technicalEvents = [
     icon: Palette,
     title: "LOGO DESIGN",
     slug: "logo-design",
-    price: 150,
+    price: 200,
     time: "1:00 PM",
     date: "12th March 2026",
     description:
@@ -56,7 +56,7 @@ const technicalEvents = [
     icon: HelpCircle,
     title: "TECHNOZEN",
     slug: "technical-quiz",
-    price: 150,
+    price: 200,
     time: "2:00 PM",
     date: "12th March 2026",
     description:
@@ -67,7 +67,7 @@ const technicalEvents = [
     icon: Bike,
     title: "EV SPARK",
     slug: "ev-spark",
-    price: 150,
+    price: 200,
     time: "9:00 AM",
     date: "13th March 2026",
     description:
@@ -78,7 +78,7 @@ const technicalEvents = [
     icon: BatteryCharging,
     title: "CIRCUIT TWISTING",
     slug: "circuit-twisting",
-    price: 150,
+    price: 200,
     time: "10:00 AM",
     date: "13th March 2026",
     description:
@@ -89,7 +89,7 @@ const technicalEvents = [
     icon: Cpu,
     title: "PRAGMA",
     slug: "project-Expo",
-    price: 150,
+    price: 200,
     time: "11:00 AM",
     date: "13th March 2026",
     description:
@@ -100,7 +100,7 @@ const technicalEvents = [
     icon: Zap,
     title: "CODETHON",
     slug: "coding-competition",
-    price: 150,
+    price: 200,
     time: "1:00 PM",
     date: "13th March 2026",
     description:
