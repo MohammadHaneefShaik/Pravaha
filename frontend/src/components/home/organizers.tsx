@@ -18,7 +18,7 @@ export interface Dignitary {
 
 export const dignitariesData: Dignitary[] = [
   {
-    name: "Dr. M. Santhiramudu",
+    name: "DR. M. Santhiramudu",
     designation: "Chairman",
     institution: "RGMCET",
     image: chairman,
@@ -46,21 +46,21 @@ export const dignitariesData: Dignitary[] = [
     msg: "RIPPLE 2K26 is the epitome of technical brilliance and teamwork.",
   },
   {
-    name: "Dr. V. Naga Bhaskar Reddy",
+    name: "DR. V. Naga Bhaskar Reddy",
     designation: "HOD, EEE",
     institution: "RGMCET",
     image: hod,
     msg: "Join us in exploring the forefront of technology and innovation.",
   },
   {
-    name: "Dr. D. Lenine",
+    name: "DR. D. Lenine",
     designation: "Professor",
     institution: "RGMCET",
     image: lenine,
     msg: "Ripple 2K26 is a celebration of technical creativity and spirit.",
   },
   {
-    name: "Mr. Y. Vijaya Suresh",
+    name: "MR. Y. Vijaya Suresh",
     designation: "Associate Professor",
     institution: "RGMCET",
     image: suresh,
