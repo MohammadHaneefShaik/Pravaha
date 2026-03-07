@@ -315,21 +315,22 @@ export default function AdminDashboard() {
                       <td className="text-center">
                         <span className="text-cyan-400 font-bold">{reg.memberCount || 1}</span>
                       </td>
-                      <td>
-                        {reg.abstractFile ? (
-                          <a
-                            href={reg.abstractFile}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition text-xs"
-                          >
-                            <FileText className="w-3.5 h-3.5" />
-                            View PDF
-                          </a>
-                        ) : (
-                          <span className="text-xs text-gray-500">—</span>
-                        )}
-                      </td>
+                     <td>
+  {reg.abstractFile ? (
+    <a
+      href={reg.abstractFile}
+      target="_blank"
+      rel="noopener noreferrer"
+      download
+      className="inline-flex items-center gap-1 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition text-xs"
+    >
+      <FileText className="w-3.5 h-3.5" />
+      Download File
+    </a>
+  ) : (
+    <span className="text-xs text-gray-500">—</span>
+  )}
+</td>
                       <td>
                         <AbstractStatusBadge status={reg.abstractStatus} />
                       </td>
