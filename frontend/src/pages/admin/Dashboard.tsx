@@ -18,13 +18,16 @@ const API = import.meta.env.VITE_API_URL;
 const downloadCSV = (data: any[], filename: string) => {
 
   if (!data || data.length === 0) {
-    alert("No registrations found");
+    alert("No registrations found for this event.");
     return;
   }
 
   const headers = [
     "Full Name",
     "Email",
+    "Phone",
+    "Register Number",
+    "College",
     "Branch",
     "Year",
     "Event",
@@ -35,6 +38,9 @@ const downloadCSV = (data: any[], filename: string) => {
   const rows = data.map(r => [
     r.fullName,
     r.email,
+    r.phone,
+    r.registerNumber,
+    r.collegeName,
     r.department,
     r.year,
     r.eventName,
@@ -43,81 +49,50 @@ const downloadCSV = (data: any[], filename: string) => {
   ]);
 
   const csv = [headers, ...rows]
-    .map(row => row.map(v => `"${v ?? ""}"`).join(","))
+    .map(row => row.map(v => `"${String(v ?? "").replace(/"/g, '""')}"`).join(","))
     .join("\n");
 
-  const blob = new Blob([csv], { type: "text/csv" });
-
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
-
   const a = document.createElement("a");
-
   a.href = url;
   a.download = filename;
-
   a.click();
+  URL.revokeObjectURL(url);
 };
 
 
 export default function Dashboard() {
 
-  const [registrations, setRegistrations] = useState([]);
-
-  const [hackathonRegs, setHackathonRegs] = useState([]);
-
-  const [activeEvent, setActiveEvent] = useState(null);
-
-  const [admin, setAdmin] = useState(null);
-
+  const [registrations, setRegistrations] = useState<any[]>([]);
+  const [activeEvent, setActiveEvent] = useState<any>(null);
+  const [admin, setAdmin] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
 
   /* ================= CHECK ADMIN ================= */
 
   useEffect(() => {
-
-    fetch(`${API}/api/admin/me`, {
-      credentials: "include",
-    })
+    fetch(`${API}/api/admin/me`, { credentials: "include" })
       .then(res => res.json())
       .then(data => {
-
-        if (!data.success) {
-          window.location.href = "/admin-login";
-        }
-
-        else {
-          setAdmin(data);
-        }
-
-      });
-
+        if (!data.success) window.location.href = "/admin-login";
+        else setAdmin(data);
+      })
+      .catch(() => { window.location.href = "/admin-login"; });
   }, []);
-
 
 
   /* ================= FETCH DATA ================= */
 
   useEffect(() => {
-
     if (!admin) return;
-
-    fetch(`${API}/api/user/getRegistrations`, {
-      credentials: "include",
-    })
+    setLoading(true);
+    fetch(`${API}/api/user/getRegistrations`, { credentials: "include" })
       .then(r => r.json())
-      .then(d => d.success && setRegistrations(d.data));
-
-
-    if (admin.role === "super") {
-
-      fetch(`${API}/api/hackathon/all`, {
-        credentials: "include",
-      })
-        .then(r => r.json())
-        .then(d => d.success && setHackathonRegs(d.data));
-
-    }
-
+      .then(d => { if (d.success) setRegistrations(d.data); })
+      .catch(err => console.error("Failed to fetch registrations:", err))
+      .finally(() => setLoading(false));
   }, [admin]);
 
 
@@ -126,43 +101,41 @@ export default function Dashboard() {
 
   const totalRegistrations =
     admin?.role === "super"
-      ? registrations.length + hackathonRegs.length
+      ? registrations.length
       : registrations.filter(r => r.eventName === admin?.eventName).length;
 
 
-  const getEventCount = (event) =>
-    event.slug === "hackathon"
-      ? hackathonRegs.length
-      : registrations.filter(r => r.eventName === event.title).length;
+  const getEventCount = (event: any) =>
+    registrations.filter(r => r.eventName === event.title).length;
 
 
   const filteredRegistrations =
     !activeEvent
       ? []
       : registrations.filter(r => {
-
         if (admin.role === "super")
           return r.eventName === activeEvent.title;
-
         return (
           r.eventName === activeEvent.title &&
           r.eventName === admin.eventName
         );
-
       });
 
 
   const visibleEvents =
     admin?.role === "super"
       ? eventsData
-      : eventsData.filter(e => e.title === admin?.eventName);
+      : eventsData.filter((e: any) => e.title === admin?.eventName);
 
 
 
-  if (!admin)
+  if (!admin || loading)
     return (
-      <div className="min-h-screen flex items-center justify-center text-white">
-        Loading Dashboard...
+      <div className="min-h-screen flex items-center justify-center text-white bg-[#060A1F]">
+        <div className="text-center">
+          <div className="w-10 h-10 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          Loading Dashboard...
+        </div>
       </div>
     );
 
