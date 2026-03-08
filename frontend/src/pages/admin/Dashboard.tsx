@@ -258,56 +258,74 @@ export default function Dashboard() {
 
 
 
-            <table className="w-full">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
 
-              <thead className="text-gray-400 border-b border-white/10">
-
-                <tr>
-
-                  <th className="p-3 text-left">Name</th>
-
-                  <th>Email</th>
-
-                  <th>Txn ID</th>
-
-                  <th>Status</th>
-
-                </tr>
-
-              </thead>
-
-
-              <tbody>
-
-                {filteredRegistrations.map(reg => (
-
-                  <tr key={reg._id} className="border-t border-white/10">
-
-                    <td className="p-3">
-                      {reg.fullName}
-                    </td>
-
-                    <td>{reg.email}</td>
-
-                    <td>{reg.transactionId}</td>
-
-                    <td>
-
-                      <span className="px-3 py-1 rounded-full text-xs bg-cyan-500/20 text-cyan-400">
-
-                        {reg.paymentStatus}
-
-                      </span>
-
-                    </td>
-
+                <thead className="text-gray-400 border-b border-white/10 bg-white/5">
+                  <tr>
+                    <th className="p-3 text-left whitespace-nowrap">Name</th>
+                    <th className="p-3 text-left whitespace-nowrap">Reg. No.</th>
+                    <th className="p-3 text-left whitespace-nowrap">Phone</th>
+                    <th className="p-3 text-left whitespace-nowrap">Email</th>
+                    <th className="p-3 text-left whitespace-nowrap">College</th>
+                    <th className="p-3 text-left whitespace-nowrap">Branch</th>
+                    <th className="p-3 text-left whitespace-nowrap">Year</th>
+                    <th className="p-3 text-left whitespace-nowrap">Txn ID</th>
+                    <th className="p-3 text-left whitespace-nowrap">Proof</th>
+                    <th className="p-3 text-left whitespace-nowrap">Status</th>
                   </tr>
+                </thead>
 
-                ))}
+                <tbody>
+                  {filteredRegistrations.length === 0 ? (
+                    <tr>
+                      <td colSpan={10} className="p-8 text-center text-gray-500">
+                        No registrations found for this event.
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredRegistrations.map(reg => (
+                      <tr key={reg._id} className="border-t border-white/10 hover:bg-white/5 transition">
+                        <td className="p-3 whitespace-nowrap">
+                          <div className="font-medium">{reg.fullName}</div>
+                          {reg.member2?.fullName && (
+                            <div className="text-xs text-cyan-400 mt-0.5">+ {reg.member2.fullName}</div>
+                          )}
+                        </td>
+                        <td className="p-3 text-gray-300 whitespace-nowrap">{reg.registerNumber || "—"}</td>
+                        <td className="p-3 text-gray-300 whitespace-nowrap">{reg.phone || "—"}</td>
+                        <td className="p-3 text-gray-300 whitespace-nowrap">{reg.email}</td>
+                        <td className="p-3 text-gray-300 whitespace-nowrap">{reg.collegeName || "—"}</td>
+                        <td className="p-3 text-gray-300 whitespace-nowrap">{reg.department || "—"}</td>
+                        <td className="p-3 text-gray-300 whitespace-nowrap">{reg.year || "—"}</td>
+                        <td className="p-3 text-xs text-gray-300 whitespace-nowrap">{reg.transactionId || "—"}</td>
+                        <td className="p-3">
+                          {reg.paymentScreenshot ? (
+                            <a href={reg.paymentScreenshot} target="_blank" rel="noopener noreferrer"
+                              className="text-xs text-cyan-400 underline hover:text-cyan-300">
+                              View
+                            </a>
+                          ) : (
+                            <span className="text-xs text-gray-500">—</span>
+                          )}
+                        </td>
+                        <td className="p-3">
+                          <span className={`px-3 py-1 rounded-full text-xs ${reg.paymentStatus === "approved"
+                              ? "bg-green-500/20 text-green-400"
+                              : reg.paymentStatus === "rejected"
+                                ? "bg-red-500/20 text-red-400"
+                                : "bg-yellow-500/20 text-yellow-400"
+                            }`}>
+                            {reg.paymentStatus || "—"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
 
-              </tbody>
-
-            </table>
+              </table>
+            </div>
 
           </motion.div>
 
