@@ -99,14 +99,18 @@ export default function Dashboard() {
 
   /* ================= LOGIC ================= */
 
+  const matchName = (a: string, b: string) =>
+    (a ?? "").trim().toLowerCase() === (b ?? "").trim().toLowerCase();
+
+
   const totalRegistrations =
     admin?.role === "super"
       ? registrations.length
-      : registrations.filter(r => r.eventName === admin?.eventName).length;
+      : registrations.filter(r => matchName(r.eventName, admin?.eventName)).length;
 
 
   const getEventCount = (event: any) =>
-    registrations.filter(r => r.eventName === event.title).length;
+    registrations.filter(r => matchName(r.eventName, event.title)).length;
 
 
   const filteredRegistrations =
@@ -114,10 +118,10 @@ export default function Dashboard() {
       ? []
       : registrations.filter(r => {
         if (admin.role === "super")
-          return r.eventName === activeEvent.title;
+          return matchName(r.eventName, activeEvent.title);
         return (
-          r.eventName === activeEvent.title &&
-          r.eventName === admin.eventName
+          matchName(r.eventName, activeEvent.title) &&
+          matchName(r.eventName, admin.eventName)
         );
       });
 
@@ -311,10 +315,10 @@ export default function Dashboard() {
                         </td>
                         <td className="p-3">
                           <span className={`px-3 py-1 rounded-full text-xs ${reg.paymentStatus === "approved"
-                              ? "bg-green-500/20 text-green-400"
-                              : reg.paymentStatus === "rejected"
-                                ? "bg-red-500/20 text-red-400"
-                                : "bg-yellow-500/20 text-yellow-400"
+                            ? "bg-green-500/20 text-green-400"
+                            : reg.paymentStatus === "rejected"
+                              ? "bg-red-500/20 text-red-400"
+                              : "bg-yellow-500/20 text-yellow-400"
                             }`}>
                             {reg.paymentStatus || "—"}
                           </span>
