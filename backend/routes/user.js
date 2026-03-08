@@ -1,4 +1,6 @@
 import express from "express";
+import https from "https";
+import http from "http";
 const Router = express.Router();
 
 import upload, { uploadAbstract } from "../middlewares/upload.js";
@@ -38,35 +40,38 @@ Router.post(
 Router.post("/updateAbstractStatus", updateAbstractStatus);
 
 // Proxy raw Cloudinary abstract file so browser can render it as PDF
-Router.get("/proxyAbstract", async (req, res) => {
+// Uses https.get with redirect following — more reliable than fetch for Cloudinary raw URLs
+
+function fetchAndPipe(url, res, redirectCount = 0) {
+    if (redirectCount > 5) return res.status(502).send("Too many redirects");
+
+    const client = url.startsWith("https") ? https : http;
+    client.get(url, (cloudRes) => {
+        // Follow redirects (Cloudinary raw files often 302 redirect)
+        if ([301, 302, 303, 307, 308].includes(cloudRes.statusCode) && cloudRes.headers.location) {
+            return fetchAndPipe(cloudRes.headers.location, res, redirectCount + 1);
+        }
+
+        if (cloudRes.statusCode !== 200) {
+            return res.status(502).send("Failed to fetch file from Cloudinary");
+        }
+
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-Disposition", "inline");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        cloudRes.pipe(res);
+    }).on("error", (err) => {
+        console.error("❌ Abstract proxy error:", err.message);
+        res.status(500).send("Proxy error");
+    });
+}
+
+Router.get("/proxyAbstract", (req, res) => {
     const { url } = req.query;
     if (!url) return res.status(400).send("Missing url");
+    if (!url.startsWith("https://res.cloudinary.com/")) return res.status(403).send("Forbidden");
 
-    // Only allow Cloudinary URLs
-    if (!url.startsWith("https://res.cloudinary.com/")) {
-        return res.status(403).send("Forbidden");
-    }
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) return res.status(502).send("Failed to fetch file");
-
-        const buffer = await response.arrayBuffer();
-        const bytes = Buffer.from(buffer);
-
-        // Detect file type from URL extension
-        const ext = url.split("?")[0].split(".").pop().toLowerCase();
-        const mimeMap = { pdf: "application/pdf", doc: "application/msword", docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" };
-        const contentType = mimeMap[ext] || "application/pdf";
-
-        res.setHeader("Content-Type", contentType);
-        res.setHeader("Content-Disposition", "inline");
-        res.setHeader("Content-Length", bytes.length);
-        res.send(bytes);
-    } catch (err) {
-        console.error("❌ Abstract proxy error:", err);
-        res.status(500).send("Proxy error");
-    }
+    fetchAndPipe(url, res);
 });
 
 export default Router;
