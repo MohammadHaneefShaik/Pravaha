@@ -1,7 +1,6 @@
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import cloudinary from "../service/cloudinary.js";
-import path from "path";
 
 /* VERIFY CONFIG */
 console.log("Cloudinary config inside upload.js:");
@@ -15,7 +14,6 @@ const paymentStorage = new CloudinaryStorage({
   params: async (req, file) => {
     return {
       folder: "event_payments",
-      resource_type: "image",
       allowed_formats: ["jpg", "jpeg", "png"],
       public_id: `payment_${Date.now()}`,
     };
@@ -24,31 +22,43 @@ const paymentStorage = new CloudinaryStorage({
 
 /* ============================
    STORAGE — Abstract Documents
-   Supports: PDF / DOC / DOCX
+   NOTE: resource_type "raw" is required for PDFs/docs.
+   Do NOT set allowed_formats here — it conflicts with raw uploads.
+   File type filtering is handled by multer's fileFilter below.
 ============================ */
 const abstractStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
-    const ext = path.extname(file.originalname); // keeps .pdf .doc .docx
+    // Preserve the original file extension so Cloudinary serves the file
+    // with the correct Content-Type header (e.g. application/pdf).
+    // Without the extension, browsers download raw files as unknown binary.
+
+    const ext =
+      file.mimetype === "application/pdf"
+        ? ".pdf"
+        : file.mimetype === "application/msword"
+        ? ".doc"
+        : ".docx";
 
     return {
       folder: "event_abstracts",
-      resource_type: "auto", // automatically detects file type
-public_id: `abstract_${Date.now()}`    };
+      resource_type: "raw",
+      public_id: `abstract_${Date.now()}${ext}`,
+    };
   },
 });
 
 /* ============================
-   FILE FILTER — Abstract Upload
+   Abstract file type filter — only PDF/DOC/DOCX
 ============================ */
 function abstractFileFilter(req, file, cb) {
-  const allowedTypes = [
+  const allowed = [
     "application/pdf",
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   ];
 
-  if (allowedTypes.includes(file.mimetype)) {
+  if (allowed.includes(file.mimetype)) {
     cb(null, true);
   } else {
     cb(new Error("Only PDF, DOC, and DOCX files are allowed"), false);
@@ -59,17 +69,14 @@ function abstractFileFilter(req, file, cb) {
    MULTER INSTANCES
 ============================ */
 
-/* Payment screenshot upload */
 const upload = multer({
   storage: paymentStorage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
-/* Abstract upload */
 const uploadAbstract = multer({
   storage: abstractStorage,
   fileFilter: abstractFileFilter,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
 });
 
 /* ============================
