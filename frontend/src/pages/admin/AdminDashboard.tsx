@@ -21,6 +21,7 @@ export default function AdminDashboard() {
   const [admin, setAdmin] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<TabType>("registrations");
   const [search, setSearch] = useState("");
+  const [pdfViewer, setPdfViewer] = useState<{ url: string; name: string } | null>(null);
 
   /* =========== CHECK ADMIN =========== */
   useEffect(() => {
@@ -228,23 +229,13 @@ export default function AdminDashboard() {
                       <td>
                         <StatusBadge status={reg.paymentStatus} />
                       </td>
-                     <td>
-  {reg.paymentScreenshot ? (
-    <a
-      href={reg.paymentScreenshot}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img
-        src={reg.paymentScreenshot}
-        className="w-12 rounded cursor-pointer hover:scale-110 transition"
-        alt="payment proof"
-      />
-    </a>
-  ) : (
-    <span className="text-xs text-gray-500">—</span>
-  )}
-</td>
+                      <td>
+                        {reg.paymentScreenshot ? (
+                          <img src={reg.paymentScreenshot} className="w-12 rounded" alt="proof" />
+                        ) : (
+                          <span className="text-xs text-gray-500">—</span>
+                        )}
+                      </td>
                       <td>
                         <div className="flex gap-2">
                           <button
@@ -315,22 +306,19 @@ export default function AdminDashboard() {
                       <td className="text-center">
                         <span className="text-cyan-400 font-bold">{reg.memberCount || 1}</span>
                       </td>
-                     <td>
-  {reg.abstractFile ? (
-    <a
-      href={`https://docs.google.com/viewer?url=${encodeURIComponent(reg.abstractFile)}&embedded=true`}
-      target="_blank"
-      rel="noopener noreferrer"
-      download
-      className="inline-flex items-center gap-1 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition text-xs"
-    >
-      <FileText className="w-3.5 h-3.5" />
-                            View File
-    </a>
-  ) : (
-    <span className="text-xs text-gray-500">—</span>
-  )}
-</td>
+                      <td>
+                        {reg.abstractFile ? (
+                          <button
+                            onClick={() => setPdfViewer({ url: reg.abstractFile, name: reg.fullName })}
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition text-xs"
+                          >
+                            <FileText className="w-3.5 h-3.5" />
+                            View
+                          </button>
+                        ) : (
+                          <span className="text-xs text-gray-500">—</span>
+                        )}
+                      </td>
                       <td>
                         <AbstractStatusBadge status={reg.abstractStatus} />
                       </td>
@@ -386,6 +374,58 @@ export default function AdminDashboard() {
       </main>
 
       <Footer />
+
+      {/* ===================== PDF VIEWER MODAL ===================== */}
+      {pdfViewer && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setPdfViewer(null)}
+        >
+          <div
+            className="bg-[#0d1535] border border-white/10 rounded-2xl w-full max-w-4xl h-[85vh] flex flex-col"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 border-b border-white/10">
+              <div>
+                <div className="font-semibold text-white">{pdfViewer.name}'s Abstract</div>
+                <div className="text-xs text-gray-400 mt-0.5">PDF Viewer</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={pdfViewer.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 bg-cyan-500/20 text-cyan-400 rounded-lg text-xs hover:bg-cyan-500/30 transition"
+                >
+                  Open in New Tab ↗
+                </a>
+                <a
+                  href={pdfViewer.url}
+                  download
+                  className="px-3 py-1.5 bg-white/10 text-gray-300 rounded-lg text-xs hover:bg-white/20 transition"
+                >
+                  ⬇ Download
+                </a>
+                <button
+                  onClick={() => setPdfViewer(null)}
+                  className="px-3 py-1.5 bg-red-500/20 text-red-400 rounded-lg text-xs hover:bg-red-500/30 transition"
+                >
+                  ✕ Close
+                </button>
+              </div>
+            </div>
+            {/* PDF iframe */}
+            <div className="flex-1 p-2">
+              <iframe
+                src={`https://docs.google.com/viewer?url=${encodeURIComponent(pdfViewer.url)}&embedded=true`}
+                className="w-full h-full rounded-xl border border-white/5"
+                title="Abstract PDF"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
