@@ -393,7 +393,7 @@ export default function AdminDashboard() {
               </div>
               <div className="flex items-center gap-2">
                 <a
-                href={`https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(pdfViewer.url)}&embedded=true`}
+   href={pdfViewer.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-3 py-1.5 bg-cyan-500/20 text-cyan-400 rounded-lg text-xs hover:bg-cyan-500/30 transition"
@@ -418,7 +418,7 @@ export default function AdminDashboard() {
             {/* PDF iframe */}
             <div className="flex-1 p-2">
               <iframe
-                src={`https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(pdfViewer.url)}&embedded=true`}
+                 src={pdfViewer.url}
   className="w-full h-full rounded-xl border border-white/5"
   title="Abstract PDF"
 />
