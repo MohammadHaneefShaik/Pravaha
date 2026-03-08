@@ -34,8 +34,7 @@ const abstractStorage = new CloudinaryStorage({
     return {
       folder: "event_abstracts",
       resource_type: "auto", // automatically detects file type
-      public_id: `abstract_${Date.now()}${ext}`,
-    };
+public_id: `abstract_${Date.now()}`    };
   },
 });
 
