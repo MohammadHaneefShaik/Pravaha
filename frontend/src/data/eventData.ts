@@ -8,13 +8,13 @@ export const eventsData = [
   },
 
   {
-    title: "Project Presentation",
-    slug: "project-presentation",
+    title: "Poster Presentation",
+    slug: "poster-presentation",
   },
 
   {
-    title: "Poster Presentation",
-    slug: "poster-presentation",
+    title: "Logo Design",
+    slug: "logo-design",
   },
 
   {
@@ -23,22 +23,23 @@ export const eventsData = [
   },
 
   {
+    title: "EV Spark",
+    slug: "ev-spark",
+  },
+
+  {
+    title: "Circuit Twisting",
+    slug: "circuit-twisting",
+  },
+
+  {
+    title: "Project Expo",
+    slug: "project-Expo",
+  },
+
+  {
     title: "Coding Competition",
     slug: "coding-competition",
   },
-   {
-    title: "Circuit Twisting",
-    slug: "circuit-twisting",
-   },
-
-   {
-    title: "Logo Design",
-    slug: "logo-design",
-  },
-    {
-    title: "EV Spark",
-    slug:  "ev-spark",
-  },
-  
 
 ];
