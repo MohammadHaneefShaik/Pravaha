@@ -418,7 +418,7 @@ export default function AdminDashboard() {
             {/* PDF iframe */}
             <div className="flex-1 p-2">
               <iframe
-                src={`${API}/api/user/proxyAbstract?url=${encodeURIComponent(pdfViewer.url)}`}
+                src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(pdfViewer.url)}`}
                 className="w-full h-full rounded-xl border border-white/5"
                 title="Abstract PDF"
               />
