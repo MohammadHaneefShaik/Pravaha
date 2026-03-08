@@ -23,7 +23,7 @@ const technicalEvents = [
     icon: FileText,
     title: "BATTLE OF IDEAZ",
     slug: "paper-presentation",
-    price: 200,
+    price: 400,
     time: "11:00 AM",
     date: "12th March 2026",
     description:
@@ -89,7 +89,7 @@ const technicalEvents = [
     icon: Cpu,
     title: "PRAGMA",
     slug: "project-Expo",
-    price: 200,
+    price: 400,
     time: "11:00 AM",
     date: "13th March 2026",
     description:
