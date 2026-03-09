@@ -279,10 +279,12 @@ export default function AdminDashboard() {
                     <th className="p-4 text-left">Name / Members</th>
                     <th>Team Name</th>
                     <th>Email</th>
+                    <th>Phone</th>
                     <th>College</th>
+                    <th>Branch</th>
+                    <th>Year</th>
                     <th>Members</th>
-                    <th>Abstract (Cloudinary)</th>
-                    <th>Form File (Drive)</th>
+                    <th>Abstract File</th>
                     <th>Abstract Status</th>
                     <th>Payment</th>
                     <th>Action</th>
@@ -304,22 +306,12 @@ export default function AdminDashboard() {
                         </span>
                       </td>
                       <td className="text-sm">{reg.email}</td>
+                      <td className="text-xs text-gray-300">{reg.phone || "—"}</td>
                       <td className="text-xs text-gray-300">{reg.collegeName}</td>
+                      <td className="text-xs text-gray-300">{reg.department || "—"}</td>
+                      <td className="text-xs text-gray-300">{reg.year || "—"}</td>
                       <td className="text-center">
                         <span className="text-cyan-400 font-bold">{reg.memberCount || 1}</span>
-                      </td>
-                      <td>
-                        {reg.abstractFile ? (
-                          <button
-                            onClick={() => setPdfViewer({ url: reg.abstractFile, name: reg.fullName })}
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition text-xs"
-                          >
-                            <FileText className="w-3.5 h-3.5" />
-                            View
-                          </button>
-                        ) : (
-                          <span className="text-xs text-gray-500">—</span>
-                        )}
                       </td>
                       <td>
                         {reg.googleFormFileUrl ? (
@@ -330,8 +322,16 @@ export default function AdminDashboard() {
                             className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500/20 transition text-xs"
                           >
                             <ExternalLink className="w-3.5 h-3.5" />
-                            Drive
+                            View
                           </a>
+                        ) : reg.abstractFile ? (
+                          <button
+                            onClick={() => setPdfViewer({ url: reg.abstractFile, name: reg.fullName })}
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition text-xs"
+                          >
+                            <FileText className="w-3.5 h-3.5" />
+                            View
+                          </button>
                         ) : (
                           <span className="text-xs text-gray-500">—</span>
                         )}
