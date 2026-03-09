@@ -248,14 +248,14 @@ export async function verifyMailer() {
    EVENT WHATSAPP GROUP LINKS
 ========================= */
 const EVENT_WHATSAPP_LINKS = {
-  "Paper Presentation": "https://chat.whatsapp.com/Gplnn1zihq31SyFGFr057l?mode=gi_t",
-  "Project Expo": "https://chat.whatsapp.com/FLvSXVzmP4o3kFf17CAlDf?mode=gi_t",
-  "Poster Presentation": "https://chat.whatsapp.com/FJxfaQRXuz13nez0Gbhmqj?mode=gi_t",
-  "Coding Competition": "https://chat.whatsapp.com/EuDGunWuZyw7TuTpYkImNE?mode=hq2tcla",
-  "Technical Quiz": "https://chat.whatsapp.com/JxhH8XSFXaaEcgoxCqRNyK?mode=gi_t",
-  "Circuit Twisting": "https://chat.whatsapp.com/HTzqSYjQwJl702iUVRftbo?mode=gi_t",
-  "Logo Design": "https://chat.whatsapp.com/JNWKMtGeG696BK3BDRZTlf?mode=hqctcla",
-  "EV Spark": "https://chat.whatsapp.com/IGZQYumx84pLcGZygln0L7?mode=gi_t",
+  "paper presentation": "https://chat.whatsapp.com/Gplnn1zihq31SyFGFr057l",
+  "project expo": "https://chat.whatsapp.com/FLvSXVzmP4o3kFf17CAlDf",
+  "poster presentation": "https://chat.whatsapp.com/FJxfaQRXuz13nez0Gbhmqj",
+  "coding competition": "https://chat.whatsapp.com/EuDGunWuZyw7TuTpYkImNE",
+  "technical quiz": "https://chat.whatsapp.com/JxhH8XSFXaaEcgoxCqRNyK",
+  "circuit twisting": "https://chat.whatsapp.com/HTzqSYjQwJl702iUVRftbo",
+  "logo design": "https://chat.whatsapp.com/JNWKMtGeG696BK3BDRZTlf",
+  "ev spark": "https://chat.whatsapp.com/IGZQYumx84pLcGZygln0L7",
 };
 
 /* =========================
@@ -268,7 +268,7 @@ export async function sendPaymentApprovalMail({
   transactionId,
 }) {
   try {
-    const whatsappLink = EVENT_WHATSAPP_LINKS[eventName] || "https://chat.whatsapp.com/LbjF1AivyB3IJFwFhF3ZG9";
+    const whatsappLink = EVENT_WHATSAPP_LINKS[eventName] ;
 
     await postToScript({
       to,
