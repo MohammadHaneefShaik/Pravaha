@@ -29,19 +29,16 @@ const paymentStorage = new CloudinaryStorage({
 const abstractStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
-    const ext =
-      file.mimetype === "application/pdf"
-        ? "pdf" // Note: Cloudinary adds the dot automatically in many cases
-        : file.mimetype === "application/msword"
-        ? "doc"
-        : "docx";
-
+    const isPDF = file.mimetype === "application/pdf";
+    
     return {
       folder: "event_abstracts",
-      // CHANGE THIS: "image" allows PDFs to be viewed inline
-      resource_type: "image", 
+      // PDFs work best as 'image' for browser viewing
+      // DOC/DOCX MUST be 'raw'
+      resource_type: isPDF ? "image" : "raw", 
       public_id: `abstract_${Date.now()}`,
-      format: ext, // Using format instead of appending to public_id is cleaner
+      // format is only used for 'image' type
+      ...(isPDF && { format: "pdf" }), 
     };
   },
 });
