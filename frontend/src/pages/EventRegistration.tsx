@@ -460,98 +460,73 @@ const EventRegistration = () => {
           </motion.div>
 
           {/* ====================================================
-                PAPER PRESENTATION — Abstract Form (Step 1)
-                Always 2 members — no toggle
+                PAPER PRESENTATION — Google Form Abstract Step (Step 1)
             ==================================================== */}
           {isPaperPresentation && ppStep === "form" && (
-            <motion.form
-              onSubmit={handleAbstractSubmit}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 glow-border space-y-3 sm:space-y-4"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-card border border-border rounded-2xl p-6 sm:p-8 glow-border space-y-6 text-center"
             >
               {/* Step indicator */}
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3 justify-center">
                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold">1</span>
-                <span className="text-sm text-muted-foreground font-medium">Member Details &amp; Abstract Upload</span>
+                <span className="text-sm text-muted-foreground font-medium">Submit Abstract via Google Form</span>
               </div>
 
-              {/* Team Name */}
-              <div>
-                <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mb-2">
-                  🏷️ Team Name
-                </p>
-                <input
-                  placeholder="Team Name (e.g. Tech Titans)"
-                  value={teamName}
-                  onChange={(e) => setTeamName(e.target.value)}
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
-                />
-              </div>
-
-              {/* Member 1 */}
-              <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
-                👤 Member 1
-              </p>
-              {memberFields.map((field) => (
-                <input
-                  key={field.key}
-                  placeholder={field.label}
-                  required
-                  value={(formData as any)[field.key]}
-                  onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
-                />
-              ))}
-
-              {/* Member 2 — always shown */}
-              <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
-                👤 Member 2
-              </p>
-              {memberFields.map((field) => (
-                <input
-                  key={`m2-${field.key}`}
-                  placeholder={field.label}
-                  required
-                  value={(member2 as any)[field.key]}
-                  onChange={(e) => setMember2({ ...member2, [field.key]: e.target.value })}
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
-                />
-              ))}
-
-              {/* Abstract Upload */}
-              <div className="bg-secondary/20 border border-border rounded-xl p-4 sm:p-5 mt-2 space-y-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-primary">
-                  <FileText className="w-4 h-4" />
-                  Abstract File Upload
+              {/* Icon + heading */}
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center">
+                  <FileText className="w-8 h-8 text-cyan-400" />
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  Upload your abstract as a PDF or Word document (max 10 MB).
+                <h2 className="text-xl font-bold text-white">Abstract Submission</h2>
+                <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
+                  Fill in your team details and upload your abstract file using our official Google Form. Once submitted, come back here and click <strong className="text-cyan-400">"I've Submitted"</strong>.
                 </p>
-                <label className="flex items-center justify-center gap-2 cursor-pointer border border-dashed border-primary p-3 rounded-lg hover:bg-primary/10 transition text-sm">
-                  📎 Choose Abstract File (PDF / DOC / DOCX)
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    required
-                    onChange={(e) => setAbstractFile(e.target.files?.[0] || null)}
-                    className="hidden"
-                  />
-                </label>
-                {abstractFile && (
-                  <p className="text-xs text-green-400">✅ {abstractFile.name}</p>
-                )}
               </div>
 
-              <button
-                type="submit"
-                disabled={ppSubmitting}
-                className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base disabled:opacity-60"
+              {/* Instructions */}
+              <div className="bg-secondary/20 border border-border rounded-xl p-4 text-left space-y-2 text-sm">
+                <p className="text-cyan-400 font-semibold mb-2">📋 What to fill in the Google Form:</p>
+                <ul className="text-muted-foreground space-y-1 list-disc list-inside">
+                  <li>Member 1 & Member 2 details (name, reg no., email…)</li>
+                  <li>Team name</li>
+                  <li>Abstract file (PDF / DOC / DOCX, max 10 MB)</li>
+                </ul>
+              </div>
+
+              {/* Open Google Form button */}
+              <a
+                href={import.meta.env.VITE_ABSTRACT_FORM_URL || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold text-base hover:opacity-90 transition shadow-lg shadow-cyan-500/20"
               >
-                Submit Abstract →
+                <FileText className="w-5 h-5" />
+                Open Google Form →
+              </a>
+
+              {/* Divider */}
+              <div className="flex items-center gap-3 text-xs text-gray-500">
+                <div className="flex-1 h-px bg-border" />
+                After submitting the form, click below
+                <div className="flex-1 h-px bg-border" />
+              </div>
+
+              {/* "I've Submitted" button — saves to pending state */}
+              <button
+                onClick={() => setPpStep("pending")}
+                className="w-full py-3 rounded-xl border border-emerald-400/40 text-emerald-400 font-semibold text-sm hover:bg-emerald-500/10 transition"
+              >
+                ✅ I've Submitted the Form
               </button>
-            </motion.form>
+
+              <p className="text-xs text-gray-500">
+                Your abstract will be reviewed by the team. You'll receive an email once it's accepted.
+              </p>
+            </motion.div>
           )}
+
 
           {/* ====================================================
                 PAPER PRESENTATION — Payment Form (Step 2, accepted)
