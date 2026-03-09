@@ -176,36 +176,32 @@ const EventRegistration = () => {
   }, [isPaperPresentation]);
 
   /* ============================================================
-    SUBMIT ABSTRACT (Paper Presentation — Step 1)
-    Always 2 members
+    SUBMIT PAPER REGISTRATION (Paper Presentation — Step 1)
+    Form-only, no file upload. Abstract goes via Google Form.
   ============================================================ */
   const handleAbstractSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!abstractFile) {
-      alert("Please upload your abstract file (PDF/DOC).");
-      return;
-    }
 
     setPpSubmitting(true);
 
-    const fd = new FormData();
+    const payload: Record<string, string> = {};
     Object.entries(formData).forEach(([key, value]) => {
-      if (key !== "transactionId") fd.append(key, value);
+      if (key !== "transactionId") payload[key] = value;
     });
-    fd.append("eventName", event.eventName);
-    fd.append("memberCount", "2");
-    if (teamName) fd.append("teamName", teamName);
-    fd.append("abstract", abstractFile);
+    payload.eventName = event.eventName;
+    payload.memberCount = "2";
+    if (teamName) payload.teamName = teamName;
 
     // Always include member 2
     Object.entries(member2).forEach(([key, value]) => {
-      fd.append(`member2_${key}`, value);
+      payload[`member2_${key}`] = value;
     });
 
     try {
-      const res = await fetch(`${API_URL}/api/user/submitAbstract`, {
+      const res = await fetch(`${API_URL}/api/user/submitPaperRegistration`, {
         method: "POST",
-        body: fd,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
 
@@ -428,7 +424,7 @@ const EventRegistration = () => {
       {/* Submission overlay */}
       <AnimatePresence>
         {(ppSubmitting || regularSubmitting) && (
-          <SubmitOverlay label={isPaperPresentation ? "Submitting abstract…" : "Submitting registration…"} />
+          <SubmitOverlay label={isPaperPresentation ? "Submitting registration…" : "Submitting registration…"} />
         )}
       </AnimatePresence>
 
@@ -449,7 +445,7 @@ const EventRegistration = () => {
             </p>
             {isPaperPresentation && (
               <p className="text-cyan-400 mt-1 text-sm font-medium">
-                📄 Submit your abstract to register &nbsp;·&nbsp; 👥 2 Members
+                📄 Fill your details & submit abstract via Google Form &nbsp;·&nbsp; 👥 2 Members
               </p>
             )}
             {isProjectExpo && (
@@ -460,71 +456,111 @@ const EventRegistration = () => {
           </motion.div>
 
           {/* ====================================================
-                PAPER PRESENTATION — Google Form Abstract Step (Step 1)
+                PAPER PRESENTATION — Registration Form + Google Form Link (Step 1)
             ==================================================== */}
           {isPaperPresentation && ppStep === "form" && (
-            <motion.div
+            <motion.form
+              onSubmit={handleAbstractSubmit}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-card border border-border rounded-2xl p-6 sm:p-8 glow-border space-y-6 text-center"
+              className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-8 glow-border space-y-3 sm:space-y-4"
             >
               {/* Step indicator */}
-              <div className="flex items-center gap-3 justify-center">
+              <div className="flex items-center gap-3 mb-2">
                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold">1</span>
-                <span className="text-sm text-muted-foreground font-medium">Submit Abstract via Google Form</span>
+                <span className="text-sm text-muted-foreground font-medium">Registration Details & Abstract Submission</span>
               </div>
 
-              {/* Icon + heading */}
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center">
-                  <FileText className="w-8 h-8 text-cyan-400" />
+              {/* Team Name */}
+              <div>
+                <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mb-2">
+                  🏷️ Team Name
+                </p>
+                <input
+                  placeholder="Enter your team name"
+                  value={teamName}
+                  onChange={(e) => setTeamName(e.target.value)}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              </div>
+
+              {/* Member 1 Details */}
+              <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
+                👤 Member 1 Details
+              </p>
+              {memberFields.map((field) => (
+                <input
+                  key={field.key}
+                  placeholder={field.label}
+                  required
+                  value={(formData as any)[field.key]}
+                  onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              ))}
+
+              {/* Member 2 Details */}
+              <p className="text-cyan-400 font-semibold text-sm border-b border-border pb-1 mt-2">
+                👤 Member 2 Details
+              </p>
+              {memberFields.map((field) => (
+                <input
+                  key={`m2-${field.key}`}
+                  placeholder={field.label}
+                  required
+                  value={(member2 as any)[field.key]}
+                  onChange={(e) => setMember2({ ...member2, [field.key]: e.target.value })}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary/40 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none text-sm sm:text-base"
+                />
+              ))}
+
+              {/* Abstract Submission via Google Form */}
+              <div className="bg-secondary/20 border border-border rounded-xl p-4 sm:p-6 mt-2 space-y-4">
+                <div className="flex flex-col items-center gap-2">
+                  <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
+                  <p className="text-muted-foreground text-xs sm:text-sm text-center">
+                    Submit your abstract file using the Google Form below
+                  </p>
                 </div>
-                <h2 className="text-xl font-bold text-white">Abstract Submission</h2>
-                <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
-                  Fill in your team details and upload your abstract file using our official Google Form. Once submitted, come back here and click <strong className="text-cyan-400">"I've Submitted"</strong>.
+
+                {/* Instructions */}
+                <div className="bg-secondary/30 border border-border rounded-lg p-3 text-left space-y-1 text-xs sm:text-sm">
+                  <p className="text-cyan-400 font-semibold mb-1">📋 What to fill in the Google Form:</p>
+                  <ul className="text-muted-foreground space-y-0.5 list-disc list-inside">
+                    <li>Your email address (same as above)</li>
+                    <li>Abstract file (PDF / DOC / DOCX, max 10 MB)</li>
+                  </ul>
+                </div>
+
+                {/* Open Google Form button */}
+                <a
+                  href={import.meta.env.VITE_ABSTRACT_FORM_URL || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold text-sm sm:text-base hover:opacity-90 transition shadow-lg shadow-cyan-500/20"
+                >
+                  <FileText className="w-5 h-5" />
+                  Open Google Form to Upload Abstract →
+                </a>
+
+                <p className="text-xs text-gray-500 text-center">
+                  ⚠️ Make sure to submit the Google Form with the <strong>same email</strong> you entered above so your abstract gets linked to your registration.
                 </p>
               </div>
 
-              {/* Instructions */}
-              <div className="bg-secondary/20 border border-border rounded-xl p-4 text-left space-y-2 text-sm">
-                <p className="text-cyan-400 font-semibold mb-2">📋 What to fill in the Google Form:</p>
-                <ul className="text-muted-foreground space-y-1 list-disc list-inside">
-                  <li>Member 1 & Member 2 details (name, reg no., email…)</li>
-                  <li>Team name</li>
-                  <li>Abstract file (PDF / DOC / DOCX, max 10 MB)</li>
-                </ul>
-              </div>
-
-              {/* Open Google Form button */}
-              <a
-                href={import.meta.env.VITE_ABSTRACT_FORM_URL || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold text-base hover:opacity-90 transition shadow-lg shadow-cyan-500/20"
-              >
-                <FileText className="w-5 h-5" />
-                Open Google Form →
-              </a>
-
-              {/* Divider */}
-              <div className="flex items-center gap-3 text-xs text-gray-500">
-                <div className="flex-1 h-px bg-border" />
-                After submitting the form, click below
-                <div className="flex-1 h-px bg-border" />
-              </div>
-
-              {/* "I've Submitted" button — saves to pending state */}
+              {/* Submit Registration Button */}
               <button
-                onClick={() => setPpStep("pending")}
-                className="w-full py-3 rounded-xl border border-emerald-400/40 text-emerald-400 font-semibold text-sm hover:bg-emerald-500/10 transition"
+                type="submit"
+                disabled={ppSubmitting}
+                className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition text-sm sm:text-base disabled:opacity-60"
               >
-                ✅ I've Submitted the Form
+                Submit Registration →
               </button>
 
-              <p className="text-xs text-gray-500">
-                Your abstract will be reviewed by the team. You'll receive an email once it's accepted.
+              <p className="text-xs text-gray-500 text-center">
+                Your abstract will be reviewed by the team. You'll receive an email once it's accepted, then you can complete your payment.
               </p>
-            </motion.div>
+            </motion.form>
           )}
 
 
