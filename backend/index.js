@@ -13,11 +13,13 @@ import basicRoute from "./routes/basic.js";
 import userRoute from "./routes/user.js";
 import adminRoute from "./routes/admin.js";
 import eventRoutes from "./routes/event.js";
+import googleformRoute from "./routes/googleform.js";
 
 
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
+
 /* ---------------------------------- */
 /* FIX __dirname FOR ES MODULES */
 /* ---------------------------------- */
@@ -35,9 +37,11 @@ app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
 const corsOptions = {
-   origin: [
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:8080",
+    "https://concurrence.vercel.app",
     "https://pravaha-2k26.vercel.app",
-    "http://localhost:5173"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -70,7 +74,8 @@ mongoose
       // Index may already not exist — safe to ignore
       console.log("ℹ️ transactionId index cleanup:", err.message);
     }
-  }).catch((err) => console.error(err));
+  })
+  .catch((err) => console.error(err));
 
 /* ---------------------------------- */
 /* API ROUTES */
@@ -79,6 +84,7 @@ app.use("/api/basic", basicRoute);
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/events", eventRoutes);
+app.use("/api/googleform", googleformRoute);
 
 /* ---------------------------------- */
 /* HEALTH CHECK */
@@ -90,7 +96,7 @@ app.get("/healthz", (req, res) => res.send("OK"));
 /* ---------------------------------- */
 app.use((req, res) => {
   if (req.method === "GET" && !req.path.startsWith("/api")) {
-    return res.redirect("https://prvaha-2k26.vercel.app");
+    return res.redirect("https://concurrence.vercel.app");
   }
   res.status(404).json({ success: false, message: "API route not found" });
 });
