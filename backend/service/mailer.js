@@ -248,14 +248,14 @@ export async function verifyMailer() {
    EVENT WHATSAPP GROUP LINKS
 ========================= */
 const EVENT_WHATSAPP_LINKS = {
-  "paper presentation": "https://chat.whatsapp.com/Gplnn1zihq31SyFGFr057l",
-  "project expo": "https://chat.whatsapp.com/FLvSXVzmP4o3kFf17CAlDf",
-  "poster presentation": "https://chat.whatsapp.com/FJxfaQRXuz13nez0Gbhmqj",
-  "coding competition": "https://chat.whatsapp.com/EuDGunWuZyw7TuTpYkImNE",
-  "technical quiz": "https://chat.whatsapp.com/JxhH8XSFXaaEcgoxCqRNyK",
-  "circuit twisting": "https://chat.whatsapp.com/HTzqSYjQwJl702iUVRftbo",
-  "logo design": "https://chat.whatsapp.com/JNWKMtGeG696BK3BDRZTlf",
-  "ev spark": "https://chat.whatsapp.com/IGZQYumx84pLcGZygln0L7",
+  "paper presentation": "https://chat.whatsapp.com/Gplnn1zihq31SyFGFr057l?mode=gi_t",
+  "project expo": "https://chat.whatsapp.com/FLvSXVzmP4o3kFf17CAlDf?mode=gi_t",
+  "poster presentation": "https://chat.whatsapp.com/FJxfaQRXuz13nez0Gbhmqj?mode=gi_t",
+  "coding competition": "https://chat.whatsapp.com/EuDGunWuZyw7TuTpYkImNE?mode=hq2tcla",
+  "technical quiz": "https://chat.whatsapp.com/JxhH8XSFXaaEcgoxCqRNyK?mode=gi_t",
+  "circuit twisting": "https://chat.whatsapp.com/HTzqSYjQwJl702iUVRftbo?mode=gi_t",
+  "logo design": "https://chat.whatsapp.com/JNWKMtGeG696BK3BDRZTlf?mode=hqctcla",
+  "ev spark": "https://chat.whatsapp.com/IGZQYumx84pLcGZygln0L7?mode=gi_t",
 };
 
 /* =========================
