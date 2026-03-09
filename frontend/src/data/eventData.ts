@@ -39,7 +39,7 @@ export const eventsData = [
 
   {
     title: "CODATHON",
-    slug: "coding-competition,
+    slug: "coding-competition",
   },
 
 ];
