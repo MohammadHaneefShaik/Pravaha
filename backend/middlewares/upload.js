@@ -29,21 +29,19 @@ const paymentStorage = new CloudinaryStorage({
 const abstractStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
-    // Preserve the original file extension so Cloudinary serves the file
-    // with the correct Content-Type header (e.g. application/pdf).
-    // Without the extension, browsers download raw files as unknown binary.
-
     const ext =
       file.mimetype === "application/pdf"
-        ? ".pdf"
+        ? "pdf" // Note: Cloudinary adds the dot automatically in many cases
         : file.mimetype === "application/msword"
-        ? ".doc"
-        : ".docx";
+        ? "doc"
+        : "docx";
 
     return {
       folder: "event_abstracts",
-      resource_type: "raw",
-      public_id: `abstract_${Date.now()}${ext}`,
+      // CHANGE THIS: "image" allows PDFs to be viewed inline
+      resource_type: "image", 
+      public_id: `abstract_${Date.now()}`,
+      format: ext, // Using format instead of appending to public_id is cleaner
     };
   },
 });
