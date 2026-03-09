@@ -3,22 +3,22 @@ export const eventsData = [
   /* TECHNICAL EVENTS */
 
   {
-    title: "Paper Presentation",
+    title: "BATTLE OF IDEAZ",
     slug: "paper-presentation",
   },
 
   {
-    title: "Poster Presentation",
-    slug: "poster-presentation",
+    title: "BLUE PRINT",
+    slug:"poster-presentation",
   },
 
   {
-    title: "Logo Design",
+    title: "LOGO CRAFT",
     slug: "logo-design",
   },
 
   {
-    title: "Technical Quiz",
+    title: "TECHNOZEN",
     slug: "technical-quiz",
   },
 
@@ -28,18 +28,18 @@ export const eventsData = [
   },
 
   {
-    title: "Circuit Twisting",
+    title: "CIRCUIT TWISTING",
     slug: "circuit-twisting",
   },
 
   {
-    title: "Project Expo",
+    title: "PRAGMA",
     slug: "project-Expo",
   },
 
   {
-    title: "Coding Competition",
-    slug: "coding-competition",
+    title: "CODATHON",
+    slug: "coding-competition,
   },
 
 ];
