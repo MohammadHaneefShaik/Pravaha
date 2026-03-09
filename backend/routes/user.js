@@ -13,6 +13,7 @@ import {
     checkAbstractStatus,
     completePayment,
     updateAbstractStatus,
+    updateGoogleFormAbstract,
 } from "../controllers/user.js";
 
 // Existing routes
@@ -40,6 +41,9 @@ Router.post(
 
 // Admin action — update abstract status
 Router.post("/updateAbstractStatus", updateAbstractStatus);
+
+// Google Apps Script — link Google Form abstract to registration
+Router.post("/updateGoogleFormAbstract", updateGoogleFormAbstract);
 
 // Proxy raw Cloudinary abstract file so browser can render it as PDF
 // Uses https.get with redirect following — more reliable than fetch for Cloudinary raw URLs
