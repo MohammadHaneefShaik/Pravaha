@@ -308,6 +308,90 @@ export async function submitAbstract(req, res) {
 }
 
 /* =========================
+   SUBMIT PAPER REGISTRATION (Form-only, no file upload — Step 1)
+   Abstract goes through Google Form separately.
+========================= */
+export async function submitPaperRegistration(req, res) {
+  try {
+    console.log("========== PAPER REGISTRATION (form-only) ==========");
+    console.log("BODY:", req.body);
+
+    const data = req.body;
+
+    const requiredFields = [
+      "fullName", "registerNumber", "email",
+      "phoneNumber", "collegeName", "branch", "studyYear", "eventName",
+    ];
+
+    for (const field of requiredFields) {
+      if (!data[field]) {
+        return res.status(400).json({ success: false, message: `${field} is missing` });
+      }
+    }
+
+    const eventData = await EventModel.findOne({ eventName: data.eventName });
+    if (!eventData) {
+      return res.status(404).json({ success: false, message: "Event not found" });
+    }
+
+    // Check if already submitted for this event
+    const alreadySubmitted = await RegistrationModel.findOne({
+      email: data.email,
+      eventId: eventData._id,
+    });
+    if (alreadySubmitted) {
+      return res.json({
+        success: true,
+        message: "Already submitted",
+        registrationId: alreadySubmitted._id,
+        abstractStatus: alreadySubmitted.abstractStatus,
+      });
+    }
+
+    const memberCount = parseInt(data.memberCount) || 1;
+
+    const savedRegistration = await RegistrationModel.create({
+      fullName: data.fullName,
+      registerNumber: data.registerNumber,
+      email: data.email,
+      phone: data.phoneNumber,
+      collegeName: data.collegeName,
+      department: data.branch,
+      year: data.studyYear,
+      teamName: data.teamName || undefined,
+      eventId: eventData._id,
+      eventName: eventData.eventName,
+      abstractStatus: "pending",
+      registrationStatus: "registered",
+      paymentStatus: "pending",
+      memberCount,
+      member2: memberCount === 2
+        ? {
+          fullName: data.member2_fullName,
+          registerNumber: data.member2_registerNumber,
+          phoneNumber: data.member2_phoneNumber,
+          email: data.member2_email,
+          collegeName: data.member2_collegeName,
+          branch: data.member2_branch,
+          studyYear: data.member2_studyYear,
+        }
+        : undefined,
+    });
+
+    console.log("✅ Paper registration saved:", savedRegistration._id);
+
+    return res.json({
+      success: true,
+      message: "Registration submitted successfully. Awaiting abstract review.",
+      registrationId: savedRegistration._id,
+    });
+  } catch (err) {
+    console.error("❌ Paper registration error:", err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+/* =========================
    CHECK ABSTRACT STATUS (Paper Presentation)
 ========================= */
 export async function checkAbstractStatus(req, res) {
