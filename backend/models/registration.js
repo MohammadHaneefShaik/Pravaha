@@ -72,6 +72,12 @@ const registrationSchema = new Schema(
     transactionId: { type: String },   // duplicate check handled in controller
     paymentScreenshot: { type: String },
     paymentScreenshotId: { type: String },
+
+    /* =====================
+       GOOGLE FORM (Abstract Upload via Google Drive)
+    ===================== */
+    googleFormFileUrl: { type: String },       // Google Drive file view URL
+    googleFormResponseId: { type: String },    // Deduplication — Google Form response ID
   },
   { timestamps: true }
 );
