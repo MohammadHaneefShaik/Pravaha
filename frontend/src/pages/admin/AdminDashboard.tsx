@@ -208,18 +208,22 @@ export default function AdminDashboard() {
                     <td className="p-4">{reg.fullName}</td>
                     <td className="text-yellow-300">{reg.teamName || "—"}</td>
                     <td className="text-xs">{reg.collegeName}</td>
-                    <td>
-                      {reg.abstractFile ? (
-                        <a
-  href={`https://docs.google.com/viewer?url=${encodeURIComponent(reg.abstractFile)}&embedded=true`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="..."
->
-  View PDF
-</a>
-                      ) : "—"}
-                    </td>
+                   <td>
+  {reg.abstractFile ? (
+    <a
+      /* REMOVE the google viewer wrapper - link directly */
+      href={reg.abstractFile} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1.5 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition border border-cyan-500/20"
+    >
+      <FileText className="w-3.5 h-3.5" />
+      View PDF
+    </a>
+  ) : (
+    <span className="text-gray-500">—</span>
+  )}
+</td>
                     <td><AbstractStatusBadge status={reg.abstractStatus} /></td>
                     <td>
                         {reg.abstractStatus === "pending" ? (
