@@ -268,8 +268,9 @@ export async function sendPaymentApprovalMail({
   transactionId,
 }) {
   try {
-    const whatsappLink = EVENT_WHATSAPP_LINKS[eventName] ;
-
+const whatsappLink =
+  EVENT_WHATSAPP_LINKS[eventName?.toLowerCase().trim()] ||
+  "https://chat.whatsapp.com/Ec0uWjdr1hq3K9sUrYD3gP";
     await postToScript({
       to,
       subject: `Registration Confirmed | ${eventName} | PRAVAHA 2K26`,
