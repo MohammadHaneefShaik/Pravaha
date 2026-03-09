@@ -541,3 +541,55 @@ export async function updateAbstractStatus(req, res) {
     return res.status(500).json({ success: false, message: err.message });
   }
 }
+
+/* =========================
+   UPDATE GOOGLE FORM ABSTRACT (Called by Google Apps Script)
+   Links the Google Drive file URL to the registration by email.
+========================= */
+export async function updateGoogleFormAbstract(req, res) {
+  try {
+    const { email, driveLink } = req.body;
+
+    console.log("📋 Google Form abstract update:", { email, driveLink });
+
+    if (!email || !driveLink) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields: email and driveLink",
+      });
+    }
+
+    // Find the most recent registration for this email with abstractStatus pending
+    const updated = await RegistrationModel.findOneAndUpdate(
+      {
+        email: email.toLowerCase().trim(),
+        abstractStatus: { $in: ["pending", "not_required"] },
+      },
+      {
+        $set: {
+          googleFormFileUrl: driveLink,
+          abstractStatus: "pending",
+        },
+      },
+      { new: true, sort: { createdAt: -1 } }
+    );
+
+    if (!updated) {
+      return res.status(404).json({
+        success: false,
+        message: "No registration found for this email. Please register first on the website.",
+      });
+    }
+
+    console.log("✅ Google Form abstract linked to registration:", updated._id, "→", driveLink);
+
+    return res.json({
+      success: true,
+      message: "Abstract file linked successfully",
+      registrationId: updated._id,
+    });
+  } catch (err) {
+    console.error("❌ Google Form abstract update error:", err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
