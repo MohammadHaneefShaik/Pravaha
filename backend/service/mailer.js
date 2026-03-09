@@ -253,7 +253,7 @@ const EVENT_WHATSAPP_LINKS = {
   "Poster Presentation": "https://chat.whatsapp.com/FJxfaQRXuz13nez0Gbhmqj?mode=gi_t",
   "Coding Competition": "https://chat.whatsapp.com/EuDGunWuZyw7TuTpYkImNE?mode=hq2tcla",
   "Technical Quiz": "https://chat.whatsapp.com/JxhH8XSFXaaEcgoxCqRNyK?mode=gi_t",
-  "Circuit Twisting": "https://chat.whatsapp.com/HTzqSYjQwJl702iUVRftbo?mode=gi_",
+  "Circuit Twisting": "https://chat.whatsapp.com/HTzqSYjQwJl702iUVRftbo?mode=gi_t",
   "Logo Design": "https://chat.whatsapp.com/JNWKMtGeG696BK3BDRZTlf?mode=hqctcla",
   "EV Spark": "https://chat.whatsapp.com/IGZQYumx84pLcGZygln0L7?mode=gi_t",
 };
