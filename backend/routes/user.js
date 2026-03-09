@@ -9,6 +9,7 @@ import {
     getAllRegistrations,
     updatePaymentStatus,
     submitAbstract,
+    submitPaperRegistration,
     checkAbstractStatus,
     completePayment,
     updateAbstractStatus,
@@ -29,6 +30,7 @@ Router.post(
     uploadAbstract.single("abstract"),
     submitAbstract
 );
+Router.post("/submitPaperRegistration", submitPaperRegistration);
 Router.get("/checkAbstractStatus", checkAbstractStatus);
 Router.post(
     "/completePayment",
