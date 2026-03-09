@@ -9,6 +9,7 @@ import {
   XCircle,
   Search,
   FileText,
+  ExternalLink,
 } from "lucide-react";
 
 const API = import.meta.env.VITE_API_URL;
@@ -25,12 +26,14 @@ export default function AdminDashboard() {
   /* =========== CHECK ADMIN =========== */
   useEffect(() => {
     fetch(`${API}/api/admin/me`, { credentials: "include" })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (!data.success) window.location.href = "/admin-login";
         else setAdmin(data);
       })
-      .catch(() => { window.location.href = "/admin-login"; })
+      .catch(() => {
+        window.location.href = "/admin-login";
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -38,8 +41,10 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (!admin) return;
     fetch(`${API}/api/user/getRegistrations`, { credentials: "include" })
-      .then(res => res.json())
-      .then(data => { if (data.success) setRegistrations(data.data); })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) setRegistrations(data.data);
+      })
       .finally(() => setLoading(false));
   }, [admin]);
 
@@ -58,9 +63,11 @@ export default function AdminDashboard() {
         transactionId: reg.transactionId,
       }),
     });
-    
-    if(res.ok) {
-        setRegistrations(prev => prev.map(r => r._id === id ? { ...r, paymentStatus: status } : r));
+
+    if (res.ok) {
+      setRegistrations((prev) =>
+        prev.map((r) => (r._id === id ? { ...r, paymentStatus: status } : r))
+      );
     }
   };
 
@@ -79,26 +86,35 @@ export default function AdminDashboard() {
       }),
     });
 
-    if(res.ok) {
-        setRegistrations(prev => prev.map(r => r._id === id ? { ...r, abstractStatus: status } : r));
+    if (res.ok) {
+      setRegistrations((prev) =>
+        prev.map((r) => (r._id === id ? { ...r, abstractStatus: status } : r))
+      );
     }
   };
 
   /* =========== FILTERED DATA =========== */
-  const abstractEntries = registrations.filter(r =>
-    r.abstractStatus && r.abstractStatus !== "not_required"
-  ).filter(r =>
-    r.fullName?.toLowerCase().includes(search.toLowerCase())
-  );
+  const abstractEntries = registrations
+    .filter((r) => r.abstractStatus && r.abstractStatus !== "not_required")
+    .filter((r) => r.fullName?.toLowerCase().includes(search.toLowerCase()));
 
   const stats = {
     total: registrations.length,
-    approved: registrations.filter(r => r.paymentStatus === "approved").length,
-    pending: registrations.filter(r => r.paymentStatus === "pending" && (r.abstractStatus === "not_required" || !r.abstractStatus)).length,
-    rejected: registrations.filter(r => r.paymentStatus === "rejected").length,
-    abstractPending: registrations.filter(r => r.abstractStatus === "pending").length,
-    abstractAccepted: registrations.filter(r => r.abstractStatus === "accepted").length,
-    abstractRejected: registrations.filter(r => r.abstractStatus === "rejected").length,
+    approved: registrations.filter((r) => r.paymentStatus === "approved").length,
+    pending: registrations.filter(
+      (r) =>
+        r.paymentStatus === "pending" &&
+        (r.abstractStatus === "not_required" || !r.abstractStatus)
+    ).length,
+    rejected: registrations.filter((r) => r.paymentStatus === "rejected").length,
+    abstractPending: registrations.filter((r) => r.abstractStatus === "pending")
+      .length,
+    abstractAccepted: registrations.filter(
+      (r) => r.abstractStatus === "accepted"
+    ).length,
+    abstractRejected: registrations.filter(
+      (r) => r.abstractStatus === "rejected"
+    ).length,
   };
 
   if (loading || admin === null) {
@@ -114,36 +130,85 @@ export default function AdminDashboard() {
       <Navbar />
 
       <main className="px-6 py-28 max-w-7xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 text-center">
-          <h1 className="text-4xl font-bold">Admin <span className="text-cyan-400">Dashboard</span></h1>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-10 text-center"
+        >
+          <h1 className="text-4xl font-bold">
+            Admin <span className="text-cyan-400">Dashboard</span>
+          </h1>
         </motion.div>
 
         {/* STATS SECTION */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <StatCard title="Total" value={stats.total} icon={<Users />} color="cyan" />
-          <StatCard title="Approved" value={stats.approved} icon={<CheckCircle />} color="green" />
-          <StatCard title="Pending" value={stats.pending} icon={<Clock />} color="yellow" />
-          <StatCard title="Rejected" value={stats.rejected} icon={<XCircle />} color="red" />
+          <StatCard
+            title="Total"
+            value={stats.total}
+            icon={<Users />}
+            color="cyan"
+          />
+          <StatCard
+            title="Approved"
+            value={stats.approved}
+            icon={<CheckCircle />}
+            color="green"
+          />
+          <StatCard
+            title="Pending"
+            value={stats.pending}
+            icon={<Clock />}
+            color="yellow"
+          />
+          <StatCard
+            title="Rejected"
+            value={stats.rejected}
+            icon={<XCircle />}
+            color="red"
+          />
         </div>
 
         {/* TABS */}
         <div className="flex gap-2 mb-6">
-          <button onClick={() => setActiveTab("registrations")} className={`px-5 py-2.5 rounded-xl text-sm font-medium transition ${activeTab === "registrations" ? "bg-cyan-500/20 text-cyan-400 border border-cyan-400/40" : "bg-white/5 text-gray-400"}`}>
+          <button
+            onClick={() => setActiveTab("registrations")}
+            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition ${
+              activeTab === "registrations"
+                ? "bg-cyan-500/20 text-cyan-400 border border-cyan-400/40"
+                : "bg-white/5 text-gray-400"
+            }`}
+          >
             <Users className="inline w-4 h-4 mr-1.5" /> All Registrations
           </button>
-          <button onClick={() => setActiveTab("abstracts")} className={`px-5 py-2.5 rounded-xl text-sm font-medium transition ${activeTab === "abstracts" ? "bg-cyan-500/20 text-cyan-400 border border-cyan-400/40" : "bg-white/5 text-gray-400"}`}>
+          <button
+            onClick={() => setActiveTab("abstracts")}
+            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition ${
+              activeTab === "abstracts"
+                ? "bg-cyan-500/20 text-cyan-400 border border-cyan-400/40"
+                : "bg-white/5 text-gray-400"
+            }`}
+          >
             <FileText className="inline w-4 h-4 mr-1.5" /> Paper Abstracts
-            {stats.abstractPending > 0 && <span className="ml-2 px-1.5 py-0.5 bg-yellow-400 text-yellow-900 rounded-full text-xs font-bold">{stats.abstractPending}</span>}
+            {stats.abstractPending > 0 && (
+              <span className="ml-2 px-1.5 py-0.5 bg-yellow-400 text-yellow-900 rounded-full text-xs font-bold">
+                {stats.abstractPending}
+              </span>
+            )}
           </button>
         </div>
 
         {/* SEARCH */}
         <div className="mb-6 relative">
           <Search className="absolute left-3 top-3 text-gray-400 w-4" />
-          <input placeholder="Search by name..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 pr-4 py-3 w-full bg-white/5 border border-white/10 rounded-xl focus:border-cyan-400 outline-none" />
+          <input
+            placeholder="Search by name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-10 pr-4 py-3 w-full bg-white/5 border border-white/10 rounded-xl focus:border-cyan-400 outline-none"
+          />
         </div>
 
-        {/* REGISTRATIONS TABLE (Simplified for readability) */}
+        {/* REGISTRATIONS TABLE */}
         {activeTab === "registrations" && (
           <div className="bg-white/5 border border-white/10 rounded-3xl overflow-x-auto">
             <table className="w-full">
@@ -152,37 +217,74 @@ export default function AdminDashboard() {
                   <th className="p-4">Name</th>
                   <th>Email</th>
                   <th>Event</th>
-                  <th>Txn</th>
+                  <th>Txn ID</th>
                   <th>Status</th>
                   <th>Proof</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {registrations.filter(r => r.fullName?.toLowerCase().includes(search.toLowerCase())).map(reg => (
-                  <tr key={reg._id} className="border-t border-white/10 text-sm">
-                    <td className="p-4">{reg.fullName}</td>
-                    <td>{reg.email}</td>
-                    <td className="text-cyan-400">{reg.eventName}</td>
- <td className="text-xs">{reg.transactionId || "—"}</td>
+                {registrations
+                  .filter((r) =>
+                    r.fullName?.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((reg) => (
+                    <tr
+                      key={reg._id}
+                      className="border-t border-white/10 text-sm"
+                    >
+                      <td className="p-4">{reg.fullName}</td>
+                      <td>{reg.email}</td>
+                      <td className="text-cyan-400">{reg.eventName}</td>
+                      <td className="text-xs font-mono">
+                        {reg.transactionId || "—"}
+                      </td>
                       <td>
                         <StatusBadge status={reg.paymentStatus} />
                       </td>
-                      <td>
+                      <td className="py-2">
                         {reg.paymentScreenshot ? (
-                          <img src={reg.paymentScreenshot} className="w-12 rounded" alt="proof" />
+                          <a
+                            href={reg.paymentScreenshot}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-12 h-12 relative group"
+                          >
+                            <img
+                              src={reg.paymentScreenshot}
+                              className="w-full h-full object-cover rounded border border-white/10 group-hover:scale-105 transition"
+                              alt="proof"
+                            />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded transition">
+                              <ExternalLink className="w-4 h-4 text-white" />
+                            </div>
+                          </a>
                         ) : (
                           <span className="text-xs text-gray-500">—</span>
                         )}
                       </td>
-                    <td>
-                      <div className="flex gap-2">
-                        <button onClick={() => updatePaymentStatus(reg._id, "approved", reg)} className="px-3 py-1 bg-green-500/20 text-green-400 rounded">Approve</button>
-                        <button onClick={() => updatePaymentStatus(reg._id, "rejected", reg)} className="px-3 py-1 bg-red-500/20 text-red-400 rounded">Reject</button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      <td>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() =>
+                              updatePaymentStatus(reg._id, "approved", reg)
+                            }
+                            className="px-3 py-1 bg-green-500/20 text-green-400 rounded hover:bg-green-500/30 transition"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() =>
+                              updatePaymentStatus(reg._id, "rejected", reg)
+                            }
+                            className="px-3 py-1 bg-red-500/20 text-red-400 rounded hover:bg-red-500/30 transition"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -195,43 +297,107 @@ export default function AdminDashboard() {
               <thead className="bg-white/10">
                 <tr className="text-left text-sm">
                   <th className="p-4">Name</th>
-                  <th>Team</th>
                   <th>College</th>
                   <th>Abstract</th>
+                  <th>Payment Proof</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {abstractEntries.map(reg => (
-                  <tr key={reg._id} className="border-t border-white/10 text-sm">
-                    <td className="p-4">{reg.fullName}</td>
-                    <td className="text-yellow-300">{reg.teamName || "—"}</td>
-                    <td className="text-xs">{reg.collegeName}</td>
-                   <td>
-  {reg.abstractFile ? (
-    <a
-      /* REMOVE the google viewer wrapper - link directly */
-      href={reg.abstractFile} 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-1.5 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition border border-cyan-500/20"
-    >
-      <FileText className="w-3.5 h-3.5" />
-      View PDF
-    </a>
-  ) : (
-    <span className="text-gray-500">—</span>
-  )}
-</td>
-                    <td><AbstractStatusBadge status={reg.abstractStatus} /></td>
+                {abstractEntries.map((reg) => (
+                  <tr
+                    key={reg._id}
+                    className="border-t border-white/10 text-sm"
+                  >
+                    <td className="p-4">
+                      <div className="font-medium">{reg.fullName}</div>
+                      <div className="text-xs text-yellow-300">
+                        {reg.teamName || "Individual"}
+                      </div>
+                    </td>
+                    <td className="text-xs text-gray-400">
+                      {reg.collegeName}
+                    </td>
                     <td>
-                        {reg.abstractStatus === "pending" ? (
-                            <div className="flex gap-2">
-                                <button onClick={() => updateAbstractStatus(reg._id, "accepted", reg)} className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded">Accept</button>
-                                <button onClick={() => updateAbstractStatus(reg._id, "rejected", reg)} className="px-2 py-1 bg-red-500/20 text-red-400 rounded">Reject</button>
-                            </div>
-                        ) : <span className="text-gray-500 italic">Handled</span>}
+                      {reg.abstractFile ? (
+                        <a
+                          href={reg.abstractFile}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 transition border border-cyan-500/20"
+                        >
+                          <FileText className="w-3.5 h-3.5" />
+                          View PDF
+                        </a>
+                      ) : (
+                        <span className="text-gray-500">—</span>
+                      )}
+                    </td>
+                    <td className="py-2">
+                      {reg.paymentScreenshot ? (
+                        <a
+                          href={reg.paymentScreenshot}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block w-12 h-12 relative group"
+                        >
+                          <img
+                            src={reg.paymentScreenshot}
+                            className="w-full h-full object-cover rounded border border-white/10 group-hover:scale-105 transition"
+                            alt="payment proof"
+                          />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded transition">
+                            <ExternalLink className="w-4 h-4 text-white" />
+                          </div>
+                        </a>
+                      ) : (
+                        <span className="text-xs text-gray-500">—</span>
+                      )}
+                    </td>
+                    <td>
+                      <AbstractStatusBadge status={reg.abstractStatus} />
+                    </td>
+                    <td>
+                      {reg.abstractStatus === "pending" ? (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() =>
+                              updateAbstractStatus(reg._id, "accepted", reg)
+                            }
+                            className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded hover:bg-emerald-500/30 transition"
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={() =>
+                              updateAbstractStatus(reg._id, "rejected", reg)
+                            }
+                            className="px-2 py-1 bg-red-500/20 text-red-400 rounded hover:bg-red-500/30 transition"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex gap-1.5">
+                           <button
+                            onClick={() =>
+                              updatePaymentStatus(reg._id, "approved", reg)
+                            }
+                            className="px-2 py-1 bg-white/5 text-[10px] text-gray-300 rounded hover:text-green-400 transition"
+                          >
+                            Approve Pay
+                          </button>
+                          <button
+                            onClick={() =>
+                              updatePaymentStatus(reg._id, "rejected", reg)
+                            }
+                            className="px-2 py-1 bg-white/5 text-[10px] text-gray-300 rounded hover:text-red-400 transition"
+                          >
+                            Reject Pay
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -245,8 +411,17 @@ export default function AdminDashboard() {
   );
 }
 
-// Sub-components kept as per original logic
-function StatCard({ title, value, icon, color }: any) {
+function StatCard({
+  title,
+  value,
+  icon,
+  color,
+}: {
+  title: string;
+  value: number;
+  icon: any;
+  color: string;
+}) {
   return (
     <div className="bg-white/5 border border-white/10 rounded-xl p-6">
       <div className={`text-${color}-400 mb-2`}>{icon}</div>
@@ -257,11 +432,35 @@ function StatCard({ title, value, icon, color }: any) {
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const colors: any = { approved: "bg-green-500/20 text-green-400", rejected: "bg-red-500/20 text-red-400", pending: "bg-yellow-500/20 text-yellow-400" };
-  return <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold ${colors[status] || "bg-white/10 text-gray-400"}`}>{status || "pending"}</span>;
+  const colors: any = {
+    approved: "bg-green-500/20 text-green-400",
+    rejected: "bg-red-500/20 text-red-400",
+    pending: "bg-yellow-500/20 text-yellow-400",
+  };
+  return (
+    <span
+      className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold ${
+        colors[status] || "bg-white/10 text-gray-400"
+      }`}
+    >
+      {status || "pending"}
+    </span>
+  );
 }
 
 function AbstractStatusBadge({ status }: { status: string }) {
-  const colors: any = { pending: "bg-yellow-500/20 text-yellow-400", accepted: "bg-emerald-500/20 text-emerald-400", rejected: "bg-red-500/20 text-red-400" };
-  return <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold ${colors[status] || "bg-white/10 text-gray-400"}`}>{status}</span>;
+  const colors: any = {
+    pending: "bg-yellow-500/20 text-yellow-400",
+    accepted: "bg-emerald-500/20 text-emerald-400",
+    rejected: "bg-red-500/20 text-red-400",
+  };
+  return (
+    <span
+      className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold ${
+        colors[status] || "bg-white/10 text-gray-400"
+      }`}
+    >
+      {status}
+    </span>
+  );
 }
